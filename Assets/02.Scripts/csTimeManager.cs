@@ -46,6 +46,7 @@ public class csTimeManager : MonoBehaviour {
 						} else {
 							Debug.Log ("Copy");
 							Vec3ArrayList.Add (hit.transform.gameObject);
+							hit.transform.gameObject.GetComponent<SpriteRenderer> ().color = new Color (0.0f, 255.0f, 255.0f, 255.0f);
 						}
 					}
 				}
