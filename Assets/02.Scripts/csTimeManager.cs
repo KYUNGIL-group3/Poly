@@ -10,6 +10,7 @@ public class csTimeManager : MonoBehaviour {
 
 
 
+	GameObject SkillMoveObj;
 	public ArrayList Vec3ArrayList = new ArrayList ();
 
 	public GameObject skillmanager;
@@ -25,8 +26,8 @@ public class csTimeManager : MonoBehaviour {
 		if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop==false) {
 			timestop = true;
 			Time.timeScale = 0.0f;
-
-			Instantiate (skillmanager, player.transform.position, Quaternion.identity);
+			player.layer = 2;
+			Instantiate (skillmanager, transform.position, Quaternion.identity);
 
 		}else if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop) {
 			timestop = false;
@@ -42,12 +43,21 @@ public class csTimeManager : MonoBehaviour {
 				for (int i = 0; i < hits.Length; i++) {
 					RaycastHit hit = hits [i];
 					if (hit.transform.tag.Equals ("Point")) {
-						if (Vec3ArrayList.Contains (hit.transform.gameObject)) {
-						} else {
-							Debug.Log ("Copy");
-							Vec3ArrayList.Add (hit.transform.gameObject);
-							hit.transform.gameObject.GetComponent<SpriteRenderer> ().color = new Color (0.0f, 255.0f, 255.0f, 255.0f);
+						//Debug.Log (Vector3.Distance (SkillMoveObj.transform.position, hit.transform.position));
+						//Debug.Log (hit.transform.position);
+
+						SkillMoveObj = GameObject.Find("SkillMoveObj");
+						if (Vector3.Distance (SkillMoveObj.transform.position, hit.transform.position) < 1.5f) {
+							
+							if (Vec3ArrayList.Contains (hit.transform.gameObject)) {
+							
+							} else {
+								Vec3ArrayList.Add (hit.transform.gameObject);
+								SkillMoveObj.transform.position = hit.transform.position;
+								hit.transform.gameObject.GetComponent<SpriteRenderer> ().color = new Color (0.0f, 255.0f, 255.0f, 255.0f);
+							}
 						}
+
 					}
 				}
 			}

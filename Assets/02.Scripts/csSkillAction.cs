@@ -4,7 +4,7 @@ using System.Collections;
 public class csSkillAction : MonoBehaviour {
 	public GameObject pointsprite;
 
-	GameObject player;
+	GameObject SkillManager;
 
 	Vector3 playerPos;
 	Vector3 StartplayerPos;
@@ -17,11 +17,11 @@ public class csSkillAction : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		player = GameObject.Find ("Player");
-		playerPos = player.transform.position + new Vector3(-10.0f, 0.0f, -5.0f);
+		SkillManager = GameObject.Find ("TimeManager");
+		playerPos = SkillManager.transform.position + new Vector3(-10.0f, 0.0f, -10.0f);
 		moveplayerPos = playerPos;
 		for (int x = 0; x < 20; x++) {
-			for (int z = 0; z < 10; z++) {
+			for (int z = 0; z < 20; z++) {
 				GameObject goTemp =  Instantiate (pointsprite, moveplayerPos,
 					Quaternion.Euler(new Vector3(0.0f,0.0f,0.0f))) as GameObject;
 				goTemp.transform.parent = gameObject.transform;

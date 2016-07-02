@@ -14,12 +14,12 @@ public class csPlayerController : MonoBehaviour {
 	Animator anim = null;
 
 	bool ismove = true;
-	public float thisdis = 0.0f;
-	public float maxdis = 100.0f;
 	Vector3[] pointpos;
 
 
 	public bool isAttack = false;
+
+	public csRunFollow cameraFollow;
 
 
 
@@ -27,6 +27,7 @@ public class csPlayerController : MonoBehaviour {
 	void Start () {
 		controller = GetComponent<CharacterController> ();
 		anim = GetComponent<Animator> ();
+		cameraFollow = GameObject.Find ("FollowChar").GetComponent<csRunFollow> ();
 
 	}
 	
@@ -66,35 +67,28 @@ public class csPlayerController : MonoBehaviour {
 	public IEnumerator StartArrayMove(ArrayList vec)
 	{
 		ismove = false;
-
+		cameraFollow.enabled = false;
 		gameObject.layer = 11;
 
 		pointpos = new Vector3[20];
-		for (int a = 0; a < vec.Count - 1; a++) {
+		for (int a = 0; a < vec.Count; a++) {
 			GameObject pointobj = vec [a] as GameObject;
 			pointpos [a] = pointobj.transform.position;
 		}
 
-		for (int a = 0; a < pointpos.Length - 1; a++) {
-			Vector3 dir = (Vector3)pointpos [a + 1] - (Vector3)pointpos [a];
-
-			//float distance1 = Vector3.Distance ((Vector3)pointpos [a + 1], (Vector3)pointpos [a]);
-
-			dir.Normalize ();
-			if (dir != Vector3.zero) {
-				Quaternion moveQtn = Quaternion.LookRotation (dir);
-
-				transform.rotation = Quaternion.Lerp (transform.rotation,
-					moveQtn,
-					30.0f * Time.deltaTime);
-			}
-
+		for (int a = 1; a < pointpos.Length; a++) {
+			
+			//Vector3 dir = (Vector3)pointpos [a] - (Vector3)pointpos [a - 1];
+			//dir.Normalize ();
+			transform.LookAt ((Vector3)pointpos [a]);
 			transform.position = (Vector3)pointpos [a];
+
 			yield return new WaitForSeconds (skillmovespeed);
 		}
 
 		Time.timeScale = 1.0f;
 		gameObject.layer = 9;
+		cameraFollow.enabled = true;
 		ismove = true;
 	}
 
