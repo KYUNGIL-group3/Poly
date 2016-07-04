@@ -7,7 +7,7 @@ public class csPlayerController : MonoBehaviour {
 	public float walkSpeed = 3.0f;
 	public float gravity = 20.0f;
 	public float jumpSpeed = 8.0f;
-	public float skillmovespeed = 0.02f;
+	public float skillmovespeed = 0.5f;
 	private Vector3 velocity;
 
 	CharacterController controller = null;
@@ -18,6 +18,7 @@ public class csPlayerController : MonoBehaviour {
 
 
 	public bool isAttack = false;
+	public bool isSkill = false;
 
 	public csRunFollow cameraFollow;
 
@@ -33,16 +34,22 @@ public class csPlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (GameManager.Instance ().isGameOver)
+			return;
+
+		if (GameManager.Instance ().isGameClear)
+			return;
+
 		if (ismove) {
 			if (!isAttack) {
-				velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
+				//velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
+				velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
 			}
 			else{
 				velocity = new Vector3 (0, 0, 0);
 			}
 
 
-				//velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
 				velocity *= walkSpeed;
 
 				if (CrossPlatformInputManager.GetButton ("Attack")) {
@@ -67,12 +74,18 @@ public class csPlayerController : MonoBehaviour {
 	public IEnumerator StartArrayMove(ArrayList vec)
 	{
 		anim.SetBool ("isSkill", true);
-
+		GameObject moveskillobj = GameObject.Find ("MoveSkillObj");
+		isSkill = true;
+		isAttack = true;
 		ismove = false;
 		cameraFollow.enabled = false;
 		gameObject.layer = 11;
 
-		pointpos = new Vector3[20];
+		moveskillobj.GetComponent<TrailRenderer> ().enabled = true;
+		moveskillobj.GetComponent<BoxCollider> ().enabled = true;
+
+		pointpos = new Vector3[vec.Count];
+		GameManager.Instance ().gauge -= vec.Count * 5;
 		for (int a = 0; a < vec.Count; a++) {
 			GameObject pointobj = vec [a] as GameObject;
 			pointpos [a] = pointobj.transform.position;
@@ -83,16 +96,31 @@ public class csPlayerController : MonoBehaviour {
 			//Vector3 dir = (Vector3)pointpos [a] - (Vector3)pointpos [a - 1];
 			//dir.Normalize ();
 			transform.LookAt ((Vector3)pointpos [a]);
+
 			transform.position = (Vector3)pointpos [a];
+
+			//float speed = 0.001f;
+			//float step = speed * Time.deltaTime;
+			//transform.position = Vector3.MoveTowards (transform.position, (Vector3)pointpos [a], step);
 
 			yield return new WaitForSeconds (skillmovespeed);
 		}
 
-		Time.timeScale = 1.0f;
+		Time.timeScale = 0.2f;
 		gameObject.layer = 9;
 		cameraFollow.enabled = true;
 		ismove = true;
+		isSkill = false;
+		isAttack = false;
+
+		Transform cameraPos = GameObject.Find ("Main Camera").transform;
+		cameraPos.position += new Vector3 (0.0f, -10.0f, 8.0f);
 		anim.SetBool ("isSkill", false);
+
+		moveskillobj.GetComponent<BoxCollider> ().enabled = false;
+		yield return new WaitForSeconds (1.0f);
+		moveskillobj.GetComponent<TrailRenderer> ().enabled = false;
+		Time.timeScale = 1.0f;
 	}
 
 	void OkMove()

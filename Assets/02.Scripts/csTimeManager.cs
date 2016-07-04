@@ -15,6 +15,7 @@ public class csTimeManager : MonoBehaviour {
 
 	public GameObject skillmanager;
 	public GameObject player;
+	public Transform cameraPos;
 	// Use this for initialization
 	void Start () {
 	
@@ -22,18 +23,24 @@ public class csTimeManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-		if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop==false) {
+		
+		if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop==false
+			&& GameManager.Instance().gauge == 100 ) {
 			timestop = true;
 			Time.timeScale = 0.0f;
 			player.layer = 2;
+			cameraPos.position += new Vector3 (0.0f, 10.0f, -8.0f);
 			Instantiate (skillmanager, transform.position, Quaternion.identity);
 
 		}else if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop) {
 			timestop = false;
-			Time.timeScale = 1.0f;
+			Time.timeScale = 0.2f;
 			GameObject PointManager = GameObject.FindWithTag ("PointManager");
-			Destroy (PointManager);
+
+
+			StartCoroutine(player.GetComponent<csPlayerController>().StartArrayMove(Vec3ArrayList));
+			Vec3ArrayList.Clear ();
+			Destroy (PointManager,1.0f);
 		}
 
 		if (timestop) {
@@ -66,9 +73,10 @@ public class csTimeManager : MonoBehaviour {
 				Time.timeScale = 0.2f;
 				GameObject PointManager = GameObject.FindWithTag ("PointManager");
 
+
 				StartCoroutine(player.GetComponent<csPlayerController>().StartArrayMove(Vec3ArrayList));
 				Vec3ArrayList.Clear ();
-				Destroy (PointManager,3.0f);
+				Destroy (PointManager,1.0f);
 			}
 		}
 	}

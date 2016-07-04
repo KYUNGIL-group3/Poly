@@ -16,6 +16,9 @@ public class csRayCastCenter : MonoBehaviour {
 		RaycastHit hit;
 
 		if (Physics.Raycast (transform.position, Vector3.down, out hit, 8.0f)) {
+			if (hit.transform.tag != "Map") {
+				Destroy (gameObject.transform.parent.gameObject);
+			}
 			gameObject.transform.parent.gameObject.GetComponent<csPointSetPosition> ().Centerdis (hit.distance);
 			Destroy (gameObject);
 		} else {

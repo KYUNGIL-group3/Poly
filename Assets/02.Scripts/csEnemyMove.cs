@@ -19,11 +19,14 @@ public class csEnemyMove : MonoBehaviour {
 
 	public float speed = 5.0f;
 	public float rotationSpeed=10.0f;
-	public float attackableRange = 0.1f;
-	public float attackStateMaxTime=2.0f;
+	public float attackableRange = 3.0f;
+	public float attackStateMaxTime=3.0f;
 	//public GameObject deadObj = null;
 
-	int hp=5;
+
+	Animator anim = null;
+
+	int hp = 100;
 	//PlayerState playerState;
 	CharacterController playerController;
 
@@ -34,10 +37,10 @@ public class csEnemyMove : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		anim = GetComponent<Animator> ();
 		target = GameObject.Find ("Player").transform;
 		playerController = GetComponent<CharacterController> ();
 		//playerState = target.GetComponent<PlayerState> ();
-
 	}
 	
 	// Update is called once per frame
@@ -68,9 +71,11 @@ public class csEnemyMove : MonoBehaviour {
 			stateTime += Time.deltaTime;
 			if (stateTime > attackStateMaxTime) {
 				stateTime = 0.0f;
+				GameManager.Instance ().PlayerHealth(10);
+				//anim.SetBool ("enemyIsAttack",true);
+				//StartCoroutine (IsAttack ());
 				//GetComponent<Animation> ().Play ("attack_Melee");
 				//GetComponent<Animation> ().PlayQueued ("iddle", QueueMode.CompleteOthers);
-
 			}
 			float distance1 = (target.position - transform.position).magnitude;
 			if (distance1 > attackableRange) {
@@ -78,7 +83,7 @@ public class csEnemyMove : MonoBehaviour {
 			}
 			break;
 		case SPIDERSTATE.DAMAGE:
-			--hp;
+			hp -= 20;
 			//GetComponent<Animation> () ["damage"].speed = 0.5f;
 			//GetComponent<Animation> ().Play ("damage");
 			//GetComponent<Animation> ().PlayQueued ("iddle", QueueMode.CompleteOthers);
@@ -86,6 +91,7 @@ public class csEnemyMove : MonoBehaviour {
 			spiderState = SPIDERSTATE.IDLE;
 			if (hp <= 0) {
 				spiderState = SPIDERSTATE.DEAD;
+				GameManager.Instance ().SkillGauge(1);
 				Destroy (gameObject);
 			}
 			break;
@@ -109,12 +115,28 @@ public class csEnemyMove : MonoBehaviour {
 	{
 		if (spiderState == SPIDERSTATE.NONE || spiderState == SPIDERSTATE.DEAD)
 			return;
+		if (coll.gameObject.tag == "PointObj") {
+			hp -= 200;
+			if (hp <= 0) {
+				spiderState = SPIDERSTATE.DEAD;
+				GameManager.Instance ().SkillGauge (1);
+				StartCoroutine (deadsp ());
+			}
+			return;
+		}
 		if(coll.gameObject.tag!="WEAPON")
 			return;
+		if (target.GetComponent<csPlayerController> ().isAttack == false)
+			return;
+		if (target.GetComponent<csPlayerController> ().isSkill) {
+			hp = hp - 80;
+		}
+
+		
 		Vector3 dir = target.position - transform.position;
 		dir.y = 0.0f;
 		dir.Normalize ();
-		playerController.SimpleMove (dir * -speed * 1.0f);
+		transform.position += -dir;
 		spiderState = SPIDERSTATE.DAMAGE;
 	}
 
@@ -123,5 +145,12 @@ public class csEnemyMove : MonoBehaviour {
 		
 		spiderState = SPIDERSTATE.IDLE;
 		//GetComponent<Animation> ().Play ("iddle");
+	}
+
+	IEnumerator deadsp()
+	{
+		yield return new WaitForSeconds (1.0f);
+
+		Destroy (gameObject);
 	}
 }
