@@ -66,6 +66,8 @@ public class csPlayerController : MonoBehaviour {
 
 	public IEnumerator StartArrayMove(ArrayList vec)
 	{
+		anim.SetBool ("isSkill", true);
+
 		ismove = false;
 		cameraFollow.enabled = false;
 		gameObject.layer = 11;
@@ -90,6 +92,7 @@ public class csPlayerController : MonoBehaviour {
 		gameObject.layer = 9;
 		cameraFollow.enabled = true;
 		ismove = true;
+		anim.SetBool ("isSkill", false);
 	}
 
 	void OkMove()

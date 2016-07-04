@@ -13,6 +13,8 @@ public class SpawnPointsManager : MonoBehaviour {
 	private Vector3 spawn1target;
 	Vector3 spawnPoint1;
 
+	Transform[] monstercount;
+
 	bool isSpawn = true;
 
 	private int Num;
@@ -55,6 +57,12 @@ public class SpawnPointsManager : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
+		if (isSpawn == false) {
+			monstercount = gameObject.GetComponentsInChildren<Transform> ();
+			if (monstercount.Length == 1) {
+				Destroy (gameObject.transform.parent.gameObject);
+			}
+		}
 
 	}
 	void OnTriggerEnter(Collider coll)
