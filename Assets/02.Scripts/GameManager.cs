@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
 	static GameManager _instance = null;
+	public Slider healthBarSlider;
+	public Slider skillBarSlider;
 	public static GameManager Instance()
 	{
 		return _instance;
@@ -21,7 +24,8 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		healthBarSlider.value = hp;
+		skillBarSlider.value = gauge;
 	}
 
 	public void GameOver()
@@ -44,4 +48,5 @@ public class GameManager : MonoBehaviour {
 	{
 		this.gauge = gauge;
 	}
+
 }
