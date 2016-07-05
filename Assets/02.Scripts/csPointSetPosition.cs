@@ -11,7 +11,8 @@ public class csPointSetPosition : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		StartCoroutine (ABC ());
+		StartCoroutine (SetPosition ());
+		StartCoroutine (SetRotation ());
 	}
 	
 	// Update is called once per frame
@@ -45,7 +46,21 @@ public class csPointSetPosition : MonoBehaviour {
 		Bdis = i;
 	}
 
-	IEnumerator ABC()
+	IEnumerator SetPosition()
+	{
+		yield return new WaitForSeconds (0.1f);
+
+		if (Mathf.Approximately (Cdis, Rdis) &&
+			Mathf.Approximately (Rdis, Ldis) &&
+			Mathf.Approximately (Ldis, Fdis) &&
+			Mathf.Approximately (Fdis, Bdis)) {
+
+		} else {
+			//transform.position = transform.position + new Vector3 (0, 0.3f, 0);
+		}
+	}
+
+	IEnumerator SetRotation()
 	{
 		yield return new WaitForSeconds (0.1f);
 
