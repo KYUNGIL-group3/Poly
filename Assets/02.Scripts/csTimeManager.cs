@@ -24,8 +24,7 @@ public class csTimeManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop==false
-			&& GameManager.Instance().gauge == 100 ) {
+		if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop==false) {
 			timestop = true;
 			Time.timeScale = 0.0f;
 			player.layer = 2;

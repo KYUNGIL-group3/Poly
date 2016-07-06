@@ -8,6 +8,7 @@ public class csPlayerController : MonoBehaviour {
 	public float gravity = 20.0f;
 	public float jumpSpeed = 8.0f;
 	public float skillmovespeed = 0.5f;
+    public GameObject DamageFx;
 	private Vector3 velocity;
 
 	CharacterController controller = null;
@@ -85,7 +86,7 @@ public class csPlayerController : MonoBehaviour {
 		moveskillobj.GetComponent<BoxCollider> ().enabled = true;
 
 		pointpos = new Vector3[vec.Count];
-		GameManager.Instance ().gauge -= vec.Count * 5;
+        GameManager.Instance().useSkillGauge(vec.Count);
 		for (int a = 0; a < vec.Count; a++) {
 			GameObject pointobj = vec [a] as GameObject;
 			pointpos [a] = pointobj.transform.position;
@@ -127,4 +128,8 @@ public class csPlayerController : MonoBehaviour {
 	{
 		isAttack = false;
 	}
+    public void DamageEF()
+    {
+        Instantiate(DamageFx, transform.position, transform.rotation);
+    }
 }
