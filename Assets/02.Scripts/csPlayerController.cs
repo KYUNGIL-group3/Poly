@@ -127,12 +127,4 @@ public class csPlayerController : MonoBehaviour {
 	{
 		isAttack = false;
 	}
-
-	void OnTriggerEnter(Collider col)
-	{
-		if (col.gameObject.tag == "Enemy") {
-			Debug.Log ("공격");
-		}
-
-	}
 }
