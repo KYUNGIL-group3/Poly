@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour {
 	static GameManager _instance = null;
 	public Slider healthBarSlider;
 	public Slider skillBarSlider;
-    public GameObject Player;
+    GameObject Player;
 	public static GameManager Instance()
 	{
 		return _instance;
@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour {
 		if (_instance == null) {
 			_instance = this;
 		}
+		Player = GameObject.FindWithTag ("Player");
         hp = maxHp;
         gauge = 0;
 	}

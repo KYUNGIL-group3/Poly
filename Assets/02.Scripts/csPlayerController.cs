@@ -21,7 +21,7 @@ public class csPlayerController : MonoBehaviour {
 	public bool isAttack = false;
 	public bool isSkill = false;
 
-	csRunFollow cameraFollow;
+	csCameraFollow cameraFollow;
 
 
 
@@ -29,7 +29,7 @@ public class csPlayerController : MonoBehaviour {
 	void Start () {
 		controller = GetComponent<CharacterController> ();
 		anim = GetComponent<Animator> ();
-		cameraFollow = GameObject.Find ("GameManager").GetComponent<csRunFollow> ();
+		cameraFollow = GameObject.Find ("GameManager").GetComponent<csCameraFollow> ();
 
 	}
 	

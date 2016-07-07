@@ -33,7 +33,7 @@ public class SpawnPointsManager : MonoBehaviour {
 			enemies1 [i].transform.parent = gameObject.transform;
 			enemies1 [i].SetActive (false);
 		}
-        pointsSpawn();
+        //pointsSpawn();
     }
 	void pointsSpawn()
 	{
@@ -66,13 +66,13 @@ public class SpawnPointsManager : MonoBehaviour {
 		}
 
 	}
-	//void OnTriggerEnter(Collider coll)
-	//{
-	//	if(coll.gameObject.tag=="Player")
-	//	if(isSpawn){
-	//		pointsSpawn ();
-	//		isSpawn = false;
-	//	}
-	//}
+	void OnTriggerEnter(Collider coll)
+	{
+		if(coll.gameObject.tag=="Player")
+		if(isSpawn){
+			pointsSpawn ();
+			isSpawn = false;
+		}
+	}
 
 }

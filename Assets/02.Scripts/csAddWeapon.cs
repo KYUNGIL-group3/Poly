@@ -5,13 +5,18 @@ using UnityStandardAssets.CrossPlatformInput;
 public class csAddWeapon : MonoBehaviour {
 
 	public GameObject[] Weapon;
+	public GameObject Player;
 	GameObject Eweapon;
+	Animator Playeranim;
 	int WeaponNum=0;
 
 	// Use this for initialization
 	void Start () {
-		Eweapon = Instantiate (Weapon [WeaponNum], transform.position, transform.rotation) as GameObject;
-		Eweapon.transform.parent = gameObject.transform;
+		if (gameObject.name != "LHand") {
+			Eweapon = Instantiate (Weapon [WeaponNum], transform.position, transform.rotation) as GameObject;
+			Eweapon.transform.parent = gameObject.transform;
+		}
+		Playeranim = Player.GetComponent<Animator> ();
 	}
 	
 	// Update is called once per frame
@@ -21,9 +26,15 @@ public class csAddWeapon : MonoBehaviour {
 			if (Weapon.Length <= WeaponNum) {
 				WeaponNum = 0;
 			}
+			if (gameObject.name == "RHand") {
+
+				Playeranim.SetInteger ("WeaponType", WeaponNum);
+			}
 			Destroy (Eweapon);
-			Eweapon = Instantiate (Weapon [WeaponNum], transform.position, transform.rotation) as GameObject;
-			Eweapon.transform.parent = gameObject.transform;
+			if (gameObject.name != "LHand" || WeaponNum == 1) {
+				Eweapon = Instantiate (Weapon [WeaponNum], transform.position, transform.rotation) as GameObject;
+				Eweapon.transform.parent = gameObject.transform;
+			}
 		} 
 	}
 

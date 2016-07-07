@@ -17,8 +17,6 @@ public class csEnemyRig2 : MonoBehaviour
     STATE state = STATE.IDLE;
     float stateTime = 0.0f;
 
-    public GameObject motion;
-
     public float idleStateMaxTime = 1.0f;   //대기시간,경직시간
     public float attackableRange = 5.0f;    //공격범위
     public float attackStateMaxTime = 4.0f; //공격대기시간
@@ -36,9 +34,8 @@ public class csEnemyRig2 : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        player = GameObject.Find("CharCenter").transform;
+		player = GameObject.FindWithTag("CharCenter").transform;
         enemyController = GetComponent<CharacterController>();
-        //anim = motion.GetComponent<Animator> ();
     }
 
     // Update is called once per frame
