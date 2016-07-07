@@ -33,7 +33,8 @@ public class SpawnPointsManager : MonoBehaviour {
 			enemies1 [i].transform.parent = gameObject.transform;
 			enemies1 [i].SetActive (false);
 		}
-	}
+        pointsSpawn();
+    }
 	void pointsSpawn()
 	{
 		
@@ -47,11 +48,11 @@ public class SpawnPointsManager : MonoBehaviour {
 			enemies1 [i].SetActive (true);
 		}
 
-		transform.rotation = Quaternion.Euler (new Vector3 (-30.0f, 0.0f, 0.0f));
+		//transform.rotation = Quaternion.Euler (new Vector3 (-30.0f, 0.0f, 0.0f));
 
-		for (int i = 0; i < enemySize; ++i) {
-			enemies1 [i].transform.rotation = Quaternion.identity;
-		}
+		//for (int i = 0; i < enemySize; ++i) {
+			//enemies1 [i].transform.rotation = Quaternion.identity;
+	//	}
 
 
 	}
@@ -65,13 +66,13 @@ public class SpawnPointsManager : MonoBehaviour {
 		}
 
 	}
-	void OnTriggerEnter(Collider coll)
-	{
-		if(coll.gameObject.tag=="Player")
-		if(isSpawn){
-			pointsSpawn ();
-			isSpawn = false;
-		}
-	}
+	//void OnTriggerEnter(Collider coll)
+	//{
+	//	if(coll.gameObject.tag=="Player")
+	//	if(isSpawn){
+	//		pointsSpawn ();
+	//		isSpawn = false;
+	//	}
+	//}
 
 }

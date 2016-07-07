@@ -19,11 +19,10 @@ public class csEnemyRig : MonoBehaviour {
 	public GameObject motion;
 
     public float idleStateMaxTime = 1.0f;   //대기시간,경직시간
-    public float attackableRange = 1.5f;    //공격범위
-    public float attackStateMaxTime = 1.0f; //공격대기시간
+    public float attackableRange = 2.0f;    //공격범위
+    public float attackStateMaxTime = 4.0f; //공격대기시간
     public int monsterAttackPoint;  //몬스터 공격력
-    public float checkAttack;   //견제공격
-    public float checkAttackDistance; //견제공격 범위
+    public float checkAttackDistance = 2.0f; //견제공격 범위
 
 
     Transform player;
@@ -35,7 +34,7 @@ public class csEnemyRig : MonoBehaviour {
     public int mHp = 300;
 	// Use this for initialization
 	void Start () {
-		player = GameObject.Find ("MoveSkillObj").transform;
+		player = GameObject.Find ("CharCenter").transform;
 		enemyController = GetComponent<CharacterController> ();
 		//anim = motion.GetComponent<Animator> ();
     }
@@ -44,58 +43,76 @@ public class csEnemyRig : MonoBehaviour {
 	void Update () {
 		//Debug.Log (state);
 		switch (state) {
-		case STATE.IDLE:
-			stateTime += Time.deltaTime;
-			if (stateTime > idleStateMaxTime) {
-				distance = Vector3.Distance (transform.position, player.position);
+		    case STATE.IDLE:
+                distance = Vector3.Distance(transform.position, player.position);
+                stateTime += Time.deltaTime;
+                if (distance <= 5.0f)
+                {
+                    state = STATE.MOVE;
+                    Debug.Log("Move로 이동");
+                    stateTime = 0.0f;
+                }
+                if (stateTime > idleStateMaxTime) {
+				
 				stateTime = 0.0f;
-				if (distance < attackableRange) {
-					//anim.SetBool ("enemyIsAttack", true);
-					state = STATE.ATTACK;
-				} else {
-					state = STATE.MOVE;
-				}
 
-				if (distance < checkAttackDistance) {
-					state = STATE.CHECKATTACK;
-				}
-			}
+                   
+                    if (distance < attackableRange)
+                    {
+                        //anim.SetBool ("enemyIsAttack", true);
+                        state = STATE.ATTACK;
+                        Debug.Log("Attack으로 이동");
+                    }
 
+                    //if (distance < checkAttackDistance) {
+                    //state = STATE.CHECKATTACK;
+                    //}
+                }
 
-			break;
-		case STATE.AFTERIDLE:
+            break;
+
+            case STATE.AFTERIDLE:
 			stateTime += Time.deltaTime;
 			if (stateTime > idleStateMaxTime) {
 				stateTime = 0.0f;
 				state = STATE.IDLE;
 			}
 			break;
-		case STATE.MOVE:
+
+            case STATE.MOVE:
                 //해당 스크립트 오브젝트와 player간의 거리
 			distance = Vector3.Distance (transform.position, player.position);
 
 			if (distance < attackableRange) {
 				state = STATE.IDLE;
-				//stateTime = attackStateMaxTime;
-				stateTime = 0.0f;
-			} else {
+				//stateTime = 0.0f;
+                    Debug.Log("Idle이동");
+			}
+                else {
 				Vector3 dir = player.position - transform.position;
 				dir.y = 0.0f;
 				dir.Normalize ();
 				enemyController.SimpleMove (dir * speed);
-			}
+                    Debug.Log("추적");
+            }
 			break;
-		case STATE.ATTACK:
-			stateTime += Time.deltaTime;                                                                            
-			if (stateTime > attackStateMaxTime) {
+
+            case STATE.ATTACK:
+                distance = Vector3.Distance(transform.position, player.position);
+                stateTime += Time.deltaTime;
+                
+                if (stateTime > attackStateMaxTime) {
 				stateTime = 0.0f;
 				GameManager.Instance ().PlayerHealth (monsterAttackPoint);
 				Debug.Log("Attack");
-				//anim.SetBool ("enemyIsAttack", false);
-				state = STATE.IDLE;
-			}
+                    //anim.SetBool ("enemyIsAttack", false);
+                    state = STATE.IDLE;
+                }
+               
+                
 			break;
-		case STATE.DAMAGE:
+
+            case STATE.DAMAGE:
 
 			if (mHp <= 0) {
 				state = STATE.DEAD;
@@ -111,7 +128,8 @@ public class csEnemyRig : MonoBehaviour {
 			}
 			//state = STATE.IDLE;
 			break;
-		case STATE.DEAD:
+
+            case STATE.DEAD:
 			state = STATE.NONE;
 			break;
                 
