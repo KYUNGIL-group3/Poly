@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
 	int hp;
     int gauge;
     public int maxHp=1000;
-    public int maxGauge=0;
+    public int maxGauge = 100;
 
 	public bool isGameOver = false;
 	public bool isGameClear = false;
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour {
 			_instance = this;
 		}
         hp = maxHp;
-        gauge = maxGauge;
+        gauge = 0;
 	}
 	
 	// Update is called once per frame
