@@ -15,7 +15,8 @@ public class csCameraFollow : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		Vector3 PlayerPos = Player.GetComponent<Transform> ().position;
+		//Vector3 PlayerPos = Player.GetComponent<Transform> ().position;
+		Vector3 PlayerPos = Player.transform.position;
 		//transform.position = ballPos;
 
 		transform.position = new Vector3 (PlayerPos.x, PlayerPos.y, PlayerPos.z);

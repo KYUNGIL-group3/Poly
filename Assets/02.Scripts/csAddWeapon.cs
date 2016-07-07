@@ -22,18 +22,20 @@ public class csAddWeapon : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (CrossPlatformInputManager.GetButtonUp ("Change")) {
-			WeaponNum++;
-			if (Weapon.Length <= WeaponNum) {
-				WeaponNum = 0;
-			}
-			if (gameObject.name == "RHand") {
+			if (!Player.GetComponent<csPlayerController> ().isAttack && Player.GetComponent<csPlayerController> ().isidle) {
+				WeaponNum++;
+				if (Weapon.Length <= WeaponNum) {
+					WeaponNum = 0;
+				}
+				if (gameObject.name == "RHand") {
 
-				Playeranim.SetInteger ("WeaponType", WeaponNum);
-			}
-			Destroy (Eweapon);
-			if (gameObject.name != "LHand" || WeaponNum == 1) {
-				Eweapon = Instantiate (Weapon [WeaponNum], transform.position, transform.rotation) as GameObject;
-				Eweapon.transform.parent = gameObject.transform;
+					Playeranim.SetInteger ("WeaponType", WeaponNum);
+				}
+				Destroy (Eweapon);
+				if (gameObject.name != "LHand" || WeaponNum == 1) {
+					Eweapon = Instantiate (Weapon [WeaponNum], transform.position, transform.rotation) as GameObject;
+					Eweapon.transform.parent = gameObject.transform;
+				}
 			}
 		} 
 	}

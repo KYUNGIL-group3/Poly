@@ -14,10 +14,11 @@ public class csPlayerController : MonoBehaviour {
 	CharacterController controller = null;
 	Animator anim = null;
 
-	bool ismove = true;
 	Vector3[] pointpos;
 
 
+	public bool ismove = true;
+	public bool isidle = true;
 	public bool isAttack = false;
 	public bool isSkill = false;
 
@@ -53,20 +54,22 @@ public class csPlayerController : MonoBehaviour {
 
 				velocity *= walkSpeed;
 
-				if (CrossPlatformInputManager.GetButton ("Attack")) {
-					anim.SetBool ("isAttack", true);
-					anim.SetBool ("isMove", false);
-					isAttack = true;
+			if (CrossPlatformInputManager.GetButton ("Attack")) {
+				anim.SetBool ("isAttack", true);
+				anim.SetBool ("isMove", false);
+				isidle = false;
+				isAttack = true;
+			} else {
+				anim.SetBool ("isAttack", false);
+				if (velocity.magnitude > 0) {
+					anim.SetBool ("isMove", true);
+					isidle = false;
+					transform.LookAt (transform.position + velocity);
 				} else {
-					anim.SetBool ("isAttack", false);
-					if (velocity.magnitude > 0) {
-						anim.SetBool ("isMove", true);
-						transform.LookAt (transform.position + velocity);
-					} else {
-						anim.SetBool ("isMove", false);
-					}
-
+					anim.SetBool ("isMove", false);
 				}
+
+			}
 			velocity.y -= (gravity);
 			controller.Move (velocity * Time.deltaTime);
 		}
@@ -126,6 +129,7 @@ public class csPlayerController : MonoBehaviour {
 
 	void OkMove()
 	{
+		isidle = true;
 		isAttack = false;
 	}
     public void DamageEF()
