@@ -20,9 +20,9 @@ public class csEnemyRig : MonoBehaviour {
     public float attackableRange = 2.0f;    //공격범위
     public float attackStateMaxTime = 4.0f; //공격대기시간
     public int monsterAttackPoint;  //몬스터 공격력
-    public float checkAttackDistance = 2.0f; //견제공격 범위
+    public float checkAttackDistance = 4.0f; //견제공격 범위(몬스터 시야)
 
-	float rotspeed = 5.0f;
+    float rotspeed = 5.0f;
 	float rottime = 0.0f;
 	public float rotmaxtime = 3.0f;
 	bool attackMotion = false;
