@@ -53,42 +53,43 @@ public class csEnemyRig2 : MonoBehaviour
     void Update()
     {
         akTime += Time.deltaTime;
-        //Debug.Log (state);
+        
         switch (state)
         {
             case STATE.IDLE:
-              
+                
                 distance = Vector3.Distance(transform.position, player.position);
                 stateTime += Time.deltaTime;
-                if (distance < attackableRange)
-                {
-                    if (akTime > akmaxTime)
-                    {
-                        //anim.SetBool ("enemyIsAttack", true);
-                        akTime = 0.0f;
-                        state = STATE.ATTACK;
-                        Debug.Log("Attack으로 이동");
-                    }
-                    else
-                    {
-                        state = STATE.MOVE;
-                        Debug.Log("Move로 이동");
-                        stateTime = 0.0f;
-
-                    }
-                }
-                else if (distance < checkAttackDistance)
-                {
-                    state = STATE.ATTACK;
-                    Debug.Log("견제");
-                }
+              
                 
                 if (stateTime > idleStateMaxTime)
 
                 {
 
                     stateTime = 0.0f;
+                    if (distance < attackableRange)
+                    {
+                        if (akTime > akmaxTime)
+                        {
+                            //anim.SetBool ("enemyIsAttack", true);
+                            akTime = 0.0f;
+                            state = STATE.ATTACK;
+                            Debug.Log("Attack으로 이동");
+                        }
+                        else
+                        {
+                            state = STATE.MOVE;
+                            Debug.Log("Move로 이동");
+                            stateTime = 0.0f;
 
+                        }
+                    }
+                    if (distance < checkAttackDistance)
+                    {
+                        state = STATE.MOVE;
+                        transform.LookAt(player);
+                        Debug.Log("탐지");
+                    }
 
                 }
 
@@ -98,43 +99,42 @@ public class csEnemyRig2 : MonoBehaviour
                 //해당 스크립트 오브젝트와 player간의 거리
                 distance = Vector3.Distance(transform.position, player.position);
 
-                if (distance < attackableRange)
-                {
-                    state = STATE.IDLE;
-                    stateTime = 0.0f;
-                    Debug.Log("Idle이동");
-                }
-                else {
+                
+            
                     Vector3 dir = player.position - transform.position;
                     dir.y = 0.0f;
                     dir.Normalize();
-                    if (distance >= 3.1f)
-                    {
-                        enemyController.SimpleMove(dir * speed);
-                        Debug.Log("추적");
-                        transform.LookAt(player);
+                if (distance > 5.0f)
+                {
 
-                        //state = STATE.IDLE;
-                        if (akTime > akmaxTime)
-                        {
-                            state = STATE.IDLE;
-                        }
+                    Debug.Log("추적");
+                    transform.LookAt(player);
+                    enemyController.SimpleMove(dir * speed);
+                    if (distance <= attackableRange)
+                    {
+                        state = STATE.ATTACK;
+                        transform.LookAt(player);
+                        stateTime = 0.0f;
 
                     }
-                    if (distance < 3.0f)
-                    {
-                        enemyController.SimpleMove(-dir * speed);
-                        Debug.Log("회피");
-                        transform.LookAt(player);
-                        //state = STATE.IDLE;
+                }
+                else if(distance <= 3.0f)
+                {
 
-                        if (akTime > akmaxTime)
-                        {
-                            state = STATE.IDLE;
-                        }
+                    Debug.Log("회피");
+                    //transform.LookAt(player);
+                    enemyController.SimpleMove(-dir * speed);
+                    if (distance <= attackableRange)
+                    {
+                        state = STATE.ATTACK;
+                        transform.LookAt(player);
+                        stateTime = 0.0f;
+
                     }
 
                 }
+
+                
                 break;
 
             case STATE.ATTACK:
@@ -144,7 +144,7 @@ public class csEnemyRig2 : MonoBehaviour
                 if (stateTime > attackStateMaxTime)
                 {
                     stateTime = 0.0f;
-                    if (distance < 5.1f)
+                    if (distance <= 5.1f)
                     {
                         GameManager.Instance().PlayerHealth(monsterAttackPoint);
                         Debug.Log("Attack");
@@ -155,12 +155,16 @@ public class csEnemyRig2 : MonoBehaviour
                             {
                                 obj[i].transform.parent = null;
 
-                                
+
                                 break;
                             }
                         }
-                        //anim.SetBool ("enemyIsAttack", false);
-                        state = STATE.IDLE;
+                        //anim.SetBool ("enemyIsAttack", false);                   
+                    }
+                    if (distance >= 5.0f)
+                    {
+                        state = STATE.MOVE;
+                        stateTime = 0.0f;
                     }
                     
                 }
