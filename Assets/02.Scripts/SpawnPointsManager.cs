@@ -37,7 +37,6 @@ public class SpawnPointsManager : MonoBehaviour {
     }
 	void pointsSpawn()
 	{
-		
 		for (int i = 0; i < enemySize; ++i) {
 
 			spawnPoint1 = spawn1target;
@@ -47,15 +46,8 @@ public class SpawnPointsManager : MonoBehaviour {
 			enemies1 [i].transform.position = spawnPoint1;
 			enemies1 [i].SetActive (true);
 		}
-
-		//transform.rotation = Quaternion.Euler (new Vector3 (-30.0f, 0.0f, 0.0f));
-
-		//for (int i = 0; i < enemySize; ++i) {
-			//enemies1 [i].transform.rotation = Quaternion.identity;
-	//	}
-
-
 	}
+
 	// Update is called once per frame
 	void Update () {
 		if (isSpawn == false) {

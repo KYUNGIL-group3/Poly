@@ -85,8 +85,8 @@ public class csPlayerController : MonoBehaviour {
 		cameraFollow.enabled = false;
 		gameObject.layer = 11;
 
-		moveskillobj.GetComponent<TrailRenderer> ().enabled = true;
-		moveskillobj.GetComponent<BoxCollider> ().enabled = true;
+		//moveskillobj.GetComponent<TrailRenderer> ().enabled = true;
+		//moveskillobj.GetComponent<BoxCollider> ().enabled = true;
 
 		pointpos = new Vector3[vec.Count];
         GameManager.Instance().useSkillGauge(vec.Count);
@@ -121,9 +121,9 @@ public class csPlayerController : MonoBehaviour {
 		cameraPos.position += new Vector3 (0.0f, -10.0f, 8.0f);
 		anim.SetBool ("isSkill", false);
 
-		moveskillobj.GetComponent<BoxCollider> ().enabled = false;
+//		moveskillobj.GetComponent<BoxCollider> ().enabled = false;
 		yield return new WaitForSeconds (1.0f);
-		moveskillobj.GetComponent<TrailRenderer> ().enabled = false;
+		//moveskillobj.GetComponent<TrailRenderer> ().enabled = false;
 		Time.timeScale = 1.0f;
 	}
 

@@ -26,7 +26,7 @@ public class csTimeManager : MonoBehaviour {
 		
 		if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop==false) {
 			timestop = true;
-			Time.timeScale = 0.0f;
+			Time.timeScale = 0.001f;
 			player.layer = 2;
 			cameraPos.position += new Vector3 (0.0f, 10.0f, -8.0f);
 			Instantiate (skillmanager, transform.position, Quaternion.identity);
@@ -43,6 +43,16 @@ public class csTimeManager : MonoBehaviour {
 		}
 
 		if (timestop) {
+			if (Vec3ArrayList.Count == 20) {
+				timestop = false;
+				Time.timeScale = 0.2f;
+				GameObject PointManager = GameObject.FindWithTag ("PointManager");
+
+				StartCoroutine(player.GetComponent<csPlayerController>().StartArrayMove(Vec3ArrayList));
+				Vec3ArrayList.Clear ();
+				Destroy (PointManager,1.0f);
+			}
+
 			if (Input.GetButton ("Fire1")) {
 				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 				RaycastHit[] hits = Physics.RaycastAll (ray);
@@ -67,16 +77,7 @@ public class csTimeManager : MonoBehaviour {
 					}
 				}
 			}
-			if (Vec3ArrayList.Count == 20) {
-				timestop = false;
-				Time.timeScale = 0.2f;
-				GameObject PointManager = GameObject.FindWithTag ("PointManager");
 
-
-				StartCoroutine(player.GetComponent<csPlayerController>().StartArrayMove(Vec3ArrayList));
-				Vec3ArrayList.Clear ();
-				Destroy (PointManager,1.0f);
-			}
 		}
 	}
 }

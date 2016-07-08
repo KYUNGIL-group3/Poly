@@ -20,23 +20,29 @@ public class csSkillAction : MonoBehaviour {
 		SkillManager = GameObject.Find ("TimeManager");
 		playerPos = SkillManager.transform.position + new Vector3(-10.0f, 0.0f, -10.0f);
 		moveplayerPos = playerPos;
-		for (int x = 0; x < 20; x++) {
+		StartCoroutine (asdf ());
+
+		//transform.rotation = Quaternion.Euler (new Vector3 (0.0f, 0.0f, 0.0f));
+		//startSkill = true;
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	}
+
+	IEnumerator asdf()
+	{	for (int x = 0; x < 20; x++) {
 			for (int z = 0; z < 20; z++) {
 				GameObject goTemp =  Instantiate (pointsprite, moveplayerPos,
 					Quaternion.Euler(new Vector3(0.0f,0.0f,0.0f))) as GameObject;
 				goTemp.transform.parent = gameObject.transform;
+
+				yield return new WaitForSeconds (0.0000001f);
 				moveplayerPos += Vector3.forward * 1.0f;
 			}
 			playerPos += Vector3.right * 1.0f;
 			moveplayerPos = playerPos;
 
 		}
-
-		transform.rotation = Quaternion.Euler (new Vector3 (0.0f, 0.0f, 0.0f));
-		//startSkill = true;
-	}
-	
-	// Update is called once per frame
-	void Update () {
 	}
 }

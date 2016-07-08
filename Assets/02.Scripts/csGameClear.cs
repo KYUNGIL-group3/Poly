@@ -10,8 +10,12 @@ public class csGameClear : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//보스생성 조건 추가
+
 		Transform[] spawnPointCount = gameObject.GetComponentsInChildren<Transform> ();
 		if (spawnPointCount.Length == 1) {
+			
+
 			GameManager.Instance ().GameClear ();
 		}
 	}
