@@ -18,7 +18,7 @@ public class csEnemyRig : MonoBehaviour {
 	Transform[] obj;
     public float idleStateMaxTime = 1.0f;   //대기시간,경직시간
     public float attackableRange = 2.0f;    //공격범위
-    public float attackStateMaxTime = 4.0f; //공격대기시간
+    public float attackStateMaxTime = 3.0f; //공격대기시간
     public int monsterAttackPoint;  //몬스터 공격력
     public float checkAttackDistance = 4.0f; //견제공격 범위(몬스터 시야)
 
