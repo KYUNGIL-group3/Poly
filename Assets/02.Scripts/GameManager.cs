@@ -13,13 +13,17 @@ public class GameManager : MonoBehaviour {
 		return _instance;
 	}
 
-	int hp;
-    int gauge;
+	public int hp;
+    public int gauge;
     public int maxHp=1000;
     public int maxGauge = 100;
 
 	public bool isGameOver = false;
 	public bool isGameClear = false;
+
+
+	float tencount = 0.5f;
+	float timecount = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -33,6 +37,13 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		timecount += Time.deltaTime;
+		if (timecount > tencount) {
+			timecount = 0.0f;
+			SkillGauge (1);
+		}
+
+
 		healthBarSlider.value = hp;
 		skillBarSlider.value = gauge;
 	}

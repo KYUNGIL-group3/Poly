@@ -18,9 +18,25 @@ public class csSkillAction : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		SkillManager = GameObject.Find ("TimeManager");
+
 		playerPos = SkillManager.transform.position + new Vector3(-10.0f, 0.0f, -10.0f);
+		//playerPos = SkillManager.transform.position + new Vector3(0.0f, 0.0f, 0.0f);
+
 		moveplayerPos = playerPos;
-		StartCoroutine (asdf ());
+
+		for (int x = 0; x < 20; x++) {
+			for (int z = 0; z < 20; z++) {
+				GameObject goTemp = Instantiate (pointsprite, moveplayerPos,
+					                       Quaternion.Euler (new Vector3 (0.0f, 0.0f, 0.0f))) as GameObject;
+				goTemp.transform.parent = gameObject.transform;
+			
+				moveplayerPos += Vector3.forward * 1.0f;
+			}
+			playerPos += Vector3.right * 1.0f;
+			moveplayerPos = playerPos;
+		} 
+
+		//StartCoroutine (asdf ());
 
 		//transform.rotation = Quaternion.Euler (new Vector3 (0.0f, 0.0f, 0.0f));
 		//startSkill = true;
@@ -30,19 +46,45 @@ public class csSkillAction : MonoBehaviour {
 	void Update () {
 	}
 
-	IEnumerator asdf()
-	{	for (int x = 0; x < 20; x++) {
-			for (int z = 0; z < 20; z++) {
-				GameObject goTemp =  Instantiate (pointsprite, moveplayerPos,
-					Quaternion.Euler(new Vector3(0.0f,0.0f,0.0f))) as GameObject;
-				goTemp.transform.parent = gameObject.transform;
-
-				yield return new WaitForSeconds (0.0000001f);
-				moveplayerPos += Vector3.forward * 1.0f;
-			}
-			playerPos += Vector3.right * 1.0f;
-			moveplayerPos = playerPos;
-
-		}
-	}
+//	IEnumerator asdf()
+//	{	
+////		for (int x = 0; x < 20; x++) {
+////			for (int z = 0; z < 20; z++) {
+////				GameObject goTemp =  Instantiate (pointsprite, moveplayerPos,
+////					Quaternion.Euler(new Vector3(0.0f,0.0f,0.0f))) as GameObject;
+////				goTemp.transform.parent = gameObject.transform;
+////
+////				yield return new WaitForSeconds (0.00000000000000001f);
+////				moveplayerPos += Vector3.forward * 1.0f;
+////			}
+////			playerPos += Vector3.right * 1.0f;
+////			moveplayerPos = playerPos;
+////
+//		//		}
+//
+//		GameObject goTemp1 =  Instantiate (pointsprite, moveplayerPos,
+//		Quaternion.Euler(new Vector3(0.0f,0.0f,0.0f))) as GameObject;
+//		goTemp1.transform.parent = gameObject.transform;
+//
+//		for (int x = 2; x < 20; x++) {
+//			for (int z = 0; z < x; z++) {
+//
+//				if (z = 0) {
+//					moveplayerPos += Vector3.forward * 1.0f;
+//				} else if (z = 1) {
+//					playerPos += Vector3.right * 1.0f;
+//				}
+//
+//
+//				GameObject goTemp =  Instantiate (pointsprite, moveplayerPos,
+//					Quaternion.Euler(new Vector3(0.0f,0.0f,0.0f))) as GameObject;
+//				goTemp.transform.parent = gameObject.transform;
+//
+//
+//
+//
+//				yield return new WaitForSeconds (0.00000000000000001f);
+//			}
+//		}
+//	}
 }

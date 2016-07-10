@@ -36,7 +36,10 @@ public class csPhy : MonoBehaviour {
 	{
 		Transform[] obj = gameObject.GetComponentsInChildren<Transform> ();
 
-		gameObject.GetComponent<Animator>().enabled = false;
+		if (gameObject.GetComponent<Animator> () != null) {
+			gameObject.GetComponent<Animator>().enabled = false;	
+		}
+
 		for (int i = 1; i < obj.Length; i++) {
 			obj [i].gameObject.AddComponent<Rigidbody> ();
 			obj [i].gameObject.AddComponent<BoxCollider> ();

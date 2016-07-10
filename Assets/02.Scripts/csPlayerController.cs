@@ -21,6 +21,7 @@ public class csPlayerController : MonoBehaviour {
 	public bool isidle = true;
 	public bool isAttack = false;
 	public bool isSkill = false;
+	public GameObject SkillDamage;
 
 	csCameraFollow cameraFollow;
 
@@ -85,9 +86,6 @@ public class csPlayerController : MonoBehaviour {
 		cameraFollow.enabled = false;
 		gameObject.layer = 11;
 
-		//moveskillobj.GetComponent<TrailRenderer> ().enabled = true;
-		//moveskillobj.GetComponent<BoxCollider> ().enabled = true;
-
 		pointpos = new Vector3[vec.Count];
         GameManager.Instance().useSkillGauge(vec.Count);
 		for (int a = 0; a < vec.Count; a++) {
@@ -96,10 +94,18 @@ public class csPlayerController : MonoBehaviour {
 		}
 
 		for (int a = 1; a < pointpos.Length; a++) {
+
+			Vector3 dir = ((Vector3)pointpos [a-1] + (Vector3)pointpos [a]) /2.0f;
+
+
+
+			//GameObject goTemp = Instantiate (SkillDamage, dir,Quaternion.Euler (new Vector3 (0.0f, 0.0f, 0.0f))) as GameObject;
 			
-			//Vector3 dir = (Vector3)pointpos [a] - (Vector3)pointpos [a - 1];
 			//dir.Normalize ();
 			transform.LookAt ((Vector3)pointpos [a]);
+
+			GameObject goTemp = Instantiate (SkillDamage, dir + new Vector3(0.0f,1.0f,0.0f),
+				transform.rotation) as GameObject;
 
 			transform.position = (Vector3)pointpos [a];
 
@@ -110,7 +116,7 @@ public class csPlayerController : MonoBehaviour {
 			yield return new WaitForSeconds (skillmovespeed);
 		}
 
-		Time.timeScale = 0.2f;
+		Time.timeScale = 1.0f;
 		gameObject.layer = 9;
 		cameraFollow.enabled = true;
 		ismove = true;
@@ -118,13 +124,13 @@ public class csPlayerController : MonoBehaviour {
 		isAttack = false;
 
 		Transform cameraPos = GameObject.Find ("Main Camera").transform;
-		cameraPos.position += new Vector3 (0.0f, -10.0f, 8.0f);
+		cameraPos.position += new Vector3 (0.0f, -5.0f, 3.0f);
 		anim.SetBool ("isSkill", false);
 
 //		moveskillobj.GetComponent<BoxCollider> ().enabled = false;
-		yield return new WaitForSeconds (1.0f);
+		//yield return new WaitForSeconds (1.0f);
 		//moveskillobj.GetComponent<TrailRenderer> ().enabled = false;
-		Time.timeScale = 1.0f;
+		//Time.timeScale = 1.0f;
 	}
 
 	void OkMove()

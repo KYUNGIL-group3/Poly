@@ -8,10 +8,9 @@ public class csTimeManager : MonoBehaviour {
 
 	public float timestoplimit = 0;
 
-
+	ArrayList Vec3ArrayList;
 
 	GameObject SkillMoveObj;
-	public ArrayList Vec3ArrayList = new ArrayList ();
 
 	public GameObject skillmanager;
 	public GameObject player;
@@ -28,8 +27,9 @@ public class csTimeManager : MonoBehaviour {
 			timestop = true;
 			Time.timeScale = 0.001f;
 			player.layer = 2;
-			cameraPos.position += new Vector3 (0.0f, 10.0f, -8.0f);
+			cameraPos.position += new Vector3 (0.0f, 5.0f, -3.0f);
 			Instantiate (skillmanager, transform.position, Quaternion.identity);
+			Vec3ArrayList = new ArrayList ();
 
 		}else if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop) {
 			timestop = false;
@@ -39,6 +39,7 @@ public class csTimeManager : MonoBehaviour {
 
 			StartCoroutine(player.GetComponent<csPlayerController>().StartArrayMove(Vec3ArrayList));
 			Vec3ArrayList.Clear ();
+
 			Destroy (PointManager,1.0f);
 		}
 
@@ -73,7 +74,7 @@ public class csTimeManager : MonoBehaviour {
 								hit.transform.gameObject.GetComponent<SpriteRenderer> ().color = new Color (0.0f, 255.0f, 255.0f, 255.0f);
 							}
 						}
-
+						break;
 					}
 				}
 			}
