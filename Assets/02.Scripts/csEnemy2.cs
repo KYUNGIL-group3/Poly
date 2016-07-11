@@ -70,7 +70,7 @@ public class csEnemy2 : MonoBehaviour
 
 			obj = gameObject.GetComponentsInChildren<Transform> ();
 			distance = Vector3.Distance (transform.position, player.position);
-                if (gameObject.name != "EnemyNormal2(Clone)" && !reloaded)
+                if (gameObject.name != "NormalEnemy2(Clone)" && !reloaded)
                 {
                     if (reloadTime > reloadmaxTime)
                     {

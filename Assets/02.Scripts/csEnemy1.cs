@@ -35,7 +35,7 @@ public class csEnemy1 : MonoBehaviour {
 	private float distance;
 	Transform target;
 	CharacterController enemyController;
-	//Animator anim;
+	Animator anim;
     public int mHp = 300;
 	// Use this for initialization
 	void Start () {
@@ -43,13 +43,15 @@ public class csEnemy1 : MonoBehaviour {
 		enemyController = GetComponent<CharacterController> ();
 		obj = gameObject.GetComponentsInChildren<Transform> ();
 
+		if (gameObject.name != "NormalEnemy1(Clone)") {
+			anim = GetComponent<Animator> ();
+		}
     }
 	
 	// Update is called once per frame
 	void Update () {
 
 		if (gameObject.name == "NormalEnemy1(Clone)") {
-			Debug.Log ("123");
 			for (int i = 1; i < obj.Length; i++) {
 				if (obj [i].tag == "Body") {
 					obj [i].transform.Rotate (new Vector3 (0.0f, rotspeed, 0.0f));
@@ -61,7 +63,9 @@ public class csEnemy1 : MonoBehaviour {
 		case STATE.IDLE:
 			distance = Vector3.Distance (transform.position, player.position);
 			stateTime = 0.0f;
-
+			if (gameObject.name != "NormalEnemy1(Clone)") {
+				anim.SetInteger ("AniStep", 0);
+			}
 			if (distance < attackableRange) {
 				state = STATE.ATTACK;
 
@@ -74,11 +78,13 @@ public class csEnemy1 : MonoBehaviour {
 		case STATE.MOVE:
 			distance = Vector3.Distance (transform.position, player.position);
 
+			if (gameObject.name != "NormalEnemy1(Clone)") {
+				anim.SetInteger ("AniStep", 0);
+			}
 			if (distance > checkMoveDistance) {
 				state = STATE.IDLE;
 				return;
 			}
-
 			if (distance < attackableRange + 0.5f) {
 				state = STATE.ATTACK;
 
@@ -86,14 +92,22 @@ public class csEnemy1 : MonoBehaviour {
 				Vector3 dir = player.position - transform.position;
 				dir.y = 0.0f;
 				dir.Normalize ();
+				if (gameObject.name != "NormalEnemy1(Clone)") {
+					anim.SetInteger ("AniStep", 1);
+					transform.LookAt (player.parent.transform);
+				}
 				enemyController.SimpleMove (dir * speed);
 			}
+
 			break;
 
 		case STATE.ATTACK:
 			distance = Vector3.Distance (transform.position, player.position);
 			stateTime += Time.deltaTime;
-                
+
+			if (gameObject.name != "NormalEnemy1(Clone)") {
+				anim.SetInteger ("AniStep", 0);
+			}
 			if (distance > checkMoveDistance) {
 				state = STATE.IDLE;
 				return;
@@ -102,6 +116,10 @@ public class csEnemy1 : MonoBehaviour {
 			if (stateTime > attackStateMaxTime) {
 				stateTime = 0.0f;
 				if (distance < attackableRange + 0.5f) {
+					if (gameObject.name != "NormalEnemy1(Clone)") {
+						anim.SetInteger ("AniStep", 2);
+						transform.LookAt (player.parent.transform);
+					}
 					GameManager.Instance ().PlayerHealth (monsterAttackPoint);
 				}					
 			}
