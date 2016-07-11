@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class csGameClear : MonoBehaviour {
+public class csSpawnManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
