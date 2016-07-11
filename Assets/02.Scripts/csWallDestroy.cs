@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class csSpawnManager : MonoBehaviour {
+public class csWallDestroy : MonoBehaviour {
+
+	public GameObject Wall;
 
 	// Use this for initialization
 	void Start () {
@@ -13,10 +15,9 @@ public class csSpawnManager : MonoBehaviour {
 		//보스생성 조건 추가
 
 		Transform[] spawnPointCount = gameObject.GetComponentsInChildren<Transform> ();
-		if (spawnPointCount.Length == 1) {
-			
-
-			GameManager.Instance ().GameClear ();
+		if (spawnPointCount.Length == 2) {
+			Destroy (Wall.gameObject);
+			Destroy (gameObject);
 		}
 	}
 }
