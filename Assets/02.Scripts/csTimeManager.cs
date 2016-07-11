@@ -26,10 +26,16 @@ public class csTimeManager : MonoBehaviour {
 		if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop==false) {
 			timestop = true;
 			Time.timeScale = 0.001f;
-			player.layer = 2;
+
+			Transform[] temp = player.GetComponentsInChildren<Transform> ();
+			for (int i = 0; i < temp.Length; i++) {
+				temp [i].gameObject.layer = 2;
+			}
 			cameraPos.position += new Vector3 (0.0f, 5.0f, -3.0f);
 			Instantiate (skillmanager, transform.position, Quaternion.identity);
 			Vec3ArrayList = new ArrayList ();
+
+
 
 		}else if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop) {
 			timestop = false;
