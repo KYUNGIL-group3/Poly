@@ -4,6 +4,7 @@ using System.Collections;
 public class SpawnPointsManager : MonoBehaviour {
 	GameObject[] enemies1;
 	public GameObject enemy;
+	public GameObject Wall;
 
 	//public GameObject spawn1;
 
@@ -41,7 +42,10 @@ public class SpawnPointsManager : MonoBehaviour {
 
 			spawnPoint1 = spawn1target;
 
-			spawnPoint1 = spawnPoint1 + Vector3.forward * Random.Range (-4, 4) + Vector3.right * Random.Range (-4, 4);
+			spawnPoint1 = spawnPoint1
+			+ Vector3.forward * Random.Range (-4, 4)
+			+ Vector3.right * Random.Range (-4, 4)
+			+ Vector3.up * 1.0f;
 
 			enemies1 [i].transform.position = spawnPoint1;
 			enemies1 [i].SetActive (true);
@@ -53,7 +57,11 @@ public class SpawnPointsManager : MonoBehaviour {
 		if (isSpawn == false) {
 			monstercount = gameObject.GetComponentsInChildren<Transform> ();
 			if (monstercount.Length == 1) {
-				Destroy (gameObject.transform.parent.gameObject);
+				if (Wall) {
+					Destroy (Wall.gameObject);	
+				}
+
+				Destroy (gameObject);
 			}
 		}
 

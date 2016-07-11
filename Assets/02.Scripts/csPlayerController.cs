@@ -140,6 +140,7 @@ public class csPlayerController : MonoBehaviour {
 	}
     public void DamageEF()
     {
-        Instantiate(DamageFx, transform.position, transform.rotation);
+		GameObject damageFxObj =  Instantiate(DamageFx, transform.position, transform.rotation) as GameObject;
+		Destroy (damageFxObj, 1.5f);
     }
 }

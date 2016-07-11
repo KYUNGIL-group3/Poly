@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour {
 			this.hp = maxHp;
 		}
 	}
+
     public void useSkillGauge(int count)
     {
         this.gauge -= count*5;
