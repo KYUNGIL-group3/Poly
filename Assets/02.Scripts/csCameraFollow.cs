@@ -9,7 +9,7 @@ public class csCameraFollow : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Player = GameObject.FindWithTag ("Player");
+		Player = GameObject.Find ("Player");
 	}
 	
 	// Update is called once per frame

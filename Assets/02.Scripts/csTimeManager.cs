@@ -23,7 +23,8 @@ public class csTimeManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop==false) {
+		if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop==false
+			&& GameManager.Instance().gauge >=5 ) {
 			timestop = true;
 			Time.timeScale = 0.001f;
 
@@ -31,7 +32,7 @@ public class csTimeManager : MonoBehaviour {
 			for (int i = 0; i < temp.Length; i++) {
 				temp [i].gameObject.layer = 2;
 			}
-			cameraPos.position += new Vector3 (0.0f, 5.0f, -3.0f);
+			cameraPos.position += new Vector3 (0.0f, 5.0f, 0.0f);
 			Instantiate (skillmanager, transform.position, Quaternion.identity);
 			Vec3ArrayList = new ArrayList ();
 
@@ -50,15 +51,15 @@ public class csTimeManager : MonoBehaviour {
 		}
 
 		if (timestop) {
-			if (Vec3ArrayList.Count == 20) {
-				timestop = false;
-				Time.timeScale = 0.2f;
-				GameObject PointManager = GameObject.FindWithTag ("PointManager");
-
-				StartCoroutine(player.GetComponent<csPlayerController>().StartArrayMove(Vec3ArrayList));
-				Vec3ArrayList.Clear ();
-				Destroy (PointManager,1.0f);
-			}
+//			if (Vec3ArrayList.Count == 20) {
+//				timestop = false;
+//				Time.timeScale = 0.2f;
+//				GameObject PointManager = GameObject.FindWithTag ("PointManager");
+//
+//				StartCoroutine(player.GetComponent<csPlayerController>().StartArrayMove(Vec3ArrayList));
+//				Vec3ArrayList.Clear ();
+//				Destroy (PointManager,1.0f);
+//			}
 
 			if (Input.GetButton ("Fire1")) {
 				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
@@ -74,7 +75,10 @@ public class csTimeManager : MonoBehaviour {
 							
 							if (Vec3ArrayList.Contains (hit.transform.gameObject)) {
 							
-							} else {
+							} else if(GameManager.Instance().gauge >= 5){
+								if (Vec3ArrayList.Count != 0) {
+									GameManager.Instance ().gauge -= 5;
+								}
 								Vec3ArrayList.Add (hit.transform.gameObject);
 								SkillMoveObj.transform.position = hit.transform.position;
 								hit.transform.gameObject.GetComponent<SpriteRenderer> ().color = new Color (0.0f, 255.0f, 255.0f, 255.0f);

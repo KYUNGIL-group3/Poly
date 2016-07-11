@@ -87,7 +87,7 @@ public class csPlayerController : MonoBehaviour {
 		gameObject.layer = 11;
 
 		pointpos = new Vector3[vec.Count];
-        GameManager.Instance().useSkillGauge(vec.Count);
+        
 		for (int a = 0; a < vec.Count; a++) {
 			GameObject pointobj = vec [a] as GameObject;
 			pointpos [a] = pointobj.transform.position;
@@ -124,13 +124,18 @@ public class csPlayerController : MonoBehaviour {
 		isAttack = false;
 
 		Transform cameraPos = GameObject.Find ("Main Camera").transform;
-		cameraPos.position += new Vector3 (0.0f, -5.0f, 3.0f);
+		cameraPos.position += new Vector3 (0.0f, -5.0f, 0.0f);
 		anim.SetBool ("isSkill", false);
 
 //		moveskillobj.GetComponent<BoxCollider> ().enabled = false;
 		//yield return new WaitForSeconds (1.0f);
 		//moveskillobj.GetComponent<TrailRenderer> ().enabled = false;
 		//Time.timeScale = 1.0f;
+	}
+	void SetLookVelocity()
+	{
+		velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
+		transform.LookAt (transform.position + velocity);
 	}
 
 	void OkMove()

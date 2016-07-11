@@ -70,46 +70,37 @@ public class csEnemy2 : MonoBehaviour
 
 			obj = gameObject.GetComponentsInChildren<Transform> ();
 			distance = Vector3.Distance (transform.position, player.position);
-                if (gameObject.name != "NormalEnemy2(Clone)" && !reloaded)
-                {
-                    if (reloadTime > reloadmaxTime)
-                    {
-                        for (int i = 1; i < obj.Length; i++)
-                        {
-                            if (obj[i].tag == "EnemyDown")
-                            {
-                                GameObject bullettemp = Instantiate(bullet, obj[i].position, Quaternion.identity) as GameObject;
-                                bullettemp.transform.parent = obj[i];
-                                reloaded = true;
-                            }
-                        }
+			if (gameObject.name != "NormalEnemy2(Clone)" && !reloaded) {
+				if (reloadTime > reloadmaxTime) {
+					for (int i = 1; i < obj.Length; i++) {
+						if (obj [i].tag == "EnemyDown") {
+							GameObject bullettemp = Instantiate (bullet, obj [i].position, Quaternion.identity) as GameObject;
+							bullettemp.transform.parent = obj [i];
+							reloaded = true;
+						}
+					}
 
-                        return;
-                    }
+					return;
+				}
 
-                }
-                else if (obj.Length == 14)
-                {
-                    if (reloadTime > reloadmaxTime)
-                    {
-                        for (int i = 1; i < obj.Length; i++)
-                        {
-                            if (obj[i].tag == "EnemyDown")
-                            {
+			} else if (obj.Length == 14) {
+				if (reloadTime > reloadmaxTime) {
+					for (int i = 1; i < obj.Length; i++) {
+						if (obj [i].tag == "EnemyDown") {
 
-                                GameObject bullettemp = Instantiate(bullet, obj[i].position, Quaternion.identity) as GameObject;
-                                bullettemp.transform.parent = obj[i];
-                            }
-                        }
-                    }
-                    return;
-                }
-                else if (reloadTime > attackStateMaxTime)
-                {
-                    reloadTime = 0.0f;
-                    state = STATE.ATTACK;
-                    return;
-                }
+							GameObject bullettemp = Instantiate (bullet, obj [i].position, Quaternion.identity) as GameObject;
+							bullettemp.transform.parent = obj [i];
+						}
+					}
+				}
+				return;
+			} else if (reloadTime > attackStateMaxTime) {
+				if (attackableRange > distance) {
+					reloadTime = 0.0f;
+					state = STATE.ATTACK;
+					return;
+				}
+			}
 
 			if (distance > checkMoveDistance) {
 

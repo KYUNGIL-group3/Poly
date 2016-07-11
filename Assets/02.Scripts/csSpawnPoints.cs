@@ -20,6 +20,8 @@ public class csSpawnPoints : MonoBehaviour {
 	public int enemySize1;
     public int enemySize2;
 
+	public float summonRange = 4.0f;
+
 	// Use this for initialization
 	void Start () {
 		//spawnCount = 10;
@@ -50,8 +52,8 @@ public class csSpawnPoints : MonoBehaviour {
 			spawnPoint1 = spawn1target;
 
 			spawnPoint1 = spawnPoint1
-			+ Vector3.forward * Random.Range (-4, 4)
-			+ Vector3.right * Random.Range (-4, 4)
+				+ Vector3.forward * Random.Range (-summonRange, summonRange)
+				+ Vector3.right * Random.Range (-summonRange, summonRange)
 			+ Vector3.up * 1.0f;
 
 			enemies1 [i].transform.position = spawnPoint1;
@@ -63,8 +65,8 @@ public class csSpawnPoints : MonoBehaviour {
             spawnPoint2 = spawn2target;
 
             spawnPoint2 = spawnPoint2
-            + Vector3.forward * Random.Range(-7, 7)
-            + Vector3.right * Random.Range(-7, 7)
+				+ Vector3.forward * Random.Range(-summonRange,summonRange)
+				+ Vector3.right * Random.Range(-summonRange, summonRange)
             + Vector3.up * 1.0f;
 
             enemies2[i].transform.position = spawnPoint2;
