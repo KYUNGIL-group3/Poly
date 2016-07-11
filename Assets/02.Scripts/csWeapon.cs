@@ -33,6 +33,8 @@ public class csWeapon : MonoBehaviour {
 					col.gameObject.GetComponent<csEnemy1> ().Damage(AttackPoint);
 				if(col.gameObject.GetComponent<csEnemy2> ())
 					col.gameObject.GetComponent<csEnemy2> ().Damage(AttackPoint);
+                if (col.gameObject.GetComponent<csHardMonster>())
+                    col.gameObject.GetComponent<csHardMonster>().Damage(AttackPoint);
 			}
 		}
 	}
