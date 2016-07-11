@@ -32,6 +32,7 @@ public class csEnemy2 : MonoBehaviour
 
     public float reloadTime = 4.0f;
 	public float reloadmaxTime = 5.0f;
+    bool reloaded = false;
 
     Transform player;
     public float speed = 2.0f;
@@ -69,22 +70,44 @@ public class csEnemy2 : MonoBehaviour
 
 			obj = gameObject.GetComponentsInChildren<Transform> ();
 			distance = Vector3.Distance (transform.position, player.position);
-			if (obj.Length == 14) {
-				if (reloadTime > reloadmaxTime) {
-					for (int i = 1; i < obj.Length; i++) {
-						if (obj [i].tag == "EnemyDown") {
+                if (gameObject.name != "EnemyNormal2(Clone)" && !reloaded)
+                {
+                    if (reloadTime > reloadmaxTime)
+                    {
+                        for (int i = 1; i < obj.Length; i++)
+                        {
+                            if (obj[i].tag == "EnemyDown")
+                            {
+                                GameObject bullettemp = Instantiate(bullet, obj[i].position, Quaternion.identity) as GameObject;
+                                bullettemp.transform.parent = obj[i];
+                                reloaded = true;
+                            }
+                        }
+                    }
+                    return;
+                }
+                else if (obj.Length == 14)
+                {
+                    if (reloadTime > reloadmaxTime)
+                    {
+                        for (int i = 1; i < obj.Length; i++)
+                        {
+                            if (obj[i].tag == "EnemyDown")
+                            {
 
-							GameObject bullettemp = Instantiate (bullet, obj [i].position, Quaternion.identity) as GameObject;
-							bullettemp.transform.parent = obj [i];
-						}
-					}
-				}
-				return;
-			} else if (reloadTime > attackStateMaxTime) {
-				reloadTime = 0.0f;
-				state = STATE.ATTACK;
-				return;
-			}
+                                GameObject bullettemp = Instantiate(bullet, obj[i].position, Quaternion.identity) as GameObject;
+                                bullettemp.transform.parent = obj[i];
+                            }
+                        }
+                    }
+                    return;
+                }
+                else if (reloadTime > attackStateMaxTime)
+                {
+                    reloadTime = 0.0f;
+                    state = STATE.ATTACK;
+                    return;
+                }
 
 			if (distance > checkMoveDistance) {
 
@@ -126,8 +149,9 @@ public class csEnemy2 : MonoBehaviour
 					obj [i].gameObject.GetComponent<Rigidbody> ().AddForce (dir * 500.0f);
 
 					state = STATE.MOVE;
+                    reloaded = false;
 
-					return;
+                    return;
 				}
 			}
 			state = STATE.MOVE;
