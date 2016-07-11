@@ -83,8 +83,10 @@ public class csEnemy2 : MonoBehaviour
                                 reloaded = true;
                             }
                         }
+
+                        return;
                     }
-                    return;
+
                 }
                 else if (obj.Length == 14)
                 {
