@@ -47,6 +47,8 @@ public class csEnemy2 : MonoBehaviour
 		player = GameObject.FindWithTag("CharCenter").transform;
         enemyController = GetComponent<CharacterController>();
         obj = gameObject.GetComponentsInChildren<Transform>();
+
+		StartCoroutine (istrigger ());
     }
 
     // Update is called once per frame
@@ -70,20 +72,7 @@ public class csEnemy2 : MonoBehaviour
 
 			obj = gameObject.GetComponentsInChildren<Transform> ();
 			distance = Vector3.Distance (transform.position, player.position);
-			if (gameObject.name != "NormalEnemy2(Clone)" && !reloaded) {
-				if (reloadTime > reloadmaxTime) {
-					for (int i = 1; i < obj.Length; i++) {
-						if (obj [i].tag == "EnemyDown") {
-							GameObject bullettemp = Instantiate (bullet, obj [i].position, Quaternion.identity) as GameObject;
-							bullettemp.transform.parent = obj [i];
-							reloaded = true;
-						}
-					}
-
-					return;
-				}
-
-			} else if (obj.Length == 14) {
+			if (obj.Length == 14) {
 				if (reloadTime > reloadmaxTime) {
 					for (int i = 1; i < obj.Length; i++) {
 						if (obj [i].tag == "EnemyDown") {
@@ -172,10 +161,6 @@ public class csEnemy2 : MonoBehaviour
 
 			obj = gameObject.GetComponentsInChildren<Transform> ();
 
-			if (gameObject.GetComponent<Animator> () != null) {
-				gameObject.GetComponent<Animator>().enabled = false;	
-			}
-
 			for (int i = 1; i < obj.Length; i++) {
 				obj [i].gameObject.AddComponent<Rigidbody> ();
 				obj [i].gameObject.AddComponent<BoxCollider> ();
@@ -197,5 +182,11 @@ public class csEnemy2 : MonoBehaviour
 		stateTime = 0.0f;
 		mHp -= WeaponAttackPoint;
 		state = STATE.DAMAGE;
+	}
+
+	IEnumerator istrigger()
+	{
+		yield return new WaitForSeconds (0.5f);
+		gameObject.GetComponent<CapsuleCollider> ().isTrigger = true;
 	}
 }

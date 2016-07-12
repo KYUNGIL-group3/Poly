@@ -20,6 +20,12 @@ public class csSpawnPoints : MonoBehaviour {
 	public int enemySize1;
     public int enemySize2;
 
+	public GameObject HardMonsterType;
+	public GameObject BossMonsterType;
+
+	GameObject HardMonster;
+	GameObject BossMonster;
+
 	public float summonRange = 4.0f;
 
 	// Use this for initialization
@@ -43,6 +49,17 @@ public class csSpawnPoints : MonoBehaviour {
             enemies2[i].transform.parent = gameObject.transform;
             enemies2[i].SetActive(false);
         }
+
+		if (HardMonsterType) {
+			HardMonster = Instantiate(HardMonsterType) as GameObject;
+			HardMonster.transform.parent = gameObject.transform;
+			HardMonster.SetActive (false);
+		} else if(BossMonsterType) {
+			BossMonster = Instantiate(BossMonsterType) as GameObject;
+			BossMonster.transform.parent = gameObject.transform;
+			BossMonster.SetActive (false);
+		}
+
         //pointsSpawn();
     }
 	void pointsSpawn()
@@ -72,6 +89,14 @@ public class csSpawnPoints : MonoBehaviour {
             enemies2[i].transform.position = spawnPoint2;
             enemies2[i].SetActive(true);
         }
+
+		if (HardMonsterType) {
+			HardMonster.transform.position = transform.position;
+			HardMonster.SetActive (true);
+		} else if(BossMonsterType) {
+			BossMonster.transform.position = transform.position;
+			BossMonster.SetActive(true);
+		}
     }
 
 	// Update is called once per frame
