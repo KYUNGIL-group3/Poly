@@ -124,8 +124,8 @@ public class csEnemy2 : MonoBehaviour
 				if (obj [i].tag == "EMissile") {
 					obj [i].transform.parent = null;
 
-					obj [i].gameObject.AddComponent<Rigidbody> ();
-					obj [i].gameObject.GetComponent<Rigidbody> ().useGravity = false;
+					//obj [i].gameObject.AddComponent<Rigidbody> ();
+					//obj [i].gameObject.GetComponent<Rigidbody> ().useGravity = false;
 					Vector3 dir = player.position - obj [i].position;
 					dir.Normalize ();
 					obj [i].gameObject.GetComponent<Rigidbody> ().AddForce (dir * 500.0f);
@@ -162,6 +162,10 @@ public class csEnemy2 : MonoBehaviour
 			obj = gameObject.GetComponentsInChildren<Transform> ();
 
 			for (int i = 1; i < obj.Length; i++) {
+				if (obj [i].tag == "EMissile") {
+					Destroy(obj [i].gameObject);
+					continue;
+				}
 				obj [i].gameObject.AddComponent<Rigidbody> ();
 				obj [i].gameObject.AddComponent<BoxCollider> ();
 				obj [i].gameObject.GetComponent<BoxCollider> ().size = new Vector3 (0.2f, 0.2f, 0.2f);
