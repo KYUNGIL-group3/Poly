@@ -25,6 +25,7 @@ public class csTimeManager : MonoBehaviour {
 		
 		if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop==false
 			&& GameManager.Instance().gauge >=5 ) {
+			GameManager.Instance ().isTimeControl = true;
 			timestop = true;
 			Time.timeScale = 0.001f;
 
@@ -40,6 +41,8 @@ public class csTimeManager : MonoBehaviour {
 
 		}else if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop) {
 			timestop = false;
+
+			GameManager.Instance ().isTimeControl = false;
 			Time.timeScale = 0.2f;
 			GameObject PointManager = GameObject.FindWithTag ("PointManager");
 
@@ -47,19 +50,10 @@ public class csTimeManager : MonoBehaviour {
 			StartCoroutine(player.GetComponent<csPlayerController>().StartArrayMove(Vec3ArrayList));
 			Vec3ArrayList.Clear ();
 
-			Destroy (PointManager,1.0f);
+			Destroy (PointManager);
 		}
 
 		if (timestop) {
-//			if (Vec3ArrayList.Count == 20) {
-//				timestop = false;
-//				Time.timeScale = 0.2f;
-//				GameObject PointManager = GameObject.FindWithTag ("PointManager");
-//
-//				StartCoroutine(player.GetComponent<csPlayerController>().StartArrayMove(Vec3ArrayList));
-//				Vec3ArrayList.Clear ();
-//				Destroy (PointManager,1.0f);
-//			}
 
 			if (Input.GetButton ("Fire1")) {
 				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
@@ -67,15 +61,16 @@ public class csTimeManager : MonoBehaviour {
 				for (int i = 0; i < hits.Length; i++) {
 					RaycastHit hit = hits [i];
 					if (hit.transform.tag.Equals ("Point")) {
-						//Debug.Log (Vector3.Distance (SkillMoveObj.transform.position, hit.transform.position));
-						//Debug.Log (hit.transform.position);
 
 						SkillMoveObj = GameObject.Find("SkillMoveObj");
-						if (Vector3.Distance (SkillMoveObj.transform.position, hit.transform.position) < 1.5f) {
+
+						if (Vector3.Distance
+							(new Vector3 (SkillMoveObj.transform.position.x, 0.0f, SkillMoveObj.transform.position.z),
+							    new Vector3 (hit.transform.position.x, 0.0f, hit.transform.position.z)) < 1.5f) {
 							
 							if (Vec3ArrayList.Contains (hit.transform.gameObject)) {
 							
-							} else if(GameManager.Instance().gauge >= 5){
+							} else if (GameManager.Instance ().gauge >= 5) {
 								if (Vec3ArrayList.Count != 0) {
 									GameManager.Instance ().gauge -= 5;
 								}

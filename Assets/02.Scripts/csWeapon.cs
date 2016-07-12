@@ -22,7 +22,9 @@ public class csWeapon : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		weaponGauge = GameManager.Instance ().gauge;
-		UpgradeWeapon (weaponGauge);
+		if (!GameManager.Instance ().isTimeControl) {
+			UpgradeWeapon (weaponGauge);
+		}
 	}
 
 	void OnTriggerEnter(Collider col)

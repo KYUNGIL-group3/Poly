@@ -25,6 +25,8 @@ public class csPlayerController : MonoBehaviour {
 
 	csCameraFollow cameraFollow;
 
+	bool DeadAction = true;
+
 
 
 	// Use this for initialization
@@ -37,8 +39,24 @@ public class csPlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (GameManager.Instance ().isGameOver)
+		if (GameManager.Instance ().isGameOver) {
+			if (DeadAction) {
+				DeadAction = false;
+
+				Transform[] obj = gameObject.GetComponentsInChildren<Transform> ();
+				gameObject.GetComponent<Animator> ().enabled = false;
+
+				for (int i = 1; i < obj.Length; i++) {
+					obj [i].gameObject.AddComponent<Rigidbody> ();
+					obj [i].gameObject.AddComponent<BoxCollider> ();
+					obj [i].gameObject.GetComponent<BoxCollider> ().size = new Vector3 (0.2f, 0.2f, 0.2f);
+					obj [i].parent = null;
+				}
+
+			}
+
 			return;
+		}
 
 		if (GameManager.Instance ().isGameClear)
 			return;

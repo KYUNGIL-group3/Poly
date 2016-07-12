@@ -14,8 +14,8 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public int hp;
-    public int gauge;
-    public int maxHp=1000;
+	public int gauge;
+    public int maxHp = 1000;
     public int maxGauge = 100;
 
 	public bool isGameOver = false;
@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour {
 
 	float tencount = 10.0f;
 	float timecount = 0.0f;
+
+	public bool isTimeControl = false;
 
 	// Use this for initialization
 	void Start () {
@@ -46,8 +48,6 @@ public class GameManager : MonoBehaviour {
 			timecount = 0.0f;
 			SkillGauge (1);
 		}
-
-
 		healthBarSlider.value = hp;
 		skillBarSlider.value = gauge;
 	}

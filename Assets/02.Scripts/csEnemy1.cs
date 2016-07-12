@@ -142,7 +142,8 @@ public class csEnemy1 : MonoBehaviour {
 				obj [i].parent = null;
 
 			}
-			Destroy(gameObject , 3.0f);
+			obj [0].parent = null;
+			Destroy(gameObject, 3.0f);
 			break;
                 
 		}
@@ -177,6 +178,6 @@ public class csEnemy1 : MonoBehaviour {
 	IEnumerator istrigger()
 	{
 		yield return new WaitForSeconds (0.5f);
-		gameObject.GetComponent<CapsuleCollider> ().isTrigger = true;
+		gameObject.GetComponent<CapsuleCollider> ().isTrigger = false;
 	}
 }
