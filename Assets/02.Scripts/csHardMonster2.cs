@@ -185,7 +185,11 @@ public class csHardMonster2 : MonoBehaviour {
                     Destroy(obj[i].gameObject, 3.0f);
                     obj[i].parent = null;
 
-                }
+				obj [i].gameObject.layer = 12;
+
+			}
+			obj [0].parent = null;
+			obj [0].gameObject.layer = 12;
                 Destroy(gameObject, 3.0f);
 
                 break;

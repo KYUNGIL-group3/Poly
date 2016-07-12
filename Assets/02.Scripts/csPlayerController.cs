@@ -27,6 +27,8 @@ public class csPlayerController : MonoBehaviour {
 
 	bool DeadAction = true;
 
+	bool isaaaa = false;
+
 
 
 	// Use this for initialization
@@ -39,6 +41,11 @@ public class csPlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+//		if (isaaaa) {
+//			isAttack = true;
+//			anim.SetBool ("isAttack", true);
+//		}
+
 		if (GameManager.Instance ().isGameOver) {
 			if (DeadAction) {
 				DeadAction = false;
@@ -72,6 +79,10 @@ public class csPlayerController : MonoBehaviour {
 
 
 				velocity *= walkSpeed;
+			if (CrossPlatformInputManager.GetButtonDown ("Attack")) {
+				isaaaa = true;
+				StartCoroutine (isaaab ());
+			} 
 
 			if (CrossPlatformInputManager.GetButton ("Attack")) {
 				anim.SetBool ("isAttack", true);
@@ -79,7 +90,9 @@ public class csPlayerController : MonoBehaviour {
 				isidle = false;
 				isAttack = true;
 			} else {
-				anim.SetBool ("isAttack", false);
+				if (!isaaaa) {
+					anim.SetBool ("isAttack", false);
+				}
 				if (velocity.magnitude > 0) {
 					anim.SetBool ("isMove", true);
 					isidle = false;
@@ -166,4 +179,10 @@ public class csPlayerController : MonoBehaviour {
 		GameObject damageFxObj =  Instantiate(DamageFx, transform.position, transform.rotation) as GameObject;
 		Destroy (damageFxObj, 1.5f);
     }
+
+	IEnumerator isaaab()
+	{
+		yield return new WaitForSeconds (0.5f);
+		isaaaa = false;
+	}
 }
