@@ -20,8 +20,10 @@ public class csSkillAttack : MonoBehaviour {
 				col.gameObject.GetComponent<csEnemy1> ().Damage(300);
 			if(col.gameObject.GetComponent<csEnemy2> ())
 				col.gameObject.GetComponent<csEnemy2> ().Damage(300);
-            if (col.gameObject.GetComponent<csHardMonster>())
-                col.gameObject.GetComponent<csHardMonster>().Damage(300);
+			if (col.gameObject.GetComponent<csHardMonster>())
+				col.gameObject.GetComponent<csHardMonster>().Damage(300);
+			if (col.gameObject.GetComponent<csHardMonster2>())
+				col.gameObject.GetComponent<csHardMonster2>().Damage(300);
 		}
 	}
 
