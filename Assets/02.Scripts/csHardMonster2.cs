@@ -18,8 +18,11 @@ public class csHardMonster2 : MonoBehaviour {
     STATE state = STATE.IDLE;
     float stateTime = 0.0f;    
     public GameObject bullet;
+    public Transform firePos;
 
     Transform[] obj;
+   
+    
     public float idleStateMaxTime = 2.0f;   //대기시간,경직시간
     public float checkMoveDistance = 5.0f; //몬스터 시야
     public float attackableRange = 5.0f;    //공격범위
@@ -65,18 +68,13 @@ public class csHardMonster2 : MonoBehaviour {
                     obj[i].transform.Rotate(new Vector3(0.0f, rotspeed, 0.0f));
                 }
             }
-        
+
         switch (state)
         {
             case STATE.IDLE:
                 distance = Vector3.Distance(transform.position, player.position);
                 stateTime = 0.0f;
-
-                if (gameObject.name != "NormalEnemy1(Clone)")
-                {
-                    anim.SetInteger("AniStep", 0);
-                }
-
+                anim.SetInteger("AniStep", 0);
 
                 if (distance <= checkMoveDistance)
                 {
@@ -87,52 +85,18 @@ public class csHardMonster2 : MonoBehaviour {
                 break;
 
             case STATE.MOVE:
-                if (gameObject.name != "NormalEnemy1(Clone)")
-                {
-                    anim.SetInteger("AniStep", 0);
-                }
+
+                anim.SetInteger("AniStep", 0);
+
                 obj = gameObject.GetComponentsInChildren<Transform>();
                 distance = Vector3.Distance(transform.position, player.position);
-                if (gameObject.name != "NormalEnemy2(Clone)" && !reloaded)
-                {
-                    anim.SetInteger("AniStep", 0);
-                    if (reloadTime > reloadmaxTime)
-                    {
-                        for (int i = 1; i < obj.Length; i++)
-                        {
-                            if (obj[i].tag == "EnemyDown")
-                            {
-                                GameObject bullettemp = Instantiate(bullet, obj[i].position, Quaternion.identity) as GameObject;
-                                
-                                bullettemp.transform.parent = obj[i];
-                                reloaded = true;
-                            }
-                        }
 
-                        return;
-                    }
-
-                }
-                else if (obj.Length == 14)
+                if (reloadTime > attackStateMaxTime)
                 {
-                    if (reloadTime > reloadmaxTime)
-                    {
-                        for (int i = 1; i < obj.Length; i++)
-                        {
-                            if (obj[i].tag == "EnemyDown")
-                            {
 
-                                GameObject bullettemp = Instantiate(bullet, obj[i].position, Quaternion.identity) as GameObject;
-                                bullettemp.transform.parent = obj[i];
-                            }
-                        }
-                    }
-                    return;
-                }
-                else if (reloadTime > attackStateMaxTime)
-                {
                     reloadTime = 0.0f;
-                    state = STATE.ATTACK;
+                    stateTime = 0.0f;
+                    state = STATE.ATTACK;                    
                     return;
                 }
 
@@ -148,11 +112,11 @@ public class csHardMonster2 : MonoBehaviour {
                     Vector3 dir = player.position - transform.position;
                     dir.y = 0.0f;
                     dir.Normalize();
-                   
-                        anim.SetInteger("AniStep", 1);
-                        transform.LookAt(player.parent.transform);
-                    
-                    
+
+                    anim.SetInteger("AniStep", 1);
+                    transform.LookAt(player.parent.transform);
+
+
                     enemyController.SimpleMove(dir * speed);
                 }
                 else if (distance < checkAttackDistance - 0.2f)
@@ -160,8 +124,8 @@ public class csHardMonster2 : MonoBehaviour {
                     Vector3 dir = player.position - transform.position;
                     dir.y = 0.0f;
                     dir.Normalize();
-                        anim.SetInteger("AniStep", 1);
-                        transform.LookAt(player.parent.transform);
+                    anim.SetInteger("AniStep", 1);
+                    transform.LookAt(player.parent.transform);
                     enemyController.SimpleMove(-dir * speed);
                 }
                 else {
@@ -173,29 +137,17 @@ public class csHardMonster2 : MonoBehaviour {
                 break;
 
             case STATE.ATTACK:
-                obj = gameObject.GetComponentsInChildren<Transform>();
-                anim.SetInteger("AniStep", 0);
-
-                for (int i = 1; i < obj.Length; i++)
-                {
-                    if (obj[i].tag == "EMissile")
-                    {
-                       
-
-                        anim.SetInteger("AniStep", 2);
-                        transform.LookAt(player.parent.transform);
-                        
-                        state = STATE.MOVE;
-                        reloaded = false;
-
-                        return;
-                    }
-                }
-                state = STATE.MOVE;
 
                 
+                anim.SetInteger("AniStep", 2);
+                transform.LookAt(player.parent.transform);
 
-
+                //if (stateTime > idleStateMaxTime)
+                //{
+                //    state = STATE.MOVE;
+                //    stateTime = 0.0f;
+                //}
+                state = STATE.MOVE;
 
                 break;
 
@@ -262,25 +214,16 @@ public class csHardMonster2 : MonoBehaviour {
 
     void Fire()
     {
-        obj = gameObject.GetComponentsInChildren<Transform>();
+
+
+
+        GameObject bullettemp = Instantiate(bullet, firePos.position, Quaternion.identity) as GameObject;
+
+
        
+        Vector3 dir = player.position - bullettemp.transform.position;
+        dir.Normalize();
+        bullettemp.gameObject.GetComponent<Rigidbody>().AddForce(dir * 500.0f);
 
-        for (int i = 1; i < obj.Length; i++)
-        {
-            if (obj[i].tag == "EMissile")
-            {
-                obj[i].transform.parent = null;
-
-                obj[i].gameObject.AddComponent<Rigidbody>();
-                obj[i].gameObject.GetComponent<Rigidbody>().useGravity = false;
-                Vector3 dir = player.position - obj[i].position;
-                dir.Normalize();
-                obj[i].gameObject.GetComponent<Rigidbody>().AddForce(dir * 500.0f);
-
-              
-
-                return;
-            }
-        }
     }
 }
