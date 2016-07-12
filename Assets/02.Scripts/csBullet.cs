@@ -3,6 +3,7 @@ using System.Collections;
 
 public class csBullet : MonoBehaviour {
 	public int bulletdamage = 30;
+    bool once = true;
     // Use this for initialization
     void Start () {
     }
@@ -15,7 +16,11 @@ public class csBullet : MonoBehaviour {
 	void OnTriggerEnter(Collider col)
 	{
 		if (col.gameObject.tag == "Player") {
-			GameManager.Instance ().PlayerHealth (bulletdamage);
+            if (once)
+            {
+                once = false;
+                GameManager.Instance().PlayerHealth(bulletdamage);
+            }
 			Destroy (gameObject);
 		}
 	}
