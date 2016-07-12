@@ -45,16 +45,14 @@ public class csHardMonster : MonoBehaviour {
         enemyController = GetComponent<CharacterController>();
         obj = gameObject.GetComponentsInChildren<Transform>();
         maxmHp = GetComponent<csHardMonster>().mHp;
-        if (gameObject.name != "NormalEnemy1(Clone)")
-        {
+      
             anim = GetComponent<Animator>();
-        }
+        
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (gameObject.name == "NormalEnemy1(Clone)")
-        {
+       
             for (int i = 1; i < obj.Length; i++)
             {
                 if (obj[i].tag == "Body")
@@ -62,17 +60,16 @@ public class csHardMonster : MonoBehaviour {
                     obj[i].transform.Rotate(new Vector3(0.0f, rotspeed, 0.0f));
                 }
             }
-        }
+        
 
         switch (state)
         {
             case STATE.IDLE:
                 distance = Vector3.Distance(transform.position, player.position);
                 stateTime = 0.0f;
-                if (gameObject.name != "NormalEnemy1(Clone)")
-                {
+               
                     anim.SetInteger("AniStep", 0);
-                }
+                
                 if (distance < attackableRange)
                 {
                     state = STATE.ATTACK;
@@ -88,10 +85,9 @@ public class csHardMonster : MonoBehaviour {
             case STATE.MOVE:
                 distance = Vector3.Distance(transform.position, player.position);
 
-                if (gameObject.name != "NormalEnemy1(Clone)")
-                {
+                
                     anim.SetInteger("AniStep", 0);
-                }
+                
                 if (distance > checkMoveDistance)
                 {
                     state = STATE.IDLE;
@@ -106,11 +102,10 @@ public class csHardMonster : MonoBehaviour {
                     Vector3 dir = player.position - transform.position;
                     dir.y = 0.0f;
                     dir.Normalize();
-                    if (gameObject.name != "NormalEnemy1(Clone)")
-                    {
+                  
                         anim.SetInteger("AniStep", 1);
                         transform.LookAt(player.parent.transform);
-                    }
+                    
                     enemyController.SimpleMove(dir * speed);
                 }
 
@@ -120,10 +115,9 @@ public class csHardMonster : MonoBehaviour {
                 distance = Vector3.Distance(transform.position, player.position);
                 stateTime += Time.deltaTime;
 
-                if (gameObject.name != "NormalEnemy1(Clone)")
-                {
+               
                     anim.SetInteger("AniStep", 0);
-                }
+                
                 if (distance > checkMoveDistance)
                 {
                     state = STATE.IDLE;
@@ -135,11 +129,10 @@ public class csHardMonster : MonoBehaviour {
                     stateTime = 0.0f;
                     if (distance < attackableRange + 0.5f)
                     {
-                        if (gameObject.name != "NormalEnemy1(Clone)")
-                        {
+                       
                             anim.SetInteger("AniStep", 2);
                             transform.LookAt(player.parent.transform);
-                        }
+                        
                         GameManager.Instance().PlayerHealth(monsterAttackPoint);
                     }
                 }
