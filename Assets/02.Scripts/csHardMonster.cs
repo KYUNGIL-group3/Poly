@@ -53,13 +53,7 @@ public class csHardMonster : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
        
-            for (int i = 1; i < obj.Length; i++)
-            {
-                if (obj[i].tag == "Body")
-                {
-                    obj[i].transform.Rotate(new Vector3(0.0f, rotspeed, 0.0f));
-                }
-            }
+          
         
 
         switch (state)
