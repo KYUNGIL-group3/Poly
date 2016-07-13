@@ -140,7 +140,7 @@ public class csHardMonster2 : MonoBehaviour {
 
                 
                 anim.SetInteger("AniStep", 2);
-                transform.LookAt(player.parent.transform);
+                transform.LookAt(player.parent.transform); 
 
                 //if (stateTime > idleStateMaxTime)
                 //{
