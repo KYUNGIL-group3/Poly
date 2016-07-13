@@ -77,7 +77,7 @@ public class csEnemy2 : MonoBehaviour
                             if (obj[i].tag == "EnemyDown")
                             {
                                 
-                                GameObject bullettemp = Instantiate(bullet, obj[i].position, Quaternion.identity) as GameObject;
+                                GameObject bullettemp = Instantiate(bullet, obj[i].position, transform.rotation) as GameObject;
                                 
                                 bullettemp.transform.parent = obj[i];
                             }
