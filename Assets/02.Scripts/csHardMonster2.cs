@@ -220,11 +220,13 @@ public class csHardMonster2 : MonoBehaviour {
     {
 
         GameObject bullettemp = Instantiate(bullet, firePos.position, Quaternion.identity) as GameObject;
+        
         bullettemp.GetComponent<csBullet>().bulletdamage = monsterAttackPoint;
 
 
         Vector3 dir = player.position - bullettemp.transform.position;
         dir.Normalize();
+        bullettemp.transform.LookAt(player);
         bullettemp.gameObject.GetComponent<Rigidbody>().AddForce(dir * 500.0f);
 
     }

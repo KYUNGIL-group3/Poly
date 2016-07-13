@@ -82,6 +82,14 @@ public class GameManager : MonoBehaviour {
 			this.hp = maxHp;
 		}
 	}
+    public void RecoveryHealth(int hp)
+    {
+        this.hp += hp;
+        if (this.hp > 1000)
+        {
+            this.hp = 1000;
+        }
+    }
 
     public void useSkillGauge(int count)
     {
