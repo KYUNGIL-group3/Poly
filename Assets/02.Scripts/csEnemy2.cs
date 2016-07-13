@@ -16,10 +16,7 @@ public class csEnemy2 : MonoBehaviour
     }
 
     STATE state = STATE.IDLE;
-    float stateTime = 0.0f;
-    public Transform firePos1;
-    public Transform firePos2;
-    public Transform firePos3;
+    float stateTime = 0.0f;   
     public GameObject bullet;
    
 	Transform[] obj;
@@ -47,8 +44,8 @@ public class csEnemy2 : MonoBehaviour
 		player = GameObject.FindWithTag("CharCenter").transform;
         enemyController = GetComponent<CharacterController>();
         obj = gameObject.GetComponentsInChildren<Transform>();
-
-		StartCoroutine (istrigger ());
+        
+        StartCoroutine (istrigger ());
     }
 
     // Update is called once per frame
@@ -73,15 +70,19 @@ public class csEnemy2 : MonoBehaviour
 			obj = gameObject.GetComponentsInChildren<Transform> ();
 			distance = Vector3.Distance (transform.position, player.position);
 			if (obj.Length == 14) {
-				if (reloadTime > reloadmaxTime) {
-					for (int i = 1; i < obj.Length; i++) {
-						if (obj [i].tag == "EnemyDown") {
-
-							GameObject bullettemp = Instantiate (bullet, obj [i].position, Quaternion.identity) as GameObject;
-							bullettemp.transform.parent = obj [i];
-						}
-					}
-				}
+                    if (reloadTime > reloadmaxTime)
+                    {
+                        for (int i = 1; i < obj.Length; i++)
+                        {
+                            if (obj[i].tag == "EnemyDown")
+                            {
+                                
+                                GameObject bullettemp = Instantiate(bullet, obj[i].position, Quaternion.identity) as GameObject;
+                                
+                                bullettemp.transform.parent = obj[i];
+                            }
+                        }
+                    }
 				return;
 			} else if (reloadTime > attackStateMaxTime) {
 				if (attackableRange > distance) {
@@ -120,22 +121,25 @@ public class csEnemy2 : MonoBehaviour
 		case STATE.ATTACK:
 			
 			obj = gameObject.GetComponentsInChildren<Transform> ();
-			for (int i = 1; i < obj.Length; i++) {
-				if (obj [i].tag == "EMissile") {
-					obj [i].transform.parent = null;
+                for (int i = 1; i < obj.Length; i++)
+                {
+                    if (obj[i].tag == "EMissile")
+                    {
+                        obj[i].transform.parent = null;
 
-					//obj [i].gameObject.AddComponent<Rigidbody> ();
-					//obj [i].gameObject.GetComponent<Rigidbody> ().useGravity = false;
-					Vector3 dir = player.position - obj [i].position;
-					dir.Normalize ();
-					obj [i].gameObject.GetComponent<Rigidbody> ().AddForce (dir * 500.0f);
+                        //obj [i].gameObject.AddComponent<Rigidbody> ();
+                        //obj [i].gameObject.GetComponent<Rigidbody> ().useGravity = false;
+                        Vector3 dir = player.position - obj[i].position;
+                        dir.Normalize();
+                        obj[i].transform.LookAt(player);
+                        obj[i].gameObject.GetComponent<Rigidbody>().AddForce(dir * 500.0f);
 
-					state = STATE.MOVE;
-                    reloaded = false;
+                        state = STATE.MOVE;
+                        reloaded = false;
 
-                    return;
-				}
-			}
+                        return;
+                    }
+                }
 			state = STATE.MOVE;
 			
 
