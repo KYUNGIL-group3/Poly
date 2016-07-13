@@ -3,7 +3,6 @@ Library/
 *.sln
 *.userprefs
 Temp/
-obj/
 *.csproj
 .vs/
 *.unitypackage
