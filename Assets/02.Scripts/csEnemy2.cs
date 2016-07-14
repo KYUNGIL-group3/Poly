@@ -51,6 +51,9 @@ public class csEnemy2 : MonoBehaviour
     // Update is called once per frame
     void Update()
 	{
+		if (GameManager.Instance ().isGameOver) {
+			return;
+		}
 		reloadTime += Time.deltaTime;
         
 		switch (state) {

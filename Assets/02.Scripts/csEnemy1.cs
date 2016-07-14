@@ -55,6 +55,9 @@ public class csEnemy1 : MonoBehaviour {
 				}
 			}
 
+		if (GameManager.Instance ().isGameOver) {
+			return;
+		}
 
 		switch (state) {
 		case STATE.IDLE:
