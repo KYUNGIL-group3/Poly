@@ -33,7 +33,7 @@ public class csTimeManager : MonoBehaviour {
 			for (int i = 0; i < temp.Length; i++) {
 				temp [i].gameObject.layer = 2;
 			}
-			cameraPos.position += new Vector3 (0.0f, 5.0f, 0.0f);
+			cameraPos.position += new Vector3 (0.0f, 5.0f, -3.0f);
 			Instantiate (skillmanager, transform.position, Quaternion.identity);
 			Vec3ArrayList = new ArrayList ();
 

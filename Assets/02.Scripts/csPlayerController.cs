@@ -70,8 +70,8 @@ public class csPlayerController : MonoBehaviour {
 
 		if (ismove) {
 			if (!isAttack) {
-				velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
-				//velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
+				//velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
+				velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
 			}
 			else{
 				velocity = new Vector3 (0, 0, 0);
@@ -155,7 +155,7 @@ public class csPlayerController : MonoBehaviour {
 		isAttack = false;
 
 		Transform cameraPos = GameObject.Find ("Main Camera").transform;
-		cameraPos.position += new Vector3 (0.0f, -5.0f, 0.0f);
+		cameraPos.position += new Vector3 (0.0f, -5.0f, 3.0f);
 		anim.SetBool ("isSkill", false);
 
 //		moveskillobj.GetComponent<BoxCollider> ().enabled = false;
@@ -188,7 +188,7 @@ public class csPlayerController : MonoBehaviour {
 
 	void NullAttack()
 	{
-		GameObject weapon = GameObject.Find ("Weapon");
+		GameObject weapon = GameObject.FindWithTag ("WEAPON");
 		weapon.GetComponent<csWeapon> ().targetreset ();
 	}
 }

@@ -19,6 +19,7 @@ public class csWeapon : MonoBehaviour {
 	void Start () {
 		UpgradeWeapon (weaponGauge);
 		player = GameObject.Find ("Player");
+		EnemyArrayList = new ArrayList ();
 	}
 	
 	// Update is called once per frame
@@ -38,6 +39,7 @@ public class csWeapon : MonoBehaviour {
 				} else {
 					EnemyArrayList.Add (col.transform.gameObject);
 				}
+
 				if(col.gameObject.GetComponent<csEnemy1> ())
 					col.gameObject.GetComponent<csEnemy1> ().Damage(AttackPoint);
 				if(col.gameObject.GetComponent<csEnemy2> ())
