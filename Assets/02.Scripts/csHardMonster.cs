@@ -54,7 +54,9 @@ public class csHardMonster : MonoBehaviour {
 	void Update () {
        
           
-        
+		if (GameManager.Instance ().isGameOver) {
+			return;
+		}
 
         switch (state)
         {

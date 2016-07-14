@@ -59,6 +59,9 @@ public class csHardMonster2 : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+		if (GameManager.Instance ().isGameOver) {
+			return;
+		}
         reloadTime += Time.deltaTime;
         
             for (int i = 1; i < obj.Length; i++)
