@@ -29,11 +29,17 @@ public class GameManager : MonoBehaviour {
 
 	public bool isTimeControl = false;
 
-	// Use this for initialization
+    // Use this for initialization
+
+    void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+        }
+    }
+
 	void Start () {
-		if (_instance == null) {
-			_instance = this;
-		}
 		Player = GameObject.Find ("Player");
         hp = maxHp;
         gauge = 0;

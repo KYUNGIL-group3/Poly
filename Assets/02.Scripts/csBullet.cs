@@ -12,8 +12,10 @@ public class csBullet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
+        //오브젝트가 부모로부터 떨어졌을때만 2초 뒤에 삭제함
+        if(gameObject.transform.parent == null)
+        Destroy(gameObject, 2.0f);
+    }
 
 	void OnTriggerEnter(Collider col)
 	{
@@ -23,6 +25,7 @@ public class csBullet : MonoBehaviour {
                 once = false;
                 GameManager.Instance().PlayerHealth(bulletdamage);
             }
+
 			Destroy (gameObject);
 		}
 	}

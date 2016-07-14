@@ -37,7 +37,7 @@ public class csHardMonster2 : MonoBehaviour {
     bool reloaded = false;
 
     Transform player;
-    public float speed = 2.0f;
+    public float speed = 3.0f;
     private float distance;
     float rotspeed = 2.0f;
     Transform target;
@@ -91,13 +91,20 @@ public class csHardMonster2 : MonoBehaviour {
                 obj = gameObject.GetComponentsInChildren<Transform>();
                 distance = Vector3.Distance(transform.position, player.position);
 
+
+                
                 if (reloadTime > attackStateMaxTime)
                 {
-
-                    reloadTime = 0.0f;
-                    stateTime = 0.0f;
-                    state = STATE.ATTACK;                    
-                    return;
+                    if (distance > attackableRange)
+                    {
+                        //거리가 공격사거리를 벗어나도 Move상태로 둔다.
+                    }
+                    else {
+                        reloadTime = 0.0f;
+                        stateTime = 0.0f;
+                        state = STATE.ATTACK;
+                        return;
+                    }
                 }
 
                 if (distance > checkMoveDistance)
@@ -106,6 +113,7 @@ public class csHardMonster2 : MonoBehaviour {
                     state = STATE.IDLE;
                     return;
                 }
+
 
                 if (distance > checkAttackDistance + 0.2f)
                 {
@@ -116,17 +124,18 @@ public class csHardMonster2 : MonoBehaviour {
                     anim.SetInteger("AniStep", 1);
                     transform.LookAt(player.parent.transform);
 
-
                     enemyController.SimpleMove(dir * speed);
                 }
                 else if (distance < checkAttackDistance - 0.2f)
                 {
+
                     Vector3 dir = player.position - transform.position;
                     dir.y = 0.0f;
                     dir.Normalize();
                     anim.SetInteger("AniStep", 1);
                     transform.LookAt(player.parent.transform);
-                    enemyController.SimpleMove(-dir * speed);
+                    enemyController.SimpleMove(-dir * speed / 2.0f);
+
                 }
                 else {
                     transform.LookAt(player.parent.transform);
@@ -138,8 +147,10 @@ public class csHardMonster2 : MonoBehaviour {
 
             case STATE.ATTACK:
 
-                
+
                 anim.SetInteger("AniStep", 2);
+
+                //anim.SetInteger("AniStep", 2);
                 transform.LookAt(player.parent.transform); 
 
                 //if (stateTime > idleStateMaxTime)
@@ -147,8 +158,21 @@ public class csHardMonster2 : MonoBehaviour {
                 //    state = STATE.MOVE;
                 //    stateTime = 0.0f;
                 //}
-                state = STATE.MOVE;
-
+                stateTime += Time.deltaTime;
+                //if(stateTime < 0.1f)
+                //{
+                  //  anim.SetInteger("AniStep", 2);
+                //}
+                //if (stateTime > 0.1f && stateTime < 0.5f)
+                //{
+                //    //anim.SetInteger("AniStep", 0);
+                //}
+                //if (stateTime > 1.0f)
+                //{
+                //    reloadTime = 0.0f;
+                //    stateTime = 0.0f;
+                //    state = STATE.MOVE;
+                //}
                 break;
 
             case STATE.DAMAGE:
@@ -229,5 +253,13 @@ public class csHardMonster2 : MonoBehaviour {
         bullettemp.transform.LookAt(player);
         bullettemp.gameObject.GetComponent<Rigidbody>().AddForce(dir * 500.0f);
 
+        reloadTime = 0.0f;
+        stateTime = 0.0f;
+        //anim.SetInteger("AniStep", 0);
+    }
+
+    void Move()
+    {
+        state = STATE.MOVE;
     }
 }
