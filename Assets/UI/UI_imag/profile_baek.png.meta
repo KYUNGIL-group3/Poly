@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 0cf7e41a500ff2d4eb58c1e2fee6beaf
-timeCreated: 1468388763
+guid: b829b680a272b824a811d1fdd8bf5702
+timeCreated: 1468459423
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -49,7 +49,7 @@ TextureImporter:
   textureType: 8
   buildTargetSettings:
   - buildTarget: Android
-    maxTextureSize: 256
+    maxTextureSize: 1024
     textureFormat: -1
     compressionQuality: 50
     allowsAlphaSplitting: 0
