@@ -8,9 +8,11 @@ public class csWeapon : MonoBehaviour {
 	int AttackPoint;
 	float AttackRange;
 	int weaponGauge = 0;
+	ArrayList EnemyArrayList;
 
 	public int[] WeaponStateAttack;
 	public float[] WeaponStateRange;
+
 
 
 	// Use this for initialization
@@ -31,6 +33,11 @@ public class csWeapon : MonoBehaviour {
 	{
 		if (col.gameObject.tag == "Enemy") {
 			if (player.GetComponent<csPlayerController> ().isAttack) {
+				if (EnemyArrayList.Contains (col.transform.gameObject)) {
+					
+				} else {
+					EnemyArrayList.Add (col.transform.gameObject);
+				}
 				if(col.gameObject.GetComponent<csEnemy1> ())
 					col.gameObject.GetComponent<csEnemy1> ().Damage(AttackPoint);
 				if(col.gameObject.GetComponent<csEnemy2> ())
@@ -63,5 +70,11 @@ public class csWeapon : MonoBehaviour {
 		AttackPoint = WeaponStateAttack [level];
 		AttackRange = WeaponStateRange [level];
 		transform.localScale = new Vector3 (AttackRange, AttackRange, AttackRange);
+	}
+
+	public void targetreset()
+	{
+		EnemyArrayList.Clear ();
+		EnemyArrayList = new ArrayList ();
 	}
 }
