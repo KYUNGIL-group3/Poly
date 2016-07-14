@@ -39,7 +39,7 @@ public class csEnemy1 : MonoBehaviour {
     public int mHp = 300;
 	// Use this for initialization
 	void Start () {
-		player = GameObject.FindWithTag("CharCenter").transform;
+		player = GameObject.Find("CharCenter").transform;
 		enemyController = GetComponent<CharacterController> ();
 		obj = gameObject.GetComponentsInChildren<Transform> ();
 

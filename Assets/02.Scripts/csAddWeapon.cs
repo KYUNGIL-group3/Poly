@@ -12,21 +12,30 @@ public class csAddWeapon : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (gameObject.name != "LHand") {
+		WeaponNum = GameManager.Instance ().Weapon1Num();
+		if (gameObject.name != "LHand" || WeaponNum == 1) {
 			Eweapon = Instantiate (Weapon [WeaponNum], transform.position, transform.rotation) as GameObject;
 			Eweapon.transform.parent = gameObject.transform;
 		}
+
 		Playeranim = Player.GetComponent<Animator> ();
+		if (gameObject.name == "RHand") {
+
+			Playeranim.SetInteger ("WeaponType", WeaponNum);
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (CrossPlatformInputManager.GetButtonUp ("Change")) {
-			if (!Player.GetComponent<csPlayerController> ().isAttack && Player.GetComponent<csPlayerController> ().isidle) {
-				WeaponNum++;
-				if (Weapon.Length <= WeaponNum) {
-					WeaponNum = 0;
+			if (!Player.GetComponent<csPlayerController> ().isAttack) {
+				if (WeaponNum == GameManager.Instance ().Weapon1Num ()) {
+					WeaponNum = GameManager.Instance ().Weapon2Num ();
 				}
+				else{
+					WeaponNum = GameManager.Instance ().Weapon1Num ();
+				}
+
 				if (gameObject.name == "RHand") {
 
 					Playeranim.SetInteger ("WeaponType", WeaponNum);

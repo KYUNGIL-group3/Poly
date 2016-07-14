@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour {
 		if (_instance == null) {
 			_instance = this;
 		}
-		Player = GameObject.FindWithTag ("Player");
+		Player = GameObject.Find ("Player");
         hp = maxHp;
         gauge = 0;
 		weapon1num = 0;
