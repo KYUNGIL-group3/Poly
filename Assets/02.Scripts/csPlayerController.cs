@@ -185,4 +185,10 @@ public class csPlayerController : MonoBehaviour {
 		yield return new WaitForSeconds (0.5f);
 		isaaaa = false;
 	}
+
+	void NullAttack()
+	{
+		GameObject weapon = GameObject.Find ("Weapon");
+		weapon.GetComponent<csWeapon> ().targetreset ();
+	}
 }

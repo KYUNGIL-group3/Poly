@@ -10,6 +10,9 @@ public class csAddWeapon : MonoBehaviour {
 	Animator Playeranim;
 	int WeaponNum=0;
 
+	float changetime= 0.0f;
+	float changemaxtime= 10.0f;
+	bool changeOk = true;
 	// Use this for initialization
 	void Start () {
 		WeaponNum = GameManager.Instance ().Weapon1Num();
@@ -27,6 +30,14 @@ public class csAddWeapon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (!changeOk) {
+			changetime += Time.deltaTime;
+			if (changetime > changemaxtime) {
+				changetime = 0.0f;
+				changeOk = true;
+			}
+			return;
+		}
 		if (CrossPlatformInputManager.GetButtonUp ("Change")) {
 			if (!Player.GetComponent<csPlayerController> ().isAttack) {
 				if (WeaponNum == GameManager.Instance ().Weapon1Num ()) {
@@ -45,6 +56,7 @@ public class csAddWeapon : MonoBehaviour {
 					Eweapon = Instantiate (Weapon [WeaponNum], transform.position, transform.rotation) as GameObject;
 					Eweapon.transform.parent = gameObject.transform;
 				}
+				changeOk = false;
 			}
 		} 
 	}
