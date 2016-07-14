@@ -21,8 +21,8 @@ public class GameManager : MonoBehaviour {
 	public bool isGameOver = false;
 	public bool isGameClear = false;
 
-	int weapon1num;
-	int weapon2num;
+	public int weapon1num = 0;
+	public int weapon2num = 1;
 
 	float tencount = 10.0f;
 	float timecount = 0.0f;
@@ -37,8 +37,8 @@ public class GameManager : MonoBehaviour {
 		Player = GameObject.Find ("Player");
         hp = maxHp;
         gauge = 0;
-		weapon1num = 0;
-		weapon2num = 1;
+		//weapon1num = 0;
+		//weapon2num = 1;
 	}
 	
 	// Update is called once per frame
