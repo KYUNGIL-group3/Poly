@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityStandardAssets.Utility;
 
 public class csTimeManager : MonoBehaviour {
 
@@ -19,7 +20,7 @@ public class csTimeManager : MonoBehaviour {
 	void Start () {
 	
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		
@@ -33,7 +34,8 @@ public class csTimeManager : MonoBehaviour {
 			for (int i = 0; i < temp.Length; i++) {
 				temp [i].gameObject.layer = 2;
 			}
-			cameraPos.position += new Vector3 (0.0f, 5.0f, -3.0f);
+			//cameraPos.position += new Vector3 (0.0f, 5.0f, -3.0f);
+			cameraPos.gameObject.GetComponent<SmoothFollow>().height = 15;
 			Instantiate (skillmanager, transform.position, Quaternion.identity);
 			Vec3ArrayList = new ArrayList ();
 

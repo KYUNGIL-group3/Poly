@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityStandardAssets.Utility;
 
 public class csPlayerController : MonoBehaviour {
 
@@ -155,7 +156,9 @@ public class csPlayerController : MonoBehaviour {
 		isAttack = false;
 
 		Transform cameraPos = GameObject.Find ("Main Camera").transform;
-		cameraPos.position += new Vector3 (0.0f, -5.0f, 3.0f);
+		//cameraPos.position += new Vector3 (0.0f, -5.0f, 3.0f);
+
+		cameraPos.gameObject.GetComponent<SmoothFollow>().height = 7;
 		anim.SetBool ("isSkill", false);
 
 //		moveskillobj.GetComponent<BoxCollider> ().enabled = false;
