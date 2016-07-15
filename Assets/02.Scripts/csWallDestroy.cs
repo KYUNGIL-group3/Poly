@@ -24,6 +24,7 @@ public class csWallDestroy : MonoBehaviour {
 			}
 			if (spawnPointCount.Length == 1) {
 				DestroyObj.transform.position += Vector3.down * 1.0f * Time.deltaTime;
+				DestroyObj.tag = "Map";
 			}
 			return;
 		}

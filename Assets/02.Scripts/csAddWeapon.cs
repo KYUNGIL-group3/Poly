@@ -11,8 +11,11 @@ public class csAddWeapon : MonoBehaviour {
 	int WeaponNum=0;
 
 	float changetime= 0.0f;
-	float changemaxtime= 10.0f;
+	float changemaxtime= 1.0f;
 	bool changeOk = true;
+
+	public bool changefree = false;
+
 	// Use this for initialization
 	void Start () {
 		WeaponNum = GameManager.Instance ().Weapon1Num();
