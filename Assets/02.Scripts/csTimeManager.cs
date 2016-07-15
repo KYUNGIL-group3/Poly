@@ -36,8 +36,8 @@ public class csTimeManager : MonoBehaviour {
 			}
 			//cameraPos.position += new Vector3 (0.0f, 5.0f, -3.0f);
 			cameraPos.gameObject.GetComponent<SmoothFollow>().height = 15;
-			Instantiate (skillmanager, transform.position, Quaternion.identity);
 			Vec3ArrayList = new ArrayList ();
+			Instantiate (skillmanager, transform.position, Quaternion.identity);
 
 
 
@@ -87,5 +87,10 @@ public class csTimeManager : MonoBehaviour {
 			}
 
 		}
+	}
+
+	public void FirstPoint(GameObject obj)
+	{
+		Vec3ArrayList.Add (obj);
 	}
 }

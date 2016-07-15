@@ -29,6 +29,14 @@ public class csSkillAction : MonoBehaviour {
 				GameObject goTemp = Instantiate (pointsprite, moveplayerPos,
 					                       Quaternion.Euler (new Vector3 (0.0f, 0.0f, 0.0f))) as GameObject;
 				goTemp.transform.parent = gameObject.transform;
+
+				if (z == 10 && x == 10) {
+					SkillManager.GetComponent<csTimeManager> ().FirstPoint (goTemp);
+					Transform[] colorTemp = goTemp.GetComponentsInChildren<Transform> ();
+					Debug.Log (colorTemp[1].gameObject.name);
+					colorTemp[1].gameObject.GetComponent<SpriteRenderer> ().color = new Color (0.0f, 255.0f, 255.0f, 255.0f);
+					//goTemp.GetComponent<SpriteRenderer> ().color = new Color (0.0f, 255.0f, 255.0f, 255.0f);
+				}
 			
 				moveplayerPos += Vector3.forward * 1.0f;
 			}
