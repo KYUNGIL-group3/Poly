@@ -16,9 +16,12 @@ public class csTimeManager : MonoBehaviour {
 	public GameObject skillmanager;
 	public GameObject player;
 	public Transform cameraPos;
+
+	int returnGauge;
+
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 
 	// Update is called once per frame
@@ -29,6 +32,8 @@ public class csTimeManager : MonoBehaviour {
 			GameManager.Instance ().isTimeControl = true;
 			timestop = true;
 			Time.timeScale = 0.001f;
+
+			returnGauge = GameManager.Instance ().gauge;
 
 			Transform[] temp = player.GetComponentsInChildren<Transform> ();
 			for (int i = 0; i < temp.Length; i++) {
@@ -53,6 +58,20 @@ public class csTimeManager : MonoBehaviour {
 			Vec3ArrayList.Clear ();
 
 			Destroy (PointManager);
+		}else if(CrossPlatformInputManager.GetButtonDown ("Attack") && timestop)
+		{
+			GameManager.Instance ().gauge = returnGauge;
+			GameManager.Instance ().isTimeControl = false;
+			Time.timeScale = 1.0f;
+			GameObject PointManager = GameObject.FindWithTag ("PointManager");
+			Vec3ArrayList.Clear ();
+
+			Destroy (PointManager);
+			Transform[] temp = player.GetComponentsInChildren<Transform> ();
+			for (int i = 0; i < temp.Length; i++) {
+				temp [i].gameObject.layer = 9;
+			}
+			cameraPos.gameObject.GetComponent<SmoothFollow>().height = 7;
 		}
 
 		if (timestop) {

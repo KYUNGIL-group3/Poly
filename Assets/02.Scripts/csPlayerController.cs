@@ -121,8 +121,12 @@ public class csPlayerController : MonoBehaviour {
 		pointpos = new Vector3[vec.Count];
         
 		for (int a = 0; a < vec.Count; a++) {
-			GameObject pointobj = vec [a] as GameObject;
-			pointpos [a] = pointobj.transform.position;
+			if (vec.Count == 1) {
+				
+			} else {
+				GameObject pointobj = vec [a] as GameObject;
+				pointpos [a] = pointobj.transform.position;
+			}
 		}
 
 		for (int a = 1; a < pointpos.Length; a++) {
