@@ -48,7 +48,9 @@ public class csEnemy1 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		if (state == STATE.NONE) {
+			return;
+		}
 			for (int i = 1; i < obj.Length; i++) {
 				if (obj [i].tag == "Body") {
 					obj [i].transform.Rotate (new Vector3 (0.0f, rotspeed, 0.0f));
@@ -140,15 +142,17 @@ public class csEnemy1 : MonoBehaviour {
 			for (int i = 1; i < obj.Length; i++) {
 				obj [i].gameObject.AddComponent<Rigidbody> ();
 				obj [i].gameObject.AddComponent<BoxCollider> ();
+				obj [i].gameObject.GetComponent<BoxCollider> ().center = new Vector3 (0.0f, 0.0f, 0.0f);
 				obj [i].gameObject.GetComponent<BoxCollider> ().size = new Vector3 (0.2f, 0.2f, 0.2f);
-				Destroy(obj [i].gameObject , 3.0f);
+				obj [i].gameObject.AddComponent<csFollowWeapon> ();
+				//Destroy(obj [i].gameObject , 3.0f);
 				obj [i].parent = null;
-				obj [i].gameObject.layer = 12;
+				obj [i].gameObject.layer = 0;
 
 			}
-			obj [0].parent = null;
-			obj [0].gameObject.layer = 12;
-			Destroy(gameObject, 3.0f);
+			//obj [0].parent = null;
+			//obj [0].gameObject.layer = 12;
+			Destroy(gameObject);
 			break;
                 
 		}

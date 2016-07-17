@@ -30,14 +30,15 @@ public class csPlayerController : MonoBehaviour {
 
 	bool isaaaa = false;
 
-
+	GameObject[] parentlist;
+	GameObject[] childlist;
 
 	// Use this for initialization
 	void Start () {
 		controller = GetComponent<CharacterController> ();
 		anim = GetComponent<Animator> ();
 		cameraFollow = GameObject.Find ("GameManager").GetComponent<csCameraFollow> ();
-
+		GameManager.Instance ().isGameOver = false;
 	}
 	
 	// Update is called once per frame
@@ -54,13 +55,20 @@ public class csPlayerController : MonoBehaviour {
 				Transform[] obj = gameObject.GetComponentsInChildren<Transform> ();
 				gameObject.GetComponent<Animator> ().enabled = false;
 
+//				for (int j = 1; j < obj.Length; j++) {
+//					parentlist [j] = obj [j].parent.gameObject;
+//					childlist [j] = obj [j].gameObject;
+//				}
+
 				for (int i = 1; i < obj.Length; i++) {
 					obj [i].gameObject.AddComponent<Rigidbody> ();
 					obj [i].gameObject.AddComponent<BoxCollider> ();
 					obj [i].gameObject.GetComponent<BoxCollider> ().size = new Vector3 (0.2f, 0.2f, 0.2f);
 					obj [i].parent = null;
+					Destroy (obj [i].gameObject, 3.0f);
 				}
-
+				Destroy (gameObject);
+				//StartCoroutine (par ());
 			}
 
 			return;
@@ -71,8 +79,8 @@ public class csPlayerController : MonoBehaviour {
 
 		if (ismove) {
 			if (!isAttack) {
-				//velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
-				velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
+				velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
+				//velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
 			}
 			else{
 				velocity = new Vector3 (0, 0, 0);
@@ -191,6 +199,18 @@ public class csPlayerController : MonoBehaviour {
 	{
 		yield return new WaitForSeconds (0.5f);
 		isaaaa = false;
+	}
+
+	IEnumerator par()
+	{
+		yield return new WaitForSeconds (10.0f);
+		//Transform[] obj = gameObject.GetComponentsInChildren<Transform> ();
+		gameObject.GetComponent<Animator> ().enabled = true;
+
+		for (int j = 1; j < childlist.Length; j++) {
+			childlist [j].transform.parent = parentlist [j].transform;
+		}
+
 	}
 
 	void NullAttack()
