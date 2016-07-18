@@ -7,7 +7,9 @@ public class GameManager : MonoBehaviour {
 	static GameManager _instance = null;
 	public Slider healthBarSlider;
 	public Slider skillBarSlider;
+    public GameObject recovery; 
     GameObject Player;
+    
 	public static GameManager Instance()
 	{
 		return _instance;
@@ -41,8 +43,10 @@ public class GameManager : MonoBehaviour {
 
 	void Start () {
 		Player = GameObject.Find ("Player");
+       
         hp = maxHp;
         gauge = 0;
+
 		//weapon1num = 0;
 		//weapon2num = 1;
 	}
@@ -95,6 +99,10 @@ public class GameManager : MonoBehaviour {
         {
             this.hp = 1000;
         }
+    }
+    public void SpawnHealthItem(Vector3 pos)
+    {
+        Instantiate(recovery,pos+new Vector3(0.0f,1.0f,0.0f),Quaternion.identity);
     }
 
     public void useSkillGauge(int count)

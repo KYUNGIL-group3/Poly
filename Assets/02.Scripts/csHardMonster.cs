@@ -63,9 +63,9 @@ public class csHardMonster : MonoBehaviour {
             case STATE.IDLE:
                 distance = Vector3.Distance(transform.position, player.position);
                 stateTime = 0.0f;
-               
-                    anim.SetInteger("AniStep", 0);
-                
+
+                anim.SetInteger("AniStep", 0);
+
                 if (distance < attackableRange)
                 {
                     state = STATE.ATTACK;
@@ -81,9 +81,9 @@ public class csHardMonster : MonoBehaviour {
             case STATE.MOVE:
                 distance = Vector3.Distance(transform.position, player.position);
 
-                
-                    anim.SetInteger("AniStep", 0);
-                
+
+                anim.SetInteger("AniStep", 0);
+
                 if (distance > checkMoveDistance)
                 {
                     state = STATE.IDLE;
@@ -98,10 +98,10 @@ public class csHardMonster : MonoBehaviour {
                     Vector3 dir = player.position - transform.position;
                     dir.y = 0.0f;
                     dir.Normalize();
-                  
-                        anim.SetInteger("AniStep", 1);
-                        transform.LookAt(player.parent.transform);
-                    
+
+                    anim.SetInteger("AniStep", 1);
+                    transform.LookAt(player.parent.transform);
+
                     enemyController.SimpleMove(dir * speed);
                 }
 
@@ -111,9 +111,9 @@ public class csHardMonster : MonoBehaviour {
                 distance = Vector3.Distance(transform.position, player.position);
                 stateTime += Time.deltaTime;
 
-               
-                    anim.SetInteger("AniStep", 0);
-                
+
+                anim.SetInteger("AniStep", 0);
+
                 if (distance > checkMoveDistance)
                 {
                     state = STATE.IDLE;
@@ -125,10 +125,10 @@ public class csHardMonster : MonoBehaviour {
                     stateTime = 0.0f;
                     if (distance < attackableRange + 0.5f)
                     {
-                       
-                            anim.SetInteger("AniStep", 2);
-                            transform.LookAt(player.parent.transform);
-                        
+
+                        anim.SetInteger("AniStep", 2);
+                        transform.LookAt(player.parent.transform);
+
                         GameManager.Instance().PlayerHealth(monsterAttackPoint);
                     }
                 }
@@ -149,7 +149,7 @@ public class csHardMonster : MonoBehaviour {
                     GameManager.Instance().SkillGauge(1);
                     break;
                 }
-                
+
                 stateTime += Time.deltaTime;
 
                 if (stateTime > idleStateMaxTime)
@@ -162,27 +162,32 @@ public class csHardMonster : MonoBehaviour {
             case STATE.DEAD:
                 state = STATE.NONE;
 
+                GameManager.Instance().SpawnHealthItem(transform.position);
 
-			obj = gameObject.GetComponentsInChildren<Transform> ();
+                obj = gameObject.GetComponentsInChildren<Transform>();
 
-			if (gameObject.GetComponent<Animator> () != null) {
-				gameObject.GetComponent<Animator>().enabled = false;	
-			}
+                if (gameObject.GetComponent<Animator>() != null)
+                {
+                    gameObject.GetComponent<Animator>().enabled = false;
+                }
 
-			for (int i = 1; i < obj.Length; i++) {
-				obj [i].gameObject.AddComponent<Rigidbody> ();
-				obj [i].gameObject.AddComponent<BoxCollider> ();
-				obj [i].gameObject.GetComponent<BoxCollider> ().center = new Vector3 (0.0f, 0.0f, 0.0f);
-				obj [i].gameObject.GetComponent<BoxCollider> ().size = new Vector3 (0.2f, 0.2f, 0.2f);
-				obj [i].gameObject.AddComponent<csFollowWeapon> ();
-				//Destroy(obj [i].gameObject , 3.0f);
-				obj [i].parent = null;
-				obj [i].gameObject.layer = 0;
+                for (int i = 1; i < obj.Length; i++)
+                {
+                    obj[i].gameObject.AddComponent<Rigidbody>();
+                    obj[i].gameObject.AddComponent<BoxCollider>();
+                    obj[i].gameObject.GetComponent<BoxCollider>().center = new Vector3(0.0f, 0.0f, 0.0f);
+                    obj[i].gameObject.GetComponent<BoxCollider>().size = new Vector3(0.2f, 0.2f, 0.2f);
+                    obj[i].gameObject.AddComponent<csFollowWeapon>();
+                    //Destroy(obj [i].gameObject , 3.0f);
+                    obj[i].parent = null;
+                    obj[i].gameObject.layer = 0;
 
-			}
-			//obj [0].parent = null;
-			//obj [0].gameObject.layer = 12;
-			Destroy(gameObject);
+                }
+                //obj [0].parent = null;
+                //obj [0].gameObject.layer = 12;
+                
+                Destroy(gameObject);
+                
                 break;
 
         }

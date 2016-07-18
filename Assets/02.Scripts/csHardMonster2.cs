@@ -19,6 +19,7 @@ public class csHardMonster2 : MonoBehaviour {
     float stateTime = 0.0f;    
     public GameObject bullet;
     public Transform firePos;
+    public GameObject enemy;
 
     Transform[] obj;
    
@@ -95,7 +96,7 @@ public class csHardMonster2 : MonoBehaviour {
                 distance = Vector3.Distance(transform.position, player.position);
 
 
-                
+
                 if (reloadTime > attackStateMaxTime)
                 {
                     if (distance > attackableRange)
@@ -195,28 +196,31 @@ public class csHardMonster2 : MonoBehaviour {
             case STATE.DEAD:
                 state = STATE.NONE;
 
+                GameManager.Instance().SpawnHealthItem(transform.position);
+                obj = gameObject.GetComponentsInChildren<Transform>();
 
-			obj = gameObject.GetComponentsInChildren<Transform> ();
+                if (gameObject.GetComponent<Animator>() != null)
+                {
+                    gameObject.GetComponent<Animator>().enabled = false;
+                }
 
-			if (gameObject.GetComponent<Animator> () != null) {
-				gameObject.GetComponent<Animator>().enabled = false;	
-			}
+                for (int i = 1; i < obj.Length; i++)
+                {
+                    obj[i].gameObject.AddComponent<Rigidbody>();
+                    obj[i].gameObject.AddComponent<BoxCollider>();
+                    obj[i].gameObject.GetComponent<BoxCollider>().center = new Vector3(0.0f, 0.0f, 0.0f);
+                    obj[i].gameObject.GetComponent<BoxCollider>().size = new Vector3(0.2f, 0.2f, 0.2f);
+                    obj[i].gameObject.AddComponent<csFollowWeapon>();
+                    //Destroy(obj [i].gameObject , 3.0f);
+                    obj[i].parent = null;
+                    obj[i].gameObject.layer = 0;
 
-			for (int i = 1; i < obj.Length; i++) {
-				obj [i].gameObject.AddComponent<Rigidbody> ();
-				obj [i].gameObject.AddComponent<BoxCollider> ();
-				obj [i].gameObject.GetComponent<BoxCollider> ().center = new Vector3 (0.0f, 0.0f, 0.0f);
-				obj [i].gameObject.GetComponent<BoxCollider> ().size = new Vector3 (0.2f, 0.2f, 0.2f);
-				obj [i].gameObject.AddComponent<csFollowWeapon> ();
-				//Destroy(obj [i].gameObject , 3.0f);
-				obj [i].parent = null;
-				obj [i].gameObject.layer = 0;
-
-			}
-			//obj [0].parent = null;
-			//obj [0].gameObject.layer = 12;
-			Destroy(gameObject);
-
+                }
+                //obj [0].parent = null;
+                //obj [0].gameObject.layer = 12;
+                
+                Destroy(gameObject);
+                
                 break;
 
         }
