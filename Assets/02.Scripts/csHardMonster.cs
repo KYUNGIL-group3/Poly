@@ -20,9 +20,11 @@ public class csHardMonster : MonoBehaviour {
     public float checkMoveDistance = 5.0f; //몬스터 시야
     public float attackableRange = 2.0f;    //공격범위
     public float attackStateMaxTime = 5.0f; //공격대기시간
-    public float checkAttackDistance = 0.0f; //견제공격 범위
-    public int monsterAttackPoint = 20;  //몬스터 공격력
-
+    public float checkAttackDistance = 2.0f; //견제공격 범위
+    public int monsterAttackPoint;  //몬스터 공격력
+    public GameObject attackfield;
+    public Transform atkpoint;
+    public Transform atkpoint2;
     float rotspeed = 2.0f;
     float attackMotionSpeed = 5.0f;
     float rottime = 0.0f;
@@ -45,9 +47,11 @@ public class csHardMonster : MonoBehaviour {
         enemyController = GetComponent<CharacterController>();
         obj = gameObject.GetComponentsInChildren<Transform>();
         maxmHp = GetComponent<csHardMonster>().mHp;
-      
-            anim = GetComponent<Animator>();
-        
+        anim = GetComponent<Animator>();
+        monsterAttackPoint = GetComponent<csHardMonster>().monsterAttackPoint;
+        Debug.Log(monsterAttackPoint);
+
+
     }
 	
 	// Update is called once per frame
@@ -129,7 +133,7 @@ public class csHardMonster : MonoBehaviour {
                         anim.SetInteger("AniStep", 2);
                         transform.LookAt(player.parent.transform);
 
-                        GameManager.Instance().PlayerHealth(monsterAttackPoint);
+                        //GameManager.Instance().PlayerHealth(monsterAttackPoint);
                     }
                 }
 
@@ -245,5 +249,10 @@ public class csHardMonster : MonoBehaviour {
     {
         transform.LookAt(player.parent.transform);
         anim.SetInteger("AniStep", 3);
+    }
+    void MakeCollider()
+    {
+        Vector3 setPos = new Vector3(atkpoint.position.x,transform.position.y, atkpoint.position.z);
+        Instantiate(attackfield, setPos, Quaternion.identity);
     }
 }
