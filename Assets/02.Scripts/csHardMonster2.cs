@@ -137,7 +137,7 @@ public class csHardMonster2 : MonoBehaviour {
                     dir.Normalize();
                     anim.SetInteger("AniStep", 1);
                     transform.LookAt(player.parent.transform);
-                    enemyController.SimpleMove(-dir * speed / 2.0f);
+                    enemyController.SimpleMove(-dir * speed / 1.5f);
 
                 }
                 else {
@@ -152,30 +152,28 @@ public class csHardMonster2 : MonoBehaviour {
 
 
                 anim.SetInteger("AniStep", 2);
+                transform.LookAt(player.parent.transform);
 
-                //anim.SetInteger("AniStep", 2);
-                transform.LookAt(player.parent.transform); 
-
-                //if (stateTime > idleStateMaxTime)
-                //{
-                //    state = STATE.MOVE;
-                //    stateTime = 0.0f;
-                //}
+                if (stateTime > idleStateMaxTime)
+                {
+                    state = STATE.MOVE;
+                    stateTime = 0.0f;
+                }
                 stateTime += Time.deltaTime;
-                //if(stateTime < 0.1f)
-                //{
-                  //  anim.SetInteger("AniStep", 2);
-                //}
-                //if (stateTime > 0.1f && stateTime < 0.5f)
-                //{
-                //    //anim.SetInteger("AniStep", 0);
-                //}
-                //if (stateTime > 1.0f)
-                //{
-                //    reloadTime = 0.0f;
-                //    stateTime = 0.0f;
-                //    state = STATE.MOVE;
-                //}
+                if (stateTime < 0.1f)
+                {
+                    anim.SetInteger("AniStep", 2);
+                }
+                if (stateTime > 0.1f && stateTime < 0.5f)
+                {
+                    anim.SetInteger("AniStep", 0);
+                }
+                if (stateTime > 1.0f)
+                {
+                    reloadTime = 0.0f;
+                    stateTime = 0.0f;
+                    state = STATE.MOVE;
+                }
                 break;
 
             case STATE.DAMAGE:
@@ -236,6 +234,15 @@ public class csHardMonster2 : MonoBehaviour {
                 return;
 
             }
+            int CounterPercentage = Random.Range(1, 100);
+            if (CounterPercentage >= 1 && CounterPercentage <= 30)
+            {
+                Debug.Log("카운터");
+               
+                CounterAttack();
+                
+                
+            }
         }
         //anim.SetBool ("Damage", true);
         stateTime = 0.0f;
@@ -264,5 +271,10 @@ public class csHardMonster2 : MonoBehaviour {
     void Move()
     {
         state = STATE.MOVE;
+    }
+    void CounterAttack()
+    {
+        transform.LookAt(player.parent.transform);
+        anim.SetInteger("AniStep", 3);
     }
 }

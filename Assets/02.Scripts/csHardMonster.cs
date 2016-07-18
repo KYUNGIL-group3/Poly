@@ -220,11 +220,25 @@ public class csHardMonster : MonoBehaviour {
                 return;
 
             }
+            int CounterPercentage = Random.Range(1, 100);
+            if (CounterPercentage >= 1 && CounterPercentage <= 30)
+            {
+                Debug.Log("카운터");
+
+                CounterAttack();
+
+
+            }
         }
 
         stateTime = 0.0f;
         mHp -= WeaponAttackPoint;
 
         state = STATE.DAMAGE;
+    }
+    void CounterAttack()
+    {
+        transform.LookAt(player.parent.transform);
+        anim.SetInteger("AniStep", 3);
     }
 }
