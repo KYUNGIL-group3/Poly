@@ -2,7 +2,9 @@
 using System.Collections;
 
 public class csAttackField : MonoBehaviour {
-    
+
+    public int AttackPower;
+
     // Use this for initialization
     void Start () {
        
@@ -17,8 +19,8 @@ public class csAttackField : MonoBehaviour {
 	{
 		if (col.gameObject.tag == "Player") {
 
-			GameManager.Instance ().PlayerHealth (30);
-            Destroy(gameObject,0.5f);
+			GameManager.Instance ().PlayerHealth (AttackPower);
+            Destroy(gameObject);
         }
         
     }

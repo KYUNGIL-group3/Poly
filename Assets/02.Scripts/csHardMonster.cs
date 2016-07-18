@@ -48,7 +48,7 @@ public class csHardMonster : MonoBehaviour {
         obj = gameObject.GetComponentsInChildren<Transform>();
         maxmHp = GetComponent<csHardMonster>().mHp;
         anim = GetComponent<Animator>();
-        monsterAttackPoint = GetComponent<csHardMonster>().monsterAttackPoint;
+        //monsterAttackPoint = GetComponent<csHardMonster>().monsterAttackPoint;
         Debug.Log(monsterAttackPoint);
 
 
@@ -253,6 +253,7 @@ public class csHardMonster : MonoBehaviour {
     void MakeCollider()
     {
         Vector3 setPos = new Vector3(atkpoint.position.x,transform.position.y, atkpoint.position.z);
-        Instantiate(attackfield, setPos, Quaternion.identity);
+        GameObject AttackFieldObj = Instantiate(attackfield, setPos, Quaternion.identity) as GameObject;
+        AttackFieldObj.GetComponent<csAttackField>().AttackPower = monsterAttackPoint;
     }
 }
