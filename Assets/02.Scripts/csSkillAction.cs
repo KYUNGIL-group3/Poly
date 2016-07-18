@@ -33,7 +33,7 @@ public class csSkillAction : MonoBehaviour {
 				if (z == 10 && x == 10) {
 					SkillManager.GetComponent<csTimeManager> ().FirstPoint (goTemp);
 					Transform[] colorTemp = goTemp.GetComponentsInChildren<Transform> ();
-					Debug.Log (colorTemp[1].gameObject.name);
+					//Debug.Log (colorTemp[1].gameObject.name);
 					colorTemp[1].gameObject.GetComponent<SpriteRenderer> ().color = new Color (0.0f, 255.0f, 255.0f, 255.0f);
 					//goTemp.GetComponent<SpriteRenderer> ().color = new Color (0.0f, 255.0f, 255.0f, 255.0f);
 				}

@@ -26,7 +26,11 @@ public class csTimeManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		
+		if (GameManager.Instance ().isGameOver) {
+			return;
+		}
+
+
 		if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop==false
 			&& GameManager.Instance().gauge >=5 ) {
 			GameManager.Instance ().isTimeControl = true;
