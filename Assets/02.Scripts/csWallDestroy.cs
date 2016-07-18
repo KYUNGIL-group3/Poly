@@ -3,8 +3,7 @@ using System.Collections;
 
 public class csWallDestroy : MonoBehaviour {
 
-	public GameObject Wall;
-	public GameObject Wall2;
+	public GameObject[] WallList;
 	public GameObject DestroyObj;
 
 	// Use this for initialization
@@ -18,29 +17,23 @@ public class csWallDestroy : MonoBehaviour {
 
 		Transform[] spawnPointCount = gameObject.GetComponentsInChildren<Transform> ();
 
-		if (!Wall && !Wall2) {
+		if (DestroyObj) {
 			if (DestroyObj.transform.position.y < 2.0f) {
 				return;
 			}
-			if (spawnPointCount.Length == 1) {
+			if (spawnPointCount.Length == WallList.Length + 1) {
 				DestroyObj.transform.position += Vector3.down * 1.0f * Time.deltaTime;
 				DestroyObj.tag = "Map";
 			}
 			return;
 		}
 
-		if (!Wall2) {
+		if (spawnPointCount.Length == WallList.Length + 1) {
+			for (int i = 0; i < WallList.Length; i++) {
+				Destroy (WallList [i].gameObject);
+			}
 
-			if (spawnPointCount.Length == 2) {
-				Destroy (Wall.gameObject);
-				Destroy (gameObject);
-			}
-		} else {
-			if (spawnPointCount.Length == 3) {
-				Destroy (Wall.gameObject);
-				Destroy (Wall2.gameObject);
-				Destroy (gameObject);
-			}
+			Destroy (gameObject);
 		}
 	}
 }
