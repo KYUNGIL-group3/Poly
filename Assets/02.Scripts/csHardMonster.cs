@@ -193,7 +193,7 @@ public class csHardMonster : MonoBehaviour {
                 //obj [0].parent = null;
                 //obj [0].gameObject.layer = 12;
                 
-                Destroy(gameObject);
+                Destroy(gameObject,0.1f);
                 
                 break;
 
@@ -238,9 +238,10 @@ public class csHardMonster : MonoBehaviour {
                 Debug.Log("카운터");
 
                 CounterAttack();
-
+                return;
 
             }
+            
         }
 
         stateTime = 0.0f;
@@ -275,6 +276,7 @@ public class csHardMonster : MonoBehaviour {
         AttackFieldObj2.GetComponent<csAttackField>().AttackPower = monsterAttackPoint;
 
     }
+    //반격용 콜라이더를 만듬
     void MakeCollider3()
     {
 

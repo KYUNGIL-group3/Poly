@@ -219,7 +219,7 @@ public class csHardMonster2 : MonoBehaviour {
                 //obj [0].parent = null;
                 //obj [0].gameObject.layer = 12;
                 
-                Destroy(gameObject);
+                Destroy(gameObject,0.1f);
                 
                 break;
 
@@ -244,7 +244,7 @@ public class csHardMonster2 : MonoBehaviour {
                 Debug.Log("카운터");
                
                 CounterAttack();
-                
+                return;
                 
             }
         }
