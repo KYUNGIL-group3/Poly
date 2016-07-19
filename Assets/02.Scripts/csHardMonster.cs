@@ -255,11 +255,22 @@ public class csHardMonster : MonoBehaviour {
     void MakeCollider()
     {
         Vector3 setPos = new Vector3(atkpoint.position.x,transform.position.y, atkpoint.position.z);
-        Vector3 setPos2  = new Vector3(atkpoint2.position.x, transform.position.y, atkpoint2.position.z);
+       
 
         GameObject AttackFieldObj = Instantiate(attackfield, setPos, Quaternion.identity) as GameObject;
-        GameObject AttackFieldObj2 = Instantiate(attackfield2, setPos, Quaternion.identity) as GameObject;
+       
         AttackFieldObj.GetComponent<csAttackField>().AttackPower = monsterAttackPoint;
+        
+
+    }
+    void MakeCollider2()
+    {
+       
+        Vector3 setPos2 = new Vector3(atkpoint2.position.x, transform.position.y, atkpoint2.position.z);
+
+       
+        GameObject AttackFieldObj2 = Instantiate(attackfield2, setPos2, Quaternion.identity) as GameObject;
+        
         AttackFieldObj2.GetComponent<csAttackField>().AttackPower = monsterAttackPoint;
 
     }
