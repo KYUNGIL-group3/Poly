@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
 
 public class SceneManager : MonoBehaviour {
 	static SceneManager _instance = null;
@@ -8,7 +7,7 @@ public class SceneManager : MonoBehaviour {
 	public int _killCount;
 	public int _DeadCount;
 	public float _PlayTimefloat;
-	public int _Object;
+	public int _Piece;
 	public int _Weapon1;
 	public int _Weapon2;
 	public int ClearStage;
@@ -43,7 +42,7 @@ public class SceneManager : MonoBehaviour {
 		_Weapon2 = PlayerPrefs.GetInt ("Weapon2");
 		_killCount = PlayerPrefs.GetInt ("KillCount");
 		_DeadCount = PlayerPrefs.GetInt ("DeadCount");
-		_Object = PlayerPrefs.GetInt ("Object");
+		_Piece = PlayerPrefs.GetInt ("Piece");
 		ClearStage =  PlayerPrefs.GetInt ("ClearStage");
 	}
 	
@@ -67,7 +66,7 @@ public class SceneManager : MonoBehaviour {
 		_Weapon2 = PlayerPrefs.GetInt ("Weapon2");
 		_killCount = PlayerPrefs.GetInt ("KillCount");
 		_DeadCount = PlayerPrefs.GetInt ("DeadCount");
-		_Object = PlayerPrefs.GetInt ("Object");
+		_Piece = PlayerPrefs.GetInt ("Piece");
 		ClearStage =  PlayerPrefs.GetInt ("ClearStage");
 	}
 

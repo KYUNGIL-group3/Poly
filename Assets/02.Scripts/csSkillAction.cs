@@ -48,8 +48,10 @@ public class csSkillAction : MonoBehaviour {
 		GameObject goTemp = Instantiate (pointsprite, playerPos,
 			                    Quaternion.Euler (new Vector3 (0.0f, 0.0f, 0.0f))) as GameObject;
 		goTemp.transform.parent = gameObject.transform;
-		SkillManager.GetComponent<csTimeManager> ().FirstPoint (goTemp);
+		goTemp.GetComponent<csPointSetPosition> ().pointcount = 0;
+
 		Transform[] colorTemp = goTemp.GetComponentsInChildren<Transform> ();
+		SkillManager.GetComponent<csTimeManager> ().FirstPoint (colorTemp[1].gameObject);
 		colorTemp[1].gameObject.GetComponent<SpriteRenderer> ().color = new Color (0.0f, 255.0f, 255.0f, 255.0f);
 
 

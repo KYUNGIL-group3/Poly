@@ -4,20 +4,16 @@ using System.Collections;
 public class csPointSetPosition : MonoBehaviour {
 
 	public GameObject pointsprite;
-	float Cdis;
-	float Fdis;
-	float Bdis;
-	float Ldis;
-	float Rdis;
+	public int pointcount;
 	float del = 0.0f;
 	bool once = false;
+	int layerMask = 1 << 14;
 	// Use this for initialization
 	void Start () {
-		
-
-
-		//StartCoroutine (setNextPoint ());
-
+		pointcount++;
+		if (pointcount > 20) {
+			Destroy (gameObject);
+		}
 	}
 	
 	// Update is called once per frame
@@ -25,48 +21,54 @@ public class csPointSetPosition : MonoBehaviour {
 		if (once) {
 			return;
 		}
-		if (del > 0.1f) {
+		if (del > 0.001f) {
 			once = true;
 			RaycastHit hit;
 
-			if (Physics.Raycast (transform.position, Vector3.forward, out hit, 1.5f, 13 << 13)) {
-			
+			if (Physics.Raycast (transform.position, Vector3.forward, out hit, 1.5f, 1 << 14)
+				|| Physics.Raycast (transform.position, Vector3.forward, out hit, 1.5f, 1 << 13)) {
+
 			} else {
 				GameObject goTemp = Instantiate (pointsprite, transform.position + Vector3.forward * 1.0f,
-					                    Quaternion.Euler (new Vector3 (0.0f, 0.0f, 0.0f))) as GameObject;
+					Quaternion.Euler (new Vector3 (0.0f, 0.0f, 0.0f))) as GameObject;
 				goTemp.transform.parent = gameObject.transform.parent;
+				goTemp.GetComponent<csPointSetPosition> ().pointcount = this.pointcount;
 			}
+
+
+			if (Physics.Raycast (transform.position, Vector3.back, out hit, 1.5f, 1 << 14)
+				|| Physics.Raycast (transform.position, Vector3.back, out hit, 1.5f, 1 << 13)) {
+
+			} else {
+				GameObject goTemp = Instantiate (pointsprite, transform.position + Vector3.back * 1.0f,
+					Quaternion.Euler (new Vector3 (0.0f, 0.0f, 0.0f))) as GameObject;
+				goTemp.transform.parent = gameObject.transform.parent;
+				goTemp.GetComponent<csPointSetPosition> ().pointcount = this.pointcount;
+			}
+
+			if (Physics.Raycast (transform.position, Vector3.right, out hit, 1.5f, 1 << 14)
+				||Physics.Raycast (transform.position, Vector3.right, out hit, 1.5f, 1 << 13)) {
+
+			} else {
+				GameObject goTemp = Instantiate (pointsprite, transform.position + Vector3.right * 1.0f,
+					Quaternion.Euler (new Vector3 (0.0f, 0.0f, 0.0f))) as GameObject;
+				goTemp.transform.parent = gameObject.transform.parent;
+				goTemp.GetComponent<csPointSetPosition> ().pointcount = this.pointcount;
+			}
+
+			if (Physics.Raycast (transform.position, Vector3.left, out hit, 1.5f, 1 << 14)
+				||Physics.Raycast (transform.position, Vector3.left, out hit, 1.5f, 1 << 13)) {
+
+			} else {
+				GameObject goTemp = Instantiate (pointsprite, transform.position + Vector3.left * 1.0f,
+					Quaternion.Euler (new Vector3 (0.0f, 0.0f, 0.0f))) as GameObject;
+				goTemp.transform.parent = gameObject.transform.parent;
+				goTemp.GetComponent<csPointSetPosition> ().pointcount = this.pointcount;
+			}
+
 		} else {
 			del += Time.unscaledDeltaTime;
 		}
 
 	}
-
-	public void Centerdis(float i)
-	{
-		Cdis = i;
-		transform.position = transform.position + new Vector3 (0, -i, 0);  
-	}
-
-	public void Rightdis(float i)
-	{
-		Rdis = i;
-	}
-
-	public void Leftdis(float i)
-	{
-		Ldis = i;
-	}
-
-	public void Forwarddis(float i)
-	{
-		Fdis = i;
-	}
-
-	public void Backdis(float i)
-	{
-		Bdis = i;
-	}
-
-
 }

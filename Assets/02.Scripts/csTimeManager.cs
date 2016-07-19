@@ -39,10 +39,10 @@ public class csTimeManager : MonoBehaviour {
 
 			returnGauge = GameManager.Instance ().gauge;
 
-			Transform[] temp = player.GetComponentsInChildren<Transform> ();
-			for (int i = 0; i < temp.Length; i++) {
-				temp [i].gameObject.layer = 2;
-			}
+//			Transform[] temp = player.GetComponentsInChildren<Transform> ();
+//			for (int i = 0; i < temp.Length; i++) {
+//				temp [i].gameObject.layer = 2;
+//			}
 			//cameraPos.position += new Vector3 (0.0f, 5.0f, -3.0f);
 			cameraPos.gameObject.GetComponent<SmoothFollow>().height = 15;
 			Vec3ArrayList = new ArrayList ();
