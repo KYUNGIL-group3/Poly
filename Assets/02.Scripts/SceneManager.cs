@@ -174,13 +174,30 @@ public class SceneManager : MonoBehaviour {
     {
 
     }
-    public void StageButton()
-    {
-		Application.LoadLevel ("Stage1-Happy");
-    }
-    public void ItemButton()
-    {
+	public void StageButton()
+	{
+		Application.LoadLevel ("POLY_stage");
+	}
+	public void Stage1()
+	{
+		Application.LoadLevel ("stage1-Happy");
+	}
+	public void Stage2()
+	{
+		Application.LoadLevel ("stage2-Enjoy");
+	}
+	public void Stage3()
+	{
+		Application.LoadLevel ("stage3-Sadness");
+	}
+	public void Stage4()
+	{
+		Application.LoadLevel ("stage4-angry");
+	}
 
+	public void WeaponButton()
+    {
+		Application.LoadLevel ("POLY_WEAPON");
     }
     public void ProfileButton()
     {
