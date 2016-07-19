@@ -147,12 +147,12 @@ public class csEnemy1 : MonoBehaviour {
 				obj [i].gameObject.AddComponent<csFollowWeapon> ();
 				//Destroy(obj [i].gameObject , 3.0f);
 				obj [i].parent = null;
-				obj [i].gameObject.layer = 0;
+				obj [i].gameObject.layer = 12;
 
 			}
 			//obj [0].parent = null;
 			//obj [0].gameObject.layer = 12;
-			Destroy(gameObject);
+			Destroy(gameObject,0.1f);
 			break;
                 
 		}

@@ -4,11 +4,14 @@ using System.Collections;
 public class csWallDestroy : MonoBehaviour {
 
 	public GameObject[] WallList;
-	public GameObject DestroyObj;
+	public GameObject DownObj;
+	public GameObject CreateWrapGate;
 
 	// Use this for initialization
 	void Start () {
-	
+		if (CreateWrapGate) {
+			CreateWrapGate.SetActive(false);
+		}
 	}
 	
 	// Update is called once per frame
@@ -17,13 +20,17 @@ public class csWallDestroy : MonoBehaviour {
 
 		Transform[] spawnPointCount = gameObject.GetComponentsInChildren<Transform> ();
 
-		if (DestroyObj) {
-			if (DestroyObj.transform.position.y < 2.0f) {
+		if (DownObj) {
+			if (DownObj.transform.position.y < 2.0f) {
 				return;
 			}
 			if (spawnPointCount.Length == WallList.Length + 1) {
-				DestroyObj.transform.position += Vector3.down * 1.0f * Time.deltaTime;
-				DestroyObj.tag = "Map";
+				DownObj.transform.position += Vector3.down * 1.0f * Time.deltaTime;
+				DownObj.tag = "Map";
+
+				if (CreateWrapGate) {
+					CreateWrapGate.SetActive(true);
+				}
 			}
 			return;
 		}
@@ -31,6 +38,9 @@ public class csWallDestroy : MonoBehaviour {
 		if (spawnPointCount.Length == WallList.Length + 1) {
 			for (int i = 0; i < WallList.Length; i++) {
 				Destroy (WallList [i].gameObject);
+			}
+			if (CreateWrapGate) {
+				CreateWrapGate.SetActive(true);
 			}
 
 			Destroy (gameObject);
