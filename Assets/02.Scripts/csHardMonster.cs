@@ -285,7 +285,7 @@ public class csHardMonster : MonoBehaviour {
 
         GameObject AttackFieldObj3 = Instantiate(attackfield3, setPos3, Quaternion.identity) as GameObject;
 
-        AttackFieldObj3.GetComponent<csAttackField>().AttackPower = monsterAttackPoint;
+        AttackFieldObj3.GetComponent<csCounterField>().AttackPower = monsterAttackPoint;
 
     }
 }
