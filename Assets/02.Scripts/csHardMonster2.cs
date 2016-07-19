@@ -30,8 +30,8 @@ public class csHardMonster2 : MonoBehaviour {
     public float attackStateMaxTime = 1.5f; //공격대기시간
     public float checkAttackDistance = 3.0f; //견제공격 범위
     public int monsterAttackPoint = 30;  //몬스터 공격력
-
-   
+    public GameObject attackfield;
+    public Transform atkpoint;
     public float reloadTime = 4.0f;
     public float reloadmaxTime = 5.0f;
     
@@ -280,5 +280,16 @@ public class csHardMonster2 : MonoBehaviour {
     {
         transform.LookAt(player.parent.transform);
         anim.SetInteger("AniStep", 3);
+    }
+    void MakeCollider()
+    {
+        Vector3 setPos = new Vector3(atkpoint.position.x, transform.position.y, atkpoint.position.z);
+
+
+        GameObject AttackFieldObj = Instantiate(attackfield, setPos, Quaternion.identity) as GameObject;
+
+        AttackFieldObj.GetComponent<csAttackField>().AttackPower = monsterAttackPoint;
+
+
     }
 }

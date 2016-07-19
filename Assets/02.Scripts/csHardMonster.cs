@@ -23,10 +23,11 @@ public class csHardMonster : MonoBehaviour {
     public float checkAttackDistance = 2.0f; //견제공격 범위
     public int monsterAttackPoint;  //몬스터 공격력
     public GameObject attackfield;
-    public GameObject attackfield2; 
-
+    public GameObject attackfield2;
+    public GameObject attackfield3;
     public Transform atkpoint;
     public Transform atkpoint2;
+    public Transform atkpoint3;
     float rotspeed = 2.0f;
     float attackMotionSpeed = 5.0f;
     float rottime = 0.0f;
@@ -272,6 +273,17 @@ public class csHardMonster : MonoBehaviour {
         GameObject AttackFieldObj2 = Instantiate(attackfield2, setPos2, Quaternion.identity) as GameObject;
         
         AttackFieldObj2.GetComponent<csAttackField>().AttackPower = monsterAttackPoint;
+
+    }
+    void MakeCollider3()
+    {
+
+        Vector3 setPos3 = new Vector3(atkpoint3.position.x, transform.position.y, atkpoint3.position.z);
+
+
+        GameObject AttackFieldObj3 = Instantiate(attackfield3, setPos3, Quaternion.identity) as GameObject;
+
+        AttackFieldObj3.GetComponent<csAttackField>().AttackPower = monsterAttackPoint;
 
     }
 }
