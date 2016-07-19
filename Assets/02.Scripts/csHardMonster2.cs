@@ -19,7 +19,7 @@ public class csHardMonster2 : MonoBehaviour {
     float stateTime = 0.0f;    
     public GameObject bullet;
     public Transform firePos;
-    public GameObject enemy;
+   
 
     Transform[] obj;
    

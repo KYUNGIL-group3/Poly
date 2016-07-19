@@ -20,7 +20,7 @@ public class csAttackField : MonoBehaviour {
 		if (col.gameObject.tag == "Player") {
 
 			GameManager.Instance ().PlayerHealth (AttackPower);
-            Destroy(gameObject);
+            Destroy(gameObject,0.5f);
         }
         
     }
