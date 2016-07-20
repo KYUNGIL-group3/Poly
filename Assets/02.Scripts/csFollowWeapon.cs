@@ -19,7 +19,7 @@ public class csFollowWeapon : MonoBehaviour {
 		weapon = GameObject.FindWithTag ("WEAPON");
 		//transform.LookAt (weapon.transform);
 		//transform.Translate (Vector3.forward * 10.0f * Time.deltaTime);
-		transform.position = Vector3.MoveTowards(transform.position, weapon.transform.position , 50.0f * Time.deltaTime);
+		transform.position = Vector3.MoveTowards(transform.position, weapon.transform.position , 30.0f * Time.deltaTime);
 
 
 	}

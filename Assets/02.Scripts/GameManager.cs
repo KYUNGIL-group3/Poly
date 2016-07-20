@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour {
 
 		isGameOver = true;
 		Debug.Log ("GameOver");
+		Time.timeScale = 0.5f;
 	}
 
 	public void GameClear()
@@ -90,6 +91,10 @@ public class GameManager : MonoBehaviour {
 
 	public void PlayerHealth(int hp)
 	{
+		if (isTimeControl) {
+			return;
+		}
+
 		this.hp -= hp;
         Player.GetComponent<csPlayerController>().DamageEF();
         if (this.hp < 0) {

@@ -125,6 +125,8 @@ public class csPlayerController : MonoBehaviour {
 
 	public IEnumerator StartArrayMove(ArrayList vec)
 	{
+
+		GameManager.Instance ().isTimeControl = true;
 		anim.SetBool ("isSkill", true);
 		GameObject moveskillobj = GameObject.Find ("MoveSkillObj");
 		isSkill = true;
@@ -179,7 +181,7 @@ public class csPlayerController : MonoBehaviour {
 
 		cameraPos.gameObject.GetComponent<SmoothFollow>().height = 7;
 		anim.SetBool ("isSkill", false);
-
+		GameManager.Instance ().isTimeControl = false;
 //		moveskillobj.GetComponent<BoxCollider> ().enabled = false;
 		//yield return new WaitForSeconds (1.0f);
 		//moveskillobj.GetComponent<TrailRenderer> ().enabled = false;
