@@ -10,9 +10,9 @@ public class csPlayerController : MonoBehaviour {
 	public float jumpSpeed = 8.0f;
 	public float skillmovespeed = 0.5f;
     public GameObject DamageFx;
-   
-	private Vector3 velocity;
-    
+    float knockbackCount = 10.0f;
+    private Vector3 velocity;
+    bool isKnockBacking = false;
     CharacterController controller = null;
 	Animator anim = null;
 
@@ -90,9 +90,16 @@ public class csPlayerController : MonoBehaviour {
 			else{
 				velocity = new Vector3 (0, 0, 0);
 			}
+            if (isKnockBacking == true)
+            {
+
+                //gameObject.GetComponent<Animator>().enabled = false;
+                KnockBack();
+                return;
+            }
 
 
-				velocity *= walkSpeed;
+            velocity *= walkSpeed;
 			if (CrossPlatformInputManager.GetButtonDown ("Attack")) {
 				isaaaa = true;
 				StartCoroutine (isaaab ());
@@ -227,6 +234,22 @@ public class csPlayerController : MonoBehaviour {
 		GameObject weapon = GameObject.FindWithTag ("WEAPON");
 		weapon.GetComponent<csWeapon> ().targetreset ();
 	}
-    
-    
+    void KnockBack()
+    {
+        knockbackCount -= Time.deltaTime * 20.0f;
+        if (knockbackCount > 0)
+        {
+            Debug.Log("넉백");
+            gameObject.GetComponent<CharacterController>().Move(new Vector3(0.0f, 0.0f, -(knockbackCount) * Time.deltaTime));
+
+        }
+        else {
+
+            isKnockBacking = false;
+            knockbackCount = 10.0f;
+        }
+
+    }
+
+
 }

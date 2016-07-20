@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class csHardMonster : MonoBehaviour {
+public class csBossMonster : MonoBehaviour
+{
     enum STATE
     {
         NONE = -1,
@@ -16,20 +17,19 @@ public class csHardMonster : MonoBehaviour {
     STATE state = STATE.IDLE;
     float stateTime = 0.0f;
     Transform[] obj;
-    public float idleStateMaxTime = 2.0f;   //대기시간,경직시간
-    public float checkMoveDistance = 5.0f; //몬스터 시야
-    public float attackableRange = 2.0f;    //공격범위
-    public float attackStateMaxTime = 5.0f; //공격대기시간
-    public float checkAttackDistance = 2.0f; //견제공격 범위
+    public float idleStateMaxTime = 1.0f;   //대기시간,경직시간
+    public float checkMoveDistance = 20.0f; //몬스터 시야
+    public float attackableRange = 20.0f;    //공격범위
+    public float attackStateMaxTime = 2.0f; //공격대기시간
+    public float checkAttackDistance = 20.0f; //견제공격 범위
     public int monsterAttackPoint;  //몬스터 공격력
-    //float knockbackCount = 10.0f;
-    //public float DelayTime;
+    
     public GameObject attackfield;
     public GameObject attackfield2;
-    public GameObject attackfield3;
+   
     public Transform atkpoint;
     public Transform atkpoint2;
-    public Transform atkpoint3;
+    
     float rotspeed = 2.0f;
     float attackMotionSpeed = 5.0f;
     float rottime = 0.0f;
@@ -47,25 +47,28 @@ public class csHardMonster : MonoBehaviour {
     private int maxmHp;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         player = GameObject.FindWithTag("CharCenter").transform;
         enemyController = GetComponent<CharacterController>();
         obj = gameObject.GetComponentsInChildren<Transform>();
-        maxmHp = GetComponent<csHardMonster>().mHp;
+       
         anim = GetComponent<Animator>();
-        //monsterAttackPoint = GetComponent<csHardMonster>().monsterAttackPoint;
+        monsterAttackPoint = GetComponent<csBossMonster>().monsterAttackPoint;
         Debug.Log(monsterAttackPoint);
 
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-       
-          
-		if (GameManager.Instance ().isGameOver) {
-			return;
-		}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+
+        if (GameManager.Instance().isGameOver)
+        {
+            return;
+        }
 
         switch (state)
         {
@@ -80,49 +83,13 @@ public class csHardMonster : MonoBehaviour {
                     state = STATE.ATTACK;
 
                 }
-                else if (distance <= checkMoveDistance)
-                {
-                    state = STATE.MOVE;
-                }
-
+   
                 break;
-
-            case STATE.MOVE:
-                distance = Vector3.Distance(transform.position, player.position);
-
-
-                anim.SetInteger("AniStep", 0);
-
-                if (distance > checkMoveDistance)
-                {
-                    state = STATE.IDLE;
-                    return;
-                }
-                if (distance < attackableRange + 0.5f)
-                {
-                    state = STATE.ATTACK;
-
-                }
-                else {
-                    Vector3 dir = player.position - transform.position;
-                    dir.y = 0.0f;
-                    dir.Normalize();
-
-                    anim.SetInteger("AniStep", 1);
-                    transform.LookAt(player.parent.transform);
-
-                    enemyController.SimpleMove(dir * speed);
-                }
-
-                break;
-
+          
             case STATE.ATTACK:
                 distance = Vector3.Distance(transform.position, player.position);
                 stateTime += Time.deltaTime;
-
-
                 anim.SetInteger("AniStep", 0);
-
                 if (distance > checkMoveDistance)
                 {
                     state = STATE.IDLE;
@@ -134,25 +101,19 @@ public class csHardMonster : MonoBehaviour {
                     stateTime = 0.0f;
                     if (distance < attackableRange + 0.5f)
                     {
-
-                        anim.SetInteger("AniStep", 2);
-                        transform.LookAt(player.parent.transform);
-
-                        //GameManager.Instance().PlayerHealth(monsterAttackPoint);
+                        
+                        anim.SetInteger("AniStep", 1);
+                        //transform.LookAt(player.parent.transform);
                     }
+                       
+                   
                 }
-
-                if (distance > attackableRange + 0.5f)
-                {
-                    state = STATE.MOVE;
-                }
-
 
                 break;
 
             case STATE.DAMAGE:
 
-              
+
                 if (mHp <= 0)
                 {
                     state = STATE.DEAD;
@@ -168,16 +129,14 @@ public class csHardMonster : MonoBehaviour {
 
                 //}
 
-
-
                 //knockbackCount = 10.0f;
                 if (stateTime > idleStateMaxTime)
                 {
                     stateTime = 0.0f;
                     state = STATE.IDLE;
                 }
-                
-                
+
+
                 break;
 
             case STATE.DEAD:
@@ -206,9 +165,9 @@ public class csHardMonster : MonoBehaviour {
                 }
                 //obj [0].parent = null;
                 //obj [0].gameObject.layer = 12;
-                
-                Destroy(gameObject,0.1f);
-                
+
+                Destroy(gameObject, 0.1f);
+
                 break;
 
         }
@@ -246,64 +205,38 @@ public class csHardMonster : MonoBehaviour {
                 return;
 
             }
-            int CounterPercentage = Random.Range(1, 100);
-            if (CounterPercentage >= 1 && CounterPercentage <= 30)
-            {
-                Debug.Log("카운터");
+           
 
-                CounterAttack();
-                return;
-
-            }
-            
         }
-       
-       
+
+
         stateTime = 0.0f;
         mHp -= WeaponAttackPoint;
 
         state = STATE.DAMAGE;
     }
-    void CounterAttack()
-    {
-        Debug.Log("CounterAttack");
-        transform.LookAt(player.parent.transform);
-        anim.SetInteger("AniStep", 3);
-    }
+   
     void MakeCollider()
     {
-        Vector3 setPos = new Vector3(atkpoint.position.x,transform.position.y, atkpoint.position.z);
-       
+        Vector3 setPos = new Vector3(atkpoint.position.x, 0, atkpoint.position.z-1.0f);
+
 
         GameObject AttackFieldObj = Instantiate(attackfield, setPos, Quaternion.identity) as GameObject;
-       
+
         AttackFieldObj.GetComponent<csAttackField>().AttackPower = monsterAttackPoint;
-        
+
 
     }
     void MakeCollider2()
     {
-       
-        Vector3 setPos2 = new Vector3(atkpoint2.position.x, transform.position.y, atkpoint2.position.z);
 
-       
+        Vector3 setPos2 = new Vector3(atkpoint2.position.x, 0, atkpoint2.position.z-1.0f);
+
+
         GameObject AttackFieldObj2 = Instantiate(attackfield2, setPos2, Quaternion.identity) as GameObject;
-        
+
         AttackFieldObj2.GetComponent<csAttackField>().AttackPower = monsterAttackPoint;
 
     }
-    //반격용 콜라이더를 만듬
-    public void MakeCollider3()
-    {
-
-        Vector3 setPos3 = new Vector3(atkpoint3.position.x, transform.position.y, atkpoint3.position.z);
-
-
-        GameObject AttackFieldObj3 = Instantiate(attackfield3, setPos3, Quaternion.identity) as GameObject;
-
-        AttackFieldObj3.GetComponent<csCounterField>().AttackPower = monsterAttackPoint;
-        
-
-    }
-    
+   
 }

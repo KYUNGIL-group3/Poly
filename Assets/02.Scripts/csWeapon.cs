@@ -48,7 +48,9 @@ public class csWeapon : MonoBehaviour {
 					col.gameObject.GetComponent<csHardMonster>().Damage(AttackPoint);
 				if (col.gameObject.GetComponent<csHardMonster2>())
 					col.gameObject.GetComponent<csHardMonster2>().Damage(AttackPoint);
-			}
+                if (col.gameObject.GetComponent<csBossMonster>())
+                    col.gameObject.GetComponent<csBossMonster>().Damage(AttackPoint);
+            }
 		}
 	}
 
