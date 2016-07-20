@@ -48,6 +48,10 @@ public class csPlayerController : MonoBehaviour {
 //			isAttack = true;
 //			anim.SetBool ("isAttack", true);
 //		}
+
+		if (GameManager.Instance ().isTimeControl) {
+			return;
+		}
         
 		if (GameManager.Instance ().isGameOver) {
 			if (DeadAction) {
