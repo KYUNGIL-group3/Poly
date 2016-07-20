@@ -100,22 +100,22 @@ public class SceneManager : MonoBehaviour {
 		PlayerPrefs.SetInt ("DeadCount" , count);
 	}
 
-	void Weapon1Set(int WeaponNum)
+	public void Weapon1Set(int WeaponNum)
 	{
 		PlayerPrefs.SetInt ("Weapon1" , WeaponNum);
 	}
 
-	void Weapon2Set(int WeaponNum)
+	public void Weapon2Set(int WeaponNum)
 	{
 		PlayerPrefs.SetInt ("Weapon2" , WeaponNum);
 	}
 
-	int Weapon1Get(int WeaponNum)
+	public int Weapon1Get()
 	{
 		return PlayerPrefs.GetInt ("Weapon1");
 	}
 
-	int Weapon2Get(int WeaponNum)
+	public int Weapon2Get()
 	{
 		return PlayerPrefs.GetInt ("Weapon2");
 	}
