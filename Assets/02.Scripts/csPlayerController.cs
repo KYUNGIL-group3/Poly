@@ -10,9 +10,10 @@ public class csPlayerController : MonoBehaviour {
 	public float jumpSpeed = 8.0f;
 	public float skillmovespeed = 0.5f;
     public GameObject DamageFx;
+   
 	private Vector3 velocity;
-
-	CharacterController controller = null;
+    
+    CharacterController controller = null;
 	Animator anim = null;
 
 	Vector3[] pointpos;
@@ -47,7 +48,7 @@ public class csPlayerController : MonoBehaviour {
 //			isAttack = true;
 //			anim.SetBool ("isAttack", true);
 //		}
-
+        
 		if (GameManager.Instance ().isGameOver) {
 			if (DeadAction) {
 				DeadAction = false;
@@ -114,7 +115,9 @@ public class csPlayerController : MonoBehaviour {
 			velocity.y -= (gravity);
 			controller.Move (velocity * Time.deltaTime);
 		}
-	}
+        
+
+    }
 
 	public IEnumerator StartArrayMove(ArrayList vec)
 	{
@@ -218,4 +221,6 @@ public class csPlayerController : MonoBehaviour {
 		GameObject weapon = GameObject.FindWithTag ("WEAPON");
 		weapon.GetComponent<csWeapon> ().targetreset ();
 	}
+    
+    
 }

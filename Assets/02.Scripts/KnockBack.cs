@@ -36,23 +36,17 @@ public class KnockBack : MonoBehaviour {
         
         
     //}
-    IEnumerator Knockback(GameObject other)
+    void Knockback()
     {
-        float startKnockback = Time.time;
-        while (Time.time <= (startKnockback + .2))
-        {
-            Debug.Log("aaa");
-            other.transform.Translate(0, 0, -20 * Time.deltaTime);
-            yield return null;
-        }
+        gameObject.GetComponent<CharacterController>().Move(new Vector3(0.0f, 0.0f, -2.0f));
     }
 
-    void OnControllerColliderHit(ControllerColliderHit hit)
+    void OnTriggerEnter(Collider col)   
     {
-        if (hit.gameObject.tag == "CounterField")
+        if (col.gameObject.tag == "WEAPON")
         {
             Debug.Log("접촉");
-            StartCoroutine(Knockback(hit.gameObject));
+            Knockback();
         }
 
     }

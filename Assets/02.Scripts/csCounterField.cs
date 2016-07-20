@@ -5,20 +5,20 @@ public class csCounterField : MonoBehaviour {
     public int AttackPower;
     // Use this for initialization
     void Start () {
-	
-	}
+        Destroy(gameObject, 0.5f);
+    }
 	
 	// Update is called once per frame
 	void Update () {
-	
+        
 	}
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Player")
         {
 
             GameManager.Instance().PlayerHealth(AttackPower);
-            Destroy(gameObject, 0.5f);
+            Destroy(gameObject);
         }
     }
 }

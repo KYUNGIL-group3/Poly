@@ -178,19 +178,21 @@ public class csHardMonster2 : MonoBehaviour {
                 break;
 
             case STATE.DAMAGE:
-
+                stateTime += Time.deltaTime;
                 if (mHp <= 0)
                 {
                     state = STATE.DEAD;
                     GameManager.Instance().SkillGauge(1);
                     break;
                 }
-                stateTime += Time.deltaTime;
+
                 if (stateTime > idleStateMaxTime)
                 {
                     stateTime = 0.0f;
                     state = STATE.IDLE;
                 }
+                
+                
                 break;
 
             case STATE.DEAD:

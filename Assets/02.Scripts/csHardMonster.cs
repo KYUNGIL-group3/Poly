@@ -22,6 +22,8 @@ public class csHardMonster : MonoBehaviour {
     public float attackStateMaxTime = 5.0f; //공격대기시간
     public float checkAttackDistance = 2.0f; //견제공격 범위
     public int monsterAttackPoint;  //몬스터 공격력
+    //float knockbackCount = 10.0f;
+    //public float DelayTime;
     public GameObject attackfield;
     public GameObject attackfield2;
     public GameObject attackfield3;
@@ -150,6 +152,7 @@ public class csHardMonster : MonoBehaviour {
 
             case STATE.DAMAGE:
 
+              
                 if (mHp <= 0)
                 {
                     state = STATE.DEAD;
@@ -158,12 +161,23 @@ public class csHardMonster : MonoBehaviour {
                 }
 
                 stateTime += Time.deltaTime;
+                //knockbackCount-=Time.deltaTime*20.0f;
+                //if (knockbackCount > 0)
+                //{
+                //    gameObject.GetComponent<CharacterController>().Move(new Vector3(0.0f, 0.0f, -(knockbackCount) * Time.deltaTime));
 
+                //}
+
+
+
+                //knockbackCount = 10.0f;
                 if (stateTime > idleStateMaxTime)
                 {
                     stateTime = 0.0f;
                     state = STATE.IDLE;
                 }
+                
+                
                 break;
 
             case STATE.DEAD:
@@ -243,7 +257,8 @@ public class csHardMonster : MonoBehaviour {
             }
             
         }
-
+       
+       
         stateTime = 0.0f;
         mHp -= WeaponAttackPoint;
 
@@ -251,6 +266,7 @@ public class csHardMonster : MonoBehaviour {
     }
     void CounterAttack()
     {
+        Debug.Log("CounterAttack");
         transform.LookAt(player.parent.transform);
         anim.SetInteger("AniStep", 3);
     }
