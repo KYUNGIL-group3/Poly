@@ -38,7 +38,9 @@ public class GameManager : MonoBehaviour {
         if (_instance == null)
         {
             _instance = this;
-        }
+		}
+		weapon1num = SceneManager.Instance ().Weapon1Get ();
+		weapon2num = SceneManager.Instance ().Weapon2Get ();
     }
 
 	void Start () {
@@ -46,9 +48,6 @@ public class GameManager : MonoBehaviour {
        
         hp = maxHp;
         gauge = 0;
-
-		weapon1num = SceneManager.Instance ().Weapon1Get ();
-		weapon2num = SceneManager.Instance ().Weapon2Get ();
 
 		//weapon1num = 0;
 		//weapon2num = 1;
