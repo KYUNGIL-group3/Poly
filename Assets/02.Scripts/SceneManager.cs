@@ -165,7 +165,6 @@ public class SceneManager : MonoBehaviour {
 		return false;
 	}
 
-
     public void StartButton()
     {
 		Application.LoadLevel ("POLY_ROBY");

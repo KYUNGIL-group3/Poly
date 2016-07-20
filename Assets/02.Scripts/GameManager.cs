@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityStandardAssets.CrossPlatformInput;
+using UnityStandardAssets.Utility;
 
 public class GameManager : MonoBehaviour {
 
 	static GameManager _instance = null;
-	public Slider healthBarSlider;
-	public Slider skillBarSlider;
+	Slider healthBarSlider;
+	Slider skillBarSlider;
     public GameObject recovery; 
     GameObject Player;
+	public GameObject OptionCamvas;
     
 	public static GameManager Instance()
 	{
@@ -41,14 +44,17 @@ public class GameManager : MonoBehaviour {
 		}
 		weapon1num = SceneManager.Instance ().Weapon1Get ();
 		weapon2num = SceneManager.Instance ().Weapon2Get ();
+
     }
 
 	void Start () {
 		Player = GameObject.Find ("Player");
-       
+		healthBarSlider = GameObject.Find ("Hp").GetComponent<Slider> ();
+		skillBarSlider = GameObject.Find ("SkillGauge").GetComponent<Slider> ();
         hp = maxHp;
         gauge = 0;
 
+		OptionCamvas.SetActive (false);
 		//weapon1num = 0;
 		//weapon2num = 1;
 	}
@@ -130,6 +136,14 @@ public class GameManager : MonoBehaviour {
 	public int Weapon2Num()
 	{
 		return weapon2num;
+	}
+
+	public void OptionButton(){
+		if (isTimeControl) {
+			return;
+		}
+		Time.timeScale = 0.0f;
+		OptionCamvas.SetActive (true);
 	}
 
 }

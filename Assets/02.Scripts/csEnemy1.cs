@@ -151,7 +151,7 @@ public class csEnemy1 : MonoBehaviour {
 
 			}
 			//obj [0].parent = null;
-			//obj [0].gameObject.layer = 12;
+			gameObject.layer = 12;
 			Destroy(gameObject,0.1f);
 			break;
                 
