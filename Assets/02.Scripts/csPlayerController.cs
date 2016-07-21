@@ -17,7 +17,7 @@ public class csPlayerController : MonoBehaviour {
 	Animator anim = null;
 
 	Vector3[] pointpos;
-
+    Vector3 nomalizedDistance;
 
 	public bool ismove = true;
 	public bool isidle = true;
@@ -33,9 +33,10 @@ public class csPlayerController : MonoBehaviour {
 
 	GameObject[] parentlist;
 	GameObject[] childlist;
-
+    
 	// Use this for initialization
 	void Start () {
+        
 		controller = GetComponent<CharacterController> ();
 		anim = GetComponent<Animator> ();
 		cameraFollow = GameObject.Find ("GameManager").GetComponent<csCameraFollow> ();
@@ -234,14 +235,29 @@ public class csPlayerController : MonoBehaviour {
 		GameObject weapon = GameObject.FindWithTag ("WEAPON");
 		weapon.GetComponent<csWeapon> ().targetreset ();
 	}
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "CounterField")
+        {
+            Debug.Log("aaa");
+            
+            Vector3 distance = transform.position - col.transform.parent.position;
+            distance.Normalize();
+            nomalizedDistance = distance;
+            
+            isKnockBacking = true;
+        }
+
+    }
     void KnockBack()
     {
         knockbackCount -= Time.deltaTime * 20.0f;
         if (knockbackCount > 0)
         {
             Debug.Log("넉백");
-            gameObject.GetComponent<CharacterController>().Move(new Vector3(0.0f, 0.0f, -(knockbackCount) * Time.deltaTime));
 
+            //gameObject.GetComponent<CharacterController>().Move(new Vector3(0.0f, 0.0f, -(knockbackCount) * Time.deltaTime));
+            gameObject.GetComponent<CharacterController>().Move(nomalizedDistance*15.0f*Time.deltaTime);
         }
         else {
 
