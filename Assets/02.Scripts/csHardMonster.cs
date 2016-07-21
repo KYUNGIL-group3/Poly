@@ -237,7 +237,7 @@ public class csHardMonster : MonoBehaviour {
     {
         if (mHp < maxmHp * 0.5)
         {
-
+        
             int percentage = Random.Range(1, 100);
             if (percentage >= 1 && percentage <= 30)
             {
@@ -302,6 +302,7 @@ public class csHardMonster : MonoBehaviour {
         GameObject AttackFieldObj3 = Instantiate(attackfield3, setPos3, Quaternion.identity) as GameObject;
 
         AttackFieldObj3.GetComponent<csCounterField>().AttackPower = monsterAttackPoint;
+        //AttackFieldObj3이 해당 스크립트를 가진 오브젝트의 자식으로 들어간다.(해당 오브젝트가 AttackFieldObj3의 부모가 된다.)
         AttackFieldObj3.transform.parent = gameObject.transform;
     }
     

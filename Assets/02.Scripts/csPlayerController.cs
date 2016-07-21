@@ -10,13 +10,19 @@ public class csPlayerController : MonoBehaviour {
 	public float jumpSpeed = 8.0f;
 	public float skillmovespeed = 0.5f;
     public GameObject DamageFx;
+    public GameObject bullet;
+   
+    public float reloadTime = 4.0f;
+    public float reloadmaxTime = 5.0f;
     float knockbackCount = 10.0f;
     private Vector3 velocity;
     bool isKnockBacking = false;
     CharacterController controller = null;
+   
 	Animator anim = null;
 
 	Vector3[] pointpos;
+    //플레이어와 적의 거리는 항상 바뀌므로 고정된 벡터 값을 저장하는 변수 추가
     Vector3 nomalizedDistance;
 
 	public bool ismove = true;
@@ -41,16 +47,17 @@ public class csPlayerController : MonoBehaviour {
 		anim = GetComponent<Animator> ();
 		cameraFollow = GameObject.Find ("GameManager").GetComponent<csCameraFollow> ();
 		GameManager.Instance ().isGameOver = false;
+       
 	}
 	
 	// Update is called once per frame
 	void Update () {
-//		if (isaaaa) {
-//			isAttack = true;
-//			anim.SetBool ("isAttack", true);
-//		}
-
-		if (GameManager.Instance ().isTimeControl) {
+        //		if (isaaaa) {
+        //			isAttack = true;
+        //			anim.SetBool ("isAttack", true);
+        //		}
+       
+        if (GameManager.Instance ().isTimeControl) {
 			return;
 		}
         
@@ -264,6 +271,22 @@ public class csPlayerController : MonoBehaviour {
             isKnockBacking = false;
             knockbackCount = 10.0f;
         }
+
+    }
+    void Fire()
+    {
+        Transform firePos;
+        firePos = GameObject.FindWithTag("firePos").transform;
+
+        Debug.Log("발사");
+        GameObject bullettemp = Instantiate(bullet, firePos.position, firePos.rotation)as GameObject;
+        
+        Vector3 dir = firePos.position - transform.position;
+
+        dir.Normalize();
+        dir.y = 0.0f;
+        bullettemp.gameObject.GetComponent<Rigidbody>().AddForce(dir * 900.0f);
+        //bullettemp.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward * 900.0f);
 
     }
 

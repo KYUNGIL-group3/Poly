@@ -283,14 +283,14 @@ public class csHardMonster2 : MonoBehaviour {
         transform.LookAt(player.parent.transform);
         anim.SetInteger("AniStep", 3);
     }
-    void MakeCollider()
+    void MakeCollider3()
     {
         Vector3 setPos = new Vector3(atkpoint.position.x, transform.position.y, atkpoint.position.z);
 
 
         GameObject AttackFieldObj = Instantiate(attackfield, setPos, Quaternion.identity) as GameObject;
 
-        AttackFieldObj.GetComponent<csAttackField>().AttackPower = monsterAttackPoint;
+        AttackFieldObj.GetComponent<csCounterField>().AttackPower = monsterAttackPoint;
 
 
     }
