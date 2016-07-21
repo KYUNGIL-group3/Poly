@@ -107,6 +107,16 @@ public class GameManager : MonoBehaviour {
 		Victory ();
 		Transform[] DesSpwanPoint = AllSpwanPoint.GetComponentsInChildren<Transform> ();
 		for (int i = 1; i < DesSpwanPoint.Length; i++) {
+			if(DesSpwanPoint[i].gameObject.GetComponent<csEnemy1> ())
+				DesSpwanPoint[i].gameObject.GetComponent<csEnemy1> ().Damage(10000);
+			if(DesSpwanPoint[i].gameObject.GetComponent<csEnemy2> ())
+				DesSpwanPoint[i].gameObject.GetComponent<csEnemy2> ().Damage(10000);
+			if (DesSpwanPoint[i].gameObject.GetComponent<csHardMonster>())
+				DesSpwanPoint[i].gameObject.GetComponent<csHardMonster>().Damage(10000);
+			if (DesSpwanPoint[i].gameObject.GetComponent<csHardMonster2>())
+				DesSpwanPoint[i].gameObject.GetComponent<csHardMonster2>().Damage(10000);
+			if (DesSpwanPoint[i].gameObject.GetComponent<csBossMonster>())
+				DesSpwanPoint[i].gameObject.GetComponent<csBossMonster>().Damage(10000);
 		}
 
 		isGameClear = true;
