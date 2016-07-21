@@ -19,6 +19,10 @@ public class csBullet : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col)
 	{
+		if (gameObject.transform.parent != null) {
+			return;
+		}
+
 		if (col.gameObject.layer == 13) {
 
 			Destroy (gameObject);

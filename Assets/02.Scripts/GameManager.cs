@@ -10,9 +10,17 @@ public class GameManager : MonoBehaviour {
 	Slider healthBarSlider;
 	Slider skillBarSlider;
     public GameObject recovery; 
-    GameObject Player;
+	GameObject Player;
 	public GameObject OptionCamvas;
+	public GameObject VictoryCamvas;
+	public GameObject FailCamvas;
+
+	public GameObject Boss;
+	public GameObject AllSpwanPoint;
+	bool once = true;
     
+	int count = 0;
+
 	public static GameManager Instance()
 	{
 		return _instance;
@@ -31,6 +39,8 @@ public class GameManager : MonoBehaviour {
 
 	float tencount = 10.0f;
 	float timecount = 0.0f;
+
+	public int countmons;
 
 	public bool isTimeControl = false;
 
@@ -61,6 +71,14 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (once) {
+			if (!Boss) {
+				once = false;
+				GameClear ();
+
+			}
+		}
+
 		timecount += Time.deltaTime;
 		if (timecount > tencount) {
 			timecount = 0.0f;
@@ -75,6 +93,7 @@ public class GameManager : MonoBehaviour {
 		if (isGameOver)
 		return;
 
+		Fail ();
 		isGameOver = true;
 		Debug.Log ("GameOver");
 		Time.timeScale = 0.5f;
@@ -85,8 +104,14 @@ public class GameManager : MonoBehaviour {
 		if (isGameClear)
 			return;
 
+		Victory ();
+		Transform[] DesSpwanPoint = AllSpwanPoint.GetComponentsInChildren<Transform> ();
+		for (int i = 1; i < DesSpwanPoint.Length; i++) {
+		}
+
 		isGameClear = true;
 		Debug.Log ("GameClear");
+		Time.timeScale = 0.5f;
 	}
 
 	public void PlayerHealth(int hp)
@@ -151,4 +176,17 @@ public class GameManager : MonoBehaviour {
 		OptionCamvas.SetActive (true);
 	}
 
+	public void Victory(){
+		VictoryCamvas.SetActive (true);
+	}
+
+	public void Fail(){
+		FailCamvas.SetActive (true);
+	}
+
+	public void abncc()
+	{
+		count++;
+		Debug.Log (count);
+	}
 }

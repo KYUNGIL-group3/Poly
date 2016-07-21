@@ -25,8 +25,8 @@ public class csPointSetPosition : MonoBehaviour {
 			once = true;
 			RaycastHit hit;
 
-			if (Physics.Raycast (transform.position, Vector3.forward, out hit, 1.5f, 1 << 14)
-				|| Physics.Raycast (transform.position, Vector3.forward, out hit, 1.5f, 1 << 13)) {
+			if (Physics.Raycast (transform.position, Vector3.forward, out hit, 1.0f, 1 << 14)
+				|| Physics.Raycast (transform.position, Vector3.forward, out hit, 1.0f, 1 << 13)) {
 
 			} else {
 				GameObject goTemp = Instantiate (pointsprite, transform.position + Vector3.forward * 1.0f,
@@ -36,8 +36,8 @@ public class csPointSetPosition : MonoBehaviour {
 			}
 
 
-			if (Physics.Raycast (transform.position, Vector3.back, out hit, 1.5f, 1 << 14)
-				|| Physics.Raycast (transform.position, Vector3.back, out hit, 1.5f, 1 << 13)) {
+			if (Physics.Raycast (transform.position, Vector3.back, out hit, 1.0f, 1 << 14)
+				|| Physics.Raycast (transform.position, Vector3.back, out hit, 1.0f, 1 << 13)) {
 
 			} else {
 				GameObject goTemp = Instantiate (pointsprite, transform.position + Vector3.back * 1.0f,
@@ -46,8 +46,8 @@ public class csPointSetPosition : MonoBehaviour {
 				goTemp.GetComponent<csPointSetPosition> ().pointcount = this.pointcount;
 			}
 
-			if (Physics.Raycast (transform.position, Vector3.right, out hit, 1.5f, 1 << 14)
-				||Physics.Raycast (transform.position, Vector3.right, out hit, 1.5f, 1 << 13)) {
+			if (Physics.Raycast (transform.position, Vector3.right, out hit, 1.0f, 1 << 14)
+				||Physics.Raycast (transform.position, Vector3.right, out hit, 1.0f, 1 << 13)) {
 
 			} else {
 				GameObject goTemp = Instantiate (pointsprite, transform.position + Vector3.right * 1.0f,
@@ -56,8 +56,8 @@ public class csPointSetPosition : MonoBehaviour {
 				goTemp.GetComponent<csPointSetPosition> ().pointcount = this.pointcount;
 			}
 
-			if (Physics.Raycast (transform.position, Vector3.left, out hit, 1.5f, 1 << 14)
-				||Physics.Raycast (transform.position, Vector3.left, out hit, 1.5f, 1 << 13)) {
+			if (Physics.Raycast (transform.position, Vector3.left, out hit, 1.0f, 1 << 14)
+				||Physics.Raycast (transform.position, Vector3.left, out hit, 1.0f, 1 << 13)) {
 
 			} else {
 				GameObject goTemp = Instantiate (pointsprite, transform.position + Vector3.left * 1.0f,

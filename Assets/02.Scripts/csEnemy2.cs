@@ -18,7 +18,7 @@ public class csEnemy2 : MonoBehaviour
     STATE state = STATE.IDLE;
     float stateTime = 0.0f;   
     public GameObject bullet;
-   
+	public GameObject bulletDestroy;
 	Transform[] obj;
 	public float idleStateMaxTime = 2.0f;   //대기시간,경직시간
 	public float checkMoveDistance = 5.0f; //몬스터 시야
@@ -166,7 +166,8 @@ public class csEnemy2 : MonoBehaviour
 		case STATE.DEAD:
 			state = STATE.NONE;
 
-
+			bulletDestroy.GetComponent<csNullparentDestroy> ().DestroyAll();
+		
 			obj = gameObject.GetComponentsInChildren<Transform> ();
 
 			if (gameObject.GetComponent<Animator> () != null) {
@@ -174,12 +175,24 @@ public class csEnemy2 : MonoBehaviour
 			}
 
 			for (int i = 1; i < obj.Length; i++) {
-				obj [i].gameObject.AddComponent<Rigidbody> ();
-				obj [i].gameObject.AddComponent<BoxCollider> ();
+				if (obj [i].gameObject.tag == "EMissile") {
+					continue;
+				}
+
+				if (obj [i].gameObject.tag == "EnemyDown") {
+					continue;
+				}
+
+				if (obj [i].gameObject.GetComponent<Rigidbody> () == null) {
+					obj [i].gameObject.AddComponent<Rigidbody> ();
+				}
+				if (obj [i].gameObject.GetComponent<BoxCollider> () == null) {
+					obj [i].gameObject.AddComponent<BoxCollider> ();
+				}
 				obj [i].gameObject.GetComponent<BoxCollider> ().center = new Vector3 (0.0f, 0.0f, 0.0f);
 				obj [i].gameObject.GetComponent<BoxCollider> ().size = new Vector3 (0.2f, 0.2f, 0.2f);
 				obj [i].gameObject.AddComponent<csFollowWeapon> ();
-				//Destroy(obj [i].gameObject , 3.0f);
+
 				obj [i].parent = null;
 				obj [i].gameObject.layer = 12;
 
