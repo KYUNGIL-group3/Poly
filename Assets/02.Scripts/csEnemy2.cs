@@ -151,16 +151,16 @@ public class csEnemy2 : MonoBehaviour
 
 		case STATE.DAMAGE:
 
-			if (mHp <= 0) {
-				state = STATE.DEAD;
-				GameManager.Instance ().SkillGauge (1);
-				break;
-			}
-			stateTime += Time.deltaTime;
-			if (stateTime > idleStateMaxTime) {
-				stateTime = 0.0f;
-				state = STATE.IDLE;
-			}
+			//if (mHp <= 0) {
+			//	state = STATE.DEAD;
+			//	GameManager.Instance ().SkillGauge (1);
+			//	break;
+			//}
+			//stateTime += Time.deltaTime;
+			//if (stateTime > idleStateMaxTime) {
+			//	stateTime = 0.0f;
+			//	state = STATE.IDLE;
+			//}
 			break;
 
 		case STATE.DEAD:
@@ -209,12 +209,17 @@ public class csEnemy2 : MonoBehaviour
 	{
 
 		//anim.SetBool ("Damage", true);
-		stateTime = 0.0f;
+		//stateTime = 0.0f;
 		mHp -= WeaponAttackPoint;
-		state = STATE.DAMAGE;
-	}
+        if (mHp <= 0)
+        {
+            state = STATE.DEAD;
+            GameManager.Instance().SkillGauge(1);
+           
+        }
+    }
 
-	IEnumerator istrigger()
+    IEnumerator istrigger()
 	{
 		yield return new WaitForSeconds (0.5f);
 		gameObject.GetComponent<CapsuleCollider> ().isTrigger = false;

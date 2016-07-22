@@ -153,14 +153,14 @@ public class csHardMonster : MonoBehaviour {
             case STATE.DAMAGE:
 
               
-                if (mHp <= 0)
-                {
-                    state = STATE.DEAD;
-                    GameManager.Instance().SkillGauge(1);
-                    break;
-                }
+                //if (mHp <= 0)
+                //{
+                //    state = STATE.DEAD;
+                //    GameManager.Instance().SkillGauge(1);
+                //    break;
+                //}
 
-                stateTime += Time.deltaTime;
+                //stateTime += Time.deltaTime;
                 //knockbackCount-=Time.deltaTime*20.0f;
                 //if (knockbackCount > 0)
                 //{
@@ -170,12 +170,13 @@ public class csHardMonster : MonoBehaviour {
 
 
 
-                //knockbackCount = 10.0f;
-                if (stateTime > idleStateMaxTime)
-                {
-                    stateTime = 0.0f;
-                    state = STATE.IDLE;
-                }
+                ////knockbackCount = 10.0f;
+                ////if (stateTime > idleStateMaxTime)
+                ////{
+                //    Debug.Log("a");
+                //    stateTime = 0.0f;
+                //    state = STATE.IDLE;
+                ////}
                 
                 
                 break;
@@ -275,12 +276,16 @@ public class csHardMonster : MonoBehaviour {
             }
             
         }
-       
-       
-        stateTime = 0.0f;
+
+        //stateTime = 0.0f;
         mHp -= WeaponAttackPoint;
 
-        state = STATE.DAMAGE;
+        if (mHp <= 0)
+        {
+            state = STATE.DEAD;
+            GameManager.Instance().SkillGauge(1);
+            
+        }
     }
     void CounterAttack()
     {

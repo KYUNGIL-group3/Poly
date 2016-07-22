@@ -36,24 +36,7 @@ public class csBullet : MonoBehaviour {
 
 			Destroy (gameObject);
 		}
-        if (col.gameObject.tag == "Enemy")
-        {
-            if (once)
-            {
-                once = false;
-                if (col.gameObject.GetComponent<csEnemy1>())
-                    col.gameObject.GetComponent<csEnemy1>().Damage(bulletdamage);
-                if (col.gameObject.GetComponent<csEnemy2>())
-                    col.gameObject.GetComponent<csEnemy2>().Damage(bulletdamage);
-                if (col.gameObject.GetComponent<csHardMonster>())
-                    col.gameObject.GetComponent<csHardMonster>().Damage(bulletdamage);
-                if (col.gameObject.GetComponent<csHardMonster2>())
-                    col.gameObject.GetComponent<csHardMonster2>().Damage(bulletdamage);
-
-            }
-
-            Destroy(gameObject);
-        }
+        
 
     }
 }

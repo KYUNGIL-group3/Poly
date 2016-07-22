@@ -178,19 +178,19 @@ public class csHardMonster2 : MonoBehaviour {
                 break;
 
             case STATE.DAMAGE:
-                stateTime += Time.deltaTime;
-                if (mHp <= 0)
-                {
-                    state = STATE.DEAD;
-                    GameManager.Instance().SkillGauge(1);
-                    break;
-                }
+                //stateTime += Time.deltaTime;
+                //if (mHp <= 0)
+                //{
+                //    state = STATE.DEAD;
+                //    GameManager.Instance().SkillGauge(1);
+                //    break;
+                //}
 
-                if (stateTime > idleStateMaxTime)
-                {
-                    stateTime = 0.0f;
-                    state = STATE.IDLE;
-                }
+                //if (stateTime > idleStateMaxTime)
+                //{
+                //    stateTime = 0.0f;
+                //    state = STATE.ATTACK;
+                //}
                 
                 
                 break;
@@ -260,9 +260,14 @@ public class csHardMonster2 : MonoBehaviour {
             }
         }
         //anim.SetBool ("Damage", true);
-        stateTime = 0.0f;
+        //stateTime = 0.0f;
         mHp -= WeaponAttackPoint;
-        state = STATE.DAMAGE;
+        if (mHp <= 0)
+        {
+            state = STATE.DEAD;
+            GameManager.Instance().SkillGauge(1);
+           
+        }
     }
 
     void Fire()
@@ -276,7 +281,7 @@ public class csHardMonster2 : MonoBehaviour {
         Vector3 dir = player.position - bullettemp.transform.position;
         dir.Normalize();
         bullettemp.transform.LookAt(player);
-        bullettemp.gameObject.GetComponent<Rigidbody>().AddForce(dir * 500.0f);
+        bullettemp.gameObject.GetComponent<Rigidbody>().AddForce(dir * 900.0f);
 
         reloadTime = 0.0f;
         stateTime = 0.0f;

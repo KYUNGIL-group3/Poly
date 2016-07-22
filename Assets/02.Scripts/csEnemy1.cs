@@ -118,16 +118,16 @@ public class csEnemy1 : MonoBehaviour {
 
 		case STATE.DAMAGE:
 
-			if (mHp <= 0) {
-				state = STATE.DEAD;
-				GameManager.Instance ().SkillGauge (1);
-				break;
-			}
-			stateTime += Time.deltaTime;
-			if (stateTime > idleStateMaxTime) {
-				stateTime = 0.0f;
-				state = STATE.IDLE;
-			}
+			//if (mHp <= 0) {
+			//	state = STATE.DEAD;
+			//	GameManager.Instance ().SkillGauge (1);
+			//	break;
+			//}
+			//stateTime += Time.deltaTime;
+			//if (stateTime > idleStateMaxTime) {
+			//	stateTime = 0.0f;
+			//	state = STATE.IDLE;
+			//}
 			break;
 
 		case STATE.DEAD:
@@ -179,10 +179,15 @@ public class csEnemy1 : MonoBehaviour {
 
 	public void Damage(int WeaponAttackPoint)
 	{
-		stateTime = 0.0f;
+		//stateTime = 0.0f;
         mHp -= WeaponAttackPoint;
-        state = STATE.DAMAGE;
-	}
+        if (mHp <= 0)
+        {
+            state = STATE.DEAD;
+            GameManager.Instance().SkillGauge(1);
+           
+        }
+    }
 
 	IEnumerator istrigger()
 	{
