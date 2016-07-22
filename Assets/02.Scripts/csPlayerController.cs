@@ -33,6 +33,8 @@ public class csPlayerController : MonoBehaviour {
 
 	csCameraFollow cameraFollow;
 
+	Transform MainCamera;
+
 	bool DeadAction = true;
 
 	bool isaaaa = false;
@@ -46,6 +48,7 @@ public class csPlayerController : MonoBehaviour {
 		controller = GetComponent<CharacterController> ();
 		anim = GetComponent<Animator> ();
 		cameraFollow = GameObject.Find ("GameManager").GetComponent<csCameraFollow> ();
+		MainCamera = GameObject.Find ("Main Camera").transform;
 		GameManager.Instance ().isGameOver = false;
        
 	}
@@ -87,8 +90,13 @@ public class csPlayerController : MonoBehaviour {
 			return;
 		}
 
-		if (GameManager.Instance ().isGameClear)
+		if (GameManager.Instance ().isGameClear) {
+
+			anim.SetBool ("isMove", false);
+
+			anim.SetBool ("isAttack", false);
 			return;
+		}
 
 		if (ismove) {
 			if (!isAttack) {
@@ -172,8 +180,8 @@ public class csPlayerController : MonoBehaviour {
 			//dir.Normalize ();
 			transform.LookAt ((Vector3)pointpos [a]);
 
-			GameObject goTemp = Instantiate (SkillDamage, dir + new Vector3(0.0f,1.0f,0.0f),
-				transform.rotation) as GameObject;
+			GameObject goTemp = Instantiate (SkillDamage, dir + new Vector3 (0.0f, 1.0f, 0.0f),
+				                    transform.rotation) as GameObject;
 
 			transform.position = (Vector3)pointpos [a];
 
@@ -221,7 +229,7 @@ public class csPlayerController : MonoBehaviour {
 
 	IEnumerator isaaab()
 	{
-		yield return new WaitForSeconds (0.5f);
+		yield return new WaitForSeconds (0.2f);
 		isaaaa = false;
 	}
 
@@ -246,8 +254,6 @@ public class csPlayerController : MonoBehaviour {
     {
         if (col.gameObject.tag == "CounterField")
         {
-            Debug.Log("aaa");
-            
             Vector3 distance = transform.position - col.transform.parent.position;
             distance.Normalize();
             nomalizedDistance = distance;
@@ -261,8 +267,6 @@ public class csPlayerController : MonoBehaviour {
         knockbackCount -= Time.deltaTime * 20.0f;
         if (knockbackCount > 0)
         {
-            Debug.Log("넉백");
-
             //gameObject.GetComponent<CharacterController>().Move(new Vector3(0.0f, 0.0f, -(knockbackCount) * Time.deltaTime));
             gameObject.GetComponent<CharacterController>().Move(nomalizedDistance*15.0f*Time.deltaTime);
         }
@@ -281,7 +285,7 @@ public class csPlayerController : MonoBehaviour {
         //firePos2 = GameObject.FindWithTag("firePos2").transform;
         firePos = GameObject.Find("firePos1").transform;
         firePos2 = GameObject.Find("firePos2").transform;
-        Debug.Log("발사");
+
         GameObject bullettemp = Instantiate(bullet, firePos.position, firePos.rotation)as GameObject;
         
         Vector3 dir = firePos.position - firePos2.position;
@@ -293,5 +297,24 @@ public class csPlayerController : MonoBehaviour {
 
     }
 
+	IEnumerator shake()
+	{
+		float shake = 0.3f;
+		float shakeAmount = 1.5f;
+		float decreaseFactor = 1.0f;
+		Vector3 originalPos;
+
+		originalPos = MainCamera.position;
+
+		while (shake > 0) {
+
+			MainCamera.position = originalPos + Random.insideUnitSphere * shakeAmount;
+			shake -= Time.deltaTime * decreaseFactor;
+			yield return new WaitForSeconds (0.01f);
+		}
+
+		MainCamera.position = originalPos;
+
+	}
 
 }
