@@ -43,6 +43,8 @@ public class PlayerBullet : MonoBehaviour
                     col.gameObject.GetComponent<csHardMonster>().Damage(bulletdamage);
                 if (col.gameObject.GetComponent<csHardMonster2>())
                     col.gameObject.GetComponent<csHardMonster2>().Damage(bulletdamage);
+                if (col.gameObject.GetComponent<csBossMonster>())
+                    col.gameObject.GetComponent<csBossMonster>().Damage(bulletdamage);
 
             }
 
