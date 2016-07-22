@@ -152,7 +152,7 @@ public class csHardMonster : MonoBehaviour {
 
             case STATE.DAMAGE:
 
-              
+
                 //if (mHp <= 0)
                 //{
                 //    state = STATE.DEAD;
@@ -171,14 +171,18 @@ public class csHardMonster : MonoBehaviour {
 
 
                 ////knockbackCount = 10.0f;
-                ////if (stateTime > idleStateMaxTime)
-                ////{
+
+                transform.LookAt(player.parent.transform);
+                anim.SetInteger("AniStep", 3);
+                state = STATE.IDLE;
+                //if (stateTime > idleStateMaxTime)
+                //{
                 //    Debug.Log("a");
                 //    stateTime = 0.0f;
                 //    state = STATE.IDLE;
-                ////}
-                
-                
+                //}
+
+
                 break;
 
             case STATE.DEAD:
@@ -271,6 +275,7 @@ public class csHardMonster : MonoBehaviour {
                 Debug.Log("카운터");
 
                 CounterAttack();
+                
                 return;
 
             }
@@ -289,9 +294,11 @@ public class csHardMonster : MonoBehaviour {
     }
     void CounterAttack()
     {
+        
         Debug.Log("CounterAttack");
-        transform.LookAt(player.parent.transform);
-        anim.SetInteger("AniStep", 3);
+        state = STATE.DAMAGE;
+        //transform.LookAt(player.parent.transform);
+        //anim.SetInteger("AniStep", 3);
     }
     void MakeCollider()
     {

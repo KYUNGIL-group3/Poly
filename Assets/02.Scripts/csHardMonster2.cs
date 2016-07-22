@@ -186,13 +186,11 @@ public class csHardMonster2 : MonoBehaviour {
                 //    break;
                 //}
 
-                //if (stateTime > idleStateMaxTime)
-                //{
-                //    stateTime = 0.0f;
-                //    state = STATE.ATTACK;
-                //}
-                
-                
+
+                transform.LookAt(player.parent.transform);
+                anim.SetInteger("AniStep", 3);
+                state = STATE.IDLE;
+
                 break;
 
             case STATE.DEAD:
@@ -294,8 +292,9 @@ public class csHardMonster2 : MonoBehaviour {
     }
     void CounterAttack()
     {
-        transform.LookAt(player.parent.transform);
-        anim.SetInteger("AniStep", 3);
+        state = STATE.DAMAGE;
+        //transform.LookAt(player.parent.transform);
+        //anim.SetInteger("AniStep", 3);
     }
     void MakeCollider3()
     {

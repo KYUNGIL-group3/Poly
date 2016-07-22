@@ -52,7 +52,7 @@ public class csBossMonster : MonoBehaviour
         player = GameObject.FindWithTag("CharCenter").transform;
         enemyController = GetComponent<CharacterController>();
         obj = gameObject.GetComponentsInChildren<Transform>();
-       
+        maxmHp = GetComponent<csBossMonster>().mHp;
         anim = GetComponent<Animator>();
         monsterAttackPoint = GetComponent<csBossMonster>().monsterAttackPoint;
         Debug.Log(monsterAttackPoint);
@@ -114,14 +114,14 @@ public class csBossMonster : MonoBehaviour
             case STATE.DAMAGE:
 
 
-                if (mHp <= 0)
-                {
-                    state = STATE.DEAD;
-                    GameManager.Instance().SkillGauge(1);
-                    break;
-                }
+                //if (mHp <= 0)
+                //{
+                //    state = STATE.DEAD;
+                //    GameManager.Instance().SkillGauge(1);
+                //    break;
+                //}
 
-                stateTime += Time.deltaTime;
+                //stateTime += Time.deltaTime;
                 //knockbackCount-=Time.deltaTime*20.0f;
                 //if (knockbackCount > 0)
                 //{
@@ -130,11 +130,11 @@ public class csBossMonster : MonoBehaviour
                 //}
 
                 //knockbackCount = 10.0f;
-                if (stateTime > idleStateMaxTime)
-                {
-                    stateTime = 0.0f;
-                    state = STATE.IDLE;
-                }
+                //if (stateTime > idleStateMaxTime)
+                //{
+                //    stateTime = 0.0f;
+                //    state = STATE.IDLE;
+                //}
 
 
                 break;
@@ -196,24 +196,33 @@ public class csBossMonster : MonoBehaviour
     {
         if (mHp < maxmHp * 0.5)
         {
+            Debug.Log("패턴1");
+            anim.SetInteger("AniStep", 2);
 
-            int percentage = Random.Range(1, 100);
-            if (percentage >= 1 && percentage <= 30)
-            {
-                Debug.Log("방어 자세");
-                anim.SetInteger("AniStep", 0);
-                return;
+            //int percentage = Random.Range(1, 100);
+            //if (percentage >= 1 && percentage <= 50)
+            //{
+            //    Debug.Log("방어 자세");
+            //    anim.SetInteger("AniStep", 0);
+            //    return;
 
-            }
-           
+            //}
+
+
+
+
+
 
         }
-
-
-        stateTime = 0.0f;
+              
         mHp -= WeaponAttackPoint;
+        if (mHp <= 0)
+        {
+            state = STATE.DEAD;
+            GameManager.Instance().SkillGauge(1);
+            
+        }
 
-        state = STATE.DAMAGE;
     }
    
     void MakeCollider()
