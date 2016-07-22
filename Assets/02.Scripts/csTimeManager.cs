@@ -76,10 +76,10 @@ public class csTimeManager : MonoBehaviour {
 			Vec3ArrayList.Clear ();
 
 			Destroy (PointManager);
-			Transform[] temp = player.GetComponentsInChildren<Transform> ();
-			for (int i = 0; i < temp.Length; i++) {
-				temp [i].gameObject.layer = 9;
-			}
+//			Transform[] temp = player.GetComponentsInChildren<Transform> ();
+//			for (int i = 0; i < temp.Length; i++) {
+//				temp [i].gameObject.layer = 9;
+//			}
 			cameraPos.gameObject.GetComponent<SmoothFollow>().height = 7;
 		}
 
