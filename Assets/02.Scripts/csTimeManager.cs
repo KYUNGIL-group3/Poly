@@ -16,6 +16,7 @@ public class csTimeManager : MonoBehaviour {
 	public GameObject skillmanager;
 	public GameObject player;
 	public Transform cameraPos;
+	public GameObject MobileSingleStickControl;
 
 	int returnGauge;
 
@@ -33,6 +34,7 @@ public class csTimeManager : MonoBehaviour {
 
 		if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop==false
 			&& GameManager.Instance().gauge >=5 ) {
+			MobileSingleStickControl.GetComponent<csITweenManagerButton> ().ActionStart ();
 			GameManager.Instance ().isTimeControl = true;
 			timestop = true;
 			Time.timeScale = 0.001f;
@@ -51,6 +53,7 @@ public class csTimeManager : MonoBehaviour {
 
 
 		}else if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop) {
+			MobileSingleStickControl.GetComponent<csITweenManagerButton> ().ActionStart ();
 			timestop = false;
 
 			GameManager.Instance ().isTimeControl = false;
@@ -62,8 +65,10 @@ public class csTimeManager : MonoBehaviour {
 			Vec3ArrayList.Clear ();
 
 			Destroy (PointManager);
-		}else if(CrossPlatformInputManager.GetButtonDown ("Attack") && timestop)
+		}else if(CrossPlatformInputManager.GetButtonDown ("SkillCancel") && timestop)
 		{
+			timestop = false;
+			MobileSingleStickControl.GetComponent<csITweenManagerButton> ().ActionStart ();
 			GameManager.Instance ().gauge = returnGauge;
 			GameManager.Instance ().isTimeControl = false;
 			Time.timeScale = 1.0f;
