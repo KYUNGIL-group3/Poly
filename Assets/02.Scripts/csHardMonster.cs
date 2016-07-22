@@ -36,7 +36,7 @@ public class csHardMonster : MonoBehaviour {
     public float rotmaxtime = 0.7f;
 
     bool isattackMotion = true;
-
+    bool once = false;
     Transform player;
     public float speed = 3.0f;
     private float distance;
@@ -182,8 +182,12 @@ public class csHardMonster : MonoBehaviour {
 
             case STATE.DEAD:
                 state = STATE.NONE;
-
-                GameManager.Instance().SpawnHealthItem(transform.position);
+                int SpawnPercent = Random.Range(1, 100);
+                if (SpawnPercent >= 1 && SpawnPercent <= 10)
+                {
+                    GameManager.Instance().SpawnHealthItem(transform.position);
+                }
+                
 
                 obj = gameObject.GetComponentsInChildren<Transform>();
 
@@ -237,7 +241,21 @@ public class csHardMonster : MonoBehaviour {
     {
         if (mHp < maxmHp * 0.5)
         {
-        
+            once = true;
+            if (GameObject.Find("Swordsman") && once == true)
+            {
+                Debug.Log("스워드맨 공격력 상승");
+                GameObject.Find("Swordsman").GetComponent<csHardMonster>().monsterAttackPoint += 20;
+                once = false;
+            }
+            if (GameObject.Find("Spearman") && once == true)
+            {
+                Debug.Log("스피어맨 공격력 상승");
+                GameObject.Find("Spearman").GetComponent<csHardMonster>().monsterAttackPoint += 20;
+                once = false;
+            }
+            
+
             int percentage = Random.Range(1, 100);
             if (percentage >= 1 && percentage <= 30)
             {

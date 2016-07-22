@@ -36,7 +36,7 @@ public class csHardMonster2 : MonoBehaviour {
     public float reloadmaxTime = 5.0f;
     
     bool reloaded = false;
-
+    bool once = false;
     Transform player;
     public float speed = 3.0f;
     private float distance;
@@ -197,8 +197,11 @@ public class csHardMonster2 : MonoBehaviour {
 
             case STATE.DEAD:
                 state = STATE.NONE;
-
-                GameManager.Instance().SpawnHealthItem(transform.position);
+                int SpawnPercent = Random.Range(1, 100);
+                if (SpawnPercent >= 1 && SpawnPercent <= 10)
+                {
+                    GameManager.Instance().SpawnHealthItem(transform.position);
+                }
                 obj = gameObject.GetComponentsInChildren<Transform>();
 
                 if (gameObject.GetComponent<Animator>() != null)
@@ -231,6 +234,12 @@ public class csHardMonster2 : MonoBehaviour {
     {
         if (mHp < maxmHp * 0.5)
         {
+            if (GameObject.Find("Crossbow Warrior") && once == true)
+            {
+                Debug.Log("크로스보우 워리어 공격속도 상승");
+                GameObject.Find("Crossbow Warrior").GetComponent<csHardMonster>().attackStateMaxTime -= 0.5f;
+                once = false;
+            }
 
             int percentage = Random.Range(1, 100);
             if (percentage >= 1 && percentage <= 30)

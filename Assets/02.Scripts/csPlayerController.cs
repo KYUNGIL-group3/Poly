@@ -276,12 +276,15 @@ public class csPlayerController : MonoBehaviour {
     void Fire()
     {
         Transform firePos;
-        firePos = GameObject.FindWithTag("firePos").transform;
-
+        Transform firePos2;
+        //firePos = GameObject.FindWithTag("firePos1").transform;
+        //firePos2 = GameObject.FindWithTag("firePos2").transform;
+        firePos = GameObject.Find("firePos1").transform;
+        firePos2 = GameObject.Find("firePos2").transform;
         Debug.Log("발사");
         GameObject bullettemp = Instantiate(bullet, firePos.position, firePos.rotation)as GameObject;
         
-        Vector3 dir = firePos.position - transform.position;
+        Vector3 dir = firePos.position - firePos2.position;
 
         dir.Normalize();
         dir.y = 0.0f;
