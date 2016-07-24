@@ -34,16 +34,16 @@ public class csOptionManager : MonoBehaviour {
 	public void NextButton()
 	{
 		switch (Application.loadedLevelName) {
-		case "Stage1-Happy":
-			Application.LoadLevel ("Stage2-Enjoy");
+		case "stage1-Happy":
+			Application.LoadLevel ("stage2-Enjoy");
 			break;
-		case "Stage2-Enjoy":
-			Application.LoadLevel ("Stage3-Sadness");
+		case "stage2-Enjoy":
+			Application.LoadLevel ("stage3-Sadness");
 			break;
-		case "Stage3-Sadness":
-			Application.LoadLevel ("Stage4-angry");
+		case "stage3-Sadness":
+			Application.LoadLevel ("stage4-angry");
 			break;
-		case "Stage4-angry":
+		case "stage4-angry":
 			//Application.LoadLevel ("Stage5");
 			break;
 

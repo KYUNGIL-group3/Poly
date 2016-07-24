@@ -44,6 +44,7 @@ public class SceneManager : MonoBehaviour {
 		_DeadCount = PlayerPrefs.GetInt ("DeadCount");
 		_Piece = PlayerPrefs.GetInt ("Piece");
 		ClearStage =  PlayerPrefs.GetInt ("ClearStage");
+
 	}
 	
 	// Update is called once per frame
@@ -53,10 +54,10 @@ public class SceneManager : MonoBehaviour {
 		//if (isGamePlay) 
 			//PlayTime ();
 
-		if(Input.GetButtonDown("Fire1"))
-			{
-				PlayTime();
-			}
+//		if(Input.GetButtonDown("Fire1"))
+//			{
+//				PlayTime();
+//			}
 	}
 
 	void SetPrefs()
@@ -223,6 +224,24 @@ public class SceneManager : MonoBehaviour {
 		string timestr = H + ":" + Mstr + ":" + Sstr;
 
 		return timestr;
+	}
+
+	void OnGUI()
+	{
+		if (GUI.Button (new Rect (20, 20, 120, 50), "Lock Contents")) {
+
+			PlayerPrefs.SetInt ("ClearStage", 1);
+			PlayerPrefs.SetInt ("Weapon1" , 0);
+			PlayerPrefs.SetInt ("Weapon2" , 0);
+		}
+
+		if (GUI.Button (new Rect (20, 80, 120, 50), "unLock Contents")) {
+
+			PlayerPrefs.SetInt ("ClearStage", 5);
+			PlayerPrefs.SetInt ("Weapon1" , 0);
+			PlayerPrefs.SetInt ("Weapon2" , 1);
+		}
+
 	}
 
 }

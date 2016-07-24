@@ -93,7 +93,6 @@ public class GameManager : MonoBehaviour {
 		//healthBarSlider.value = hp;
 		healthBarSlider.value = hp/10;
 		float hpLate = (float)hp / (float)maxHp;
-		Debug.Log (hpLate);
 		m_FillImage.color = Color.Lerp (m_ZeroHealthColor, m_FullHealthColor,hpLate);
 		skillBarSlider.value = gauge;
 	}
@@ -105,7 +104,6 @@ public class GameManager : MonoBehaviour {
 
 		Fail ();
 		isGameOver = true;
-		Debug.Log ("GameOver");
 		Time.timeScale = 0.5f;
 	}
 
@@ -130,7 +128,29 @@ public class GameManager : MonoBehaviour {
 		}
 
 		isGameClear = true;
-		Debug.Log ("GameClear");
+
+		Debug.Log (Application.loadedLevelName);
+
+		switch (Application.loadedLevelName) {
+
+		case "stage1-Happy":
+			PlayerPrefs.SetInt ("ClearStage", 2);
+			PlayerPrefs.SetInt ("Weapon1" , 0);
+			PlayerPrefs.SetInt ("Weapon2" , 1);
+			break;
+		case "stage2-Enjoy":
+			PlayerPrefs.SetInt ("ClearStage", 3);
+			break;
+		case "stage3-Sadness":
+			PlayerPrefs.SetInt ("ClearStage", 4);
+			break;
+		case "stage4-angry":
+			PlayerPrefs.SetInt ("ClearStage", 5);
+			break;
+
+
+		}
+
 		Time.timeScale = 0.5f;
 	}
 
@@ -208,5 +228,27 @@ public class GameManager : MonoBehaviour {
 	{
 		count++;
 		Debug.Log (count);
+	}
+
+
+	void OnGUI()
+	{
+		if (GUI.Button (new Rect (20, 140, 120, 50), "Wrap Boss")) {
+			Player.transform.position = Boss.transform.position;
+		}
+
+		if (GUI.Button (new Rect (20, 200, 120, 50), "Kill Boss")) {
+			if(Boss.gameObject.GetComponent<csEnemy1> ())
+				Boss.gameObject.GetComponent<csEnemy1> ().Damage(10000);
+			if(Boss.gameObject.GetComponent<csEnemy2> ())
+				Boss.gameObject.GetComponent<csEnemy2> ().Damage(10000);
+			if (Boss.gameObject.GetComponent<csHardMonster>())
+				Boss.gameObject.GetComponent<csHardMonster>().Damage(10000);
+			if (Boss.gameObject.GetComponent<csHardMonster2>())
+				Boss.gameObject.GetComponent<csHardMonster2>().Damage(10000);
+			if (Boss.gameObject.GetComponent<csBossMonster>())
+				Boss.gameObject.GetComponent<csBossMonster>().Damage(10000);
+		}
+
 	}
 }

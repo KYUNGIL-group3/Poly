@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public class csWeaponChange : MonoBehaviour {
 
 	public Button[] Weapons;
+	public Button mainSlot;
+	public Button subSlot;
 
 	bool selectMainWeapon = true;
 
@@ -15,6 +17,12 @@ public class csWeaponChange : MonoBehaviour {
 		if (SceneManager.Instance ().Weapon1Get () != SceneManager.Instance ().Weapon2Get ()) {
 			Weapons [SceneManager.Instance ().Weapon2Get ()].targetGraphic.color = Color.red;
 		}
+
+
+
+		mainSlot.targetGraphic.color = Color.blue;
+		subSlot.targetGraphic.color = Color.white;
+
 //		if (SceneManager.Instance ().Weapon1Get () != SceneManager.Instance ().Weapon2Get ()) {
 //
 //			switch (SceneManager.Instance ().Weapon2Get ()) {
@@ -45,17 +53,30 @@ public class csWeaponChange : MonoBehaviour {
 	public void selectMain()
 	{
 		selectMainWeapon = true;
+		mainSlot.targetGraphic.color = Color.blue;
+		subSlot.targetGraphic.color = Color.white;
 	}
 
 	public void selectSub()
 	{
 		selectMainWeapon = false;
+		mainSlot.targetGraphic.color = Color.white;
+		subSlot.targetGraphic.color = Color.red;
 	}
 
 	public void selectWeapon(int WeaponNum)
 	{
 		if (selectMainWeapon) {
 			if (SceneManager.Instance ().Weapon2Get () == WeaponNum) {
+
+				int weapon1 = SceneManager.Instance ().Weapon1Get ();
+				int weapon2 = SceneManager.Instance ().Weapon2Get ();
+
+				Weapons [weapon2].targetGraphic.color = Color.blue;
+				Weapons [weapon1].targetGraphic.color = Color.red;
+
+				SceneManager.Instance ().Weapon1Set (weapon2);
+				SceneManager.Instance ().Weapon2Set (weapon1);
 				return;
 			} else {
 				for (int i = 0; i < Weapons.Length; i++) {
@@ -68,6 +89,14 @@ public class csWeaponChange : MonoBehaviour {
 			}
 		} else {
 			if (SceneManager.Instance ().Weapon1Get () == WeaponNum) {
+				int weapon1 = SceneManager.Instance ().Weapon1Get ();
+				int weapon2 = SceneManager.Instance ().Weapon2Get ();
+
+				Weapons [weapon2].targetGraphic.color = Color.blue;
+				Weapons [weapon1].targetGraphic.color = Color.red;
+
+				SceneManager.Instance ().Weapon1Set (weapon2);
+				SceneManager.Instance ().Weapon2Set (weapon1);
 				return;
 			} else {
 				for (int i = 0; i < Weapons.Length; i++) {
