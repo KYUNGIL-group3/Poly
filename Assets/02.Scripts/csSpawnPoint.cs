@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class csSpawnPoint : MonoBehaviour {
-	Transform[] enemies;
+	public Transform[] enemies;
 
 	bool isSpawn = true;
 
@@ -15,7 +15,7 @@ public class csSpawnPoint : MonoBehaviour {
 
 		//pointsSpawn();
 	}
-	void pointsSpawn()
+	public void pointsSpawn()
 	{
 		for (int i = 1; i < enemies.Length; ++i) {
 			enemies [i].gameObject.SetActive (true);
