@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour {
 	public GameObject Boss;
 	public GameObject AllSpwanPoint;
 	bool once = true;
+
+	int Stagekillcount =0;
     
 	int count = 0;
 
@@ -230,6 +232,10 @@ public class GameManager : MonoBehaviour {
 		Debug.Log (count);
 	}
 
+	public void AddKillCount(int count)
+	{
+		Stagekillcount += count;
+	}
 
 	void OnGUI()
 	{

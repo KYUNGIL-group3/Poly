@@ -194,6 +194,10 @@ public class SceneManager : MonoBehaviour {
 	{
 		Application.LoadLevel ("stage4-angry");
 	}
+	public void Stage5()
+	{
+		Application.LoadLevel ("stage5-fear");
+	}
 
 	public void WeaponButton()
     {

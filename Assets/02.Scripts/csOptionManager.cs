@@ -44,7 +44,7 @@ public class csOptionManager : MonoBehaviour {
 			Application.LoadLevel ("stage4-angry");
 			break;
 		case "stage4-angry":
-			//Application.LoadLevel ("Stage5");
+			Application.LoadLevel ("stage5-fear");
 			break;
 
 
