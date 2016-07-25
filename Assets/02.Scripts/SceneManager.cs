@@ -168,6 +168,7 @@ public class SceneManager : MonoBehaviour {
 
     public void StartButton()
     {
+        AudioManager.Instance().PlayMainUISound();
 		Application.LoadLevel ("POLY_ROBY");
     }
     public void ShopButton()
