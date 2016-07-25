@@ -19,7 +19,9 @@ public class GameManager : MonoBehaviour {
 	public GameObject AllSpwanPoint;
 	bool once = true;
 
-	int Stagekillcount =0;
+	int Stagekillcount = 0;
+	int StageDeadcount = 0;
+	float PlayTime = 0.0f;
     
 	int count = 0;
 
@@ -80,6 +82,11 @@ public class GameManager : MonoBehaviour {
 
 			}
 		}
+
+
+
+		PlayTime += Time.unscaledDeltaTime;
+
 
 		timecount += Time.deltaTime;
 		if (timecount > tencount) {
@@ -187,6 +194,7 @@ public class GameManager : MonoBehaviour {
 	public void SkillGauge(int gauge)
 	{
 		this.gauge += gauge;
+		AddKillCount (1);
 		if (this.gauge > maxGauge) {
 			this.gauge = maxGauge;
 		}
@@ -224,9 +232,14 @@ public class GameManager : MonoBehaviour {
 		Debug.Log (count);
 	}
 
-	public void AddKillCount(int count)
+	public void AddKillCount(int killcount)
 	{
-		Stagekillcount += count;
+		Stagekillcount += killcount;
+	}
+
+	public void AddDeadCount(int deadcount)
+	{
+		StageDeadcount += deadcount;
 	}
 
 	void OnGUI()
