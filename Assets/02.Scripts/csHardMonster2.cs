@@ -68,129 +68,107 @@ public class csHardMonster2 : MonoBehaviour {
 
     // Update is called once per frame
     void Update()
-    {
+	{
 		healthBarSlider.value = (float)mHp / (float)maxmHp * 100;
 		float hpLate = (float)mHp / (float)maxmHp;
-		m_FillImage.color = Color.Lerp (m_ZeroHealthColor, m_FullHealthColor,hpLate);
+		m_FillImage.color = Color.Lerp (m_ZeroHealthColor, m_FullHealthColor, hpLate);
 
 		if (GameManager.Instance ().isGameOver) {
 			return;
 		}
-        reloadTime += Time.deltaTime;
+		reloadTime += Time.deltaTime;
         
-            for (int i = 1; i < obj.Length; i++)
-            {
-                if (obj[i].tag == "Body")
-                {
-                    obj[i].transform.Rotate(new Vector3(0.0f, rotspeed, 0.0f));
-                }
-            }
+		switch (state) {
+		case STATE.IDLE:
+			distance = Vector3.Distance (transform.position, player.position);
+			stateTime = 0.0f;
+			anim.SetInteger ("AniStep", 0);
 
-        switch (state)
-        {
-            case STATE.IDLE:
-                distance = Vector3.Distance(transform.position, player.position);
-                stateTime = 0.0f;
-                anim.SetInteger("AniStep", 0);
+			if (distance <= checkMoveDistance) {
+				state = STATE.MOVE;
+				return;
+			}
 
-                if (distance <= checkMoveDistance)
-                {
-                    state = STATE.MOVE;
-                    return;
-                }
+			break;
 
-                break;
+		case STATE.MOVE:
 
-            case STATE.MOVE:
+			anim.SetInteger ("AniStep", 0);
 
-                anim.SetInteger("AniStep", 0);
-
-                obj = gameObject.GetComponentsInChildren<Transform>();
-                distance = Vector3.Distance(transform.position, player.position);
+			obj = gameObject.GetComponentsInChildren<Transform> ();
+			distance = Vector3.Distance (transform.position, player.position);
 
 
 
-                if (reloadTime > attackStateMaxTime)
-                {
-                    if (distance > attackableRange)
-                    {
-                        //거리가 공격사거리를 벗어나도 Move상태로 둔다.
-                    }
-                    else {
-                        reloadTime = 0.0f;
-                        stateTime = 0.0f;
-                        state = STATE.ATTACK;
-                        return;
-                    }
-                }
+			if (reloadTime > attackStateMaxTime) {
+				if (distance > attackableRange) {
+					//거리가 공격사거리를 벗어나도 Move상태로 둔다.
+				} else {
+					reloadTime = 0.0f;
+					stateTime = 0.0f;
+					state = STATE.ATTACK;
+					return;
+				}
+			}
 
-                if (distance > checkMoveDistance)
-                {
+			if (distance > checkMoveDistance) {
 
-                    state = STATE.IDLE;
-                    return;
-                }
+				state = STATE.IDLE;
+				return;
+			}
 
 
-                if (distance > checkAttackDistance + 0.2f)
-                {
-                    Vector3 dir = player.position - transform.position;
-                    dir.y = 0.0f;
-                    dir.Normalize();
+			if (distance > checkAttackDistance + 0.2f) {
+				Vector3 dir = player.position - transform.position;
+				dir.y = 0.0f;
+				dir.Normalize ();
 
-                    anim.SetInteger("AniStep", 1);
-                    transform.LookAt(player.parent.transform);
+				anim.SetInteger ("AniStep", 1);
+				transform.LookAt (player.parent.transform);
 
-                    enemyController.SimpleMove(dir * speed);
-                }
-                else if (distance < checkAttackDistance - 0.2f)
-                {
+				enemyController.SimpleMove (dir * speed);
+			} else if (distance < checkAttackDistance - 0.2f) {
 
-                    Vector3 dir = player.position - transform.position;
-                    dir.y = 0.0f;
-                    dir.Normalize();
-                    anim.SetInteger("AniStep", 1);
-                    transform.LookAt(player.parent.transform);
-                    enemyController.SimpleMove(-dir * speed / 1.5f);
+				Vector3 dir = player.position - transform.position;
+				dir.y = 0.0f;
+				dir.Normalize ();
+				anim.SetInteger ("AniStep", 1);
+				transform.LookAt (player.parent.transform);
+				enemyController.SimpleMove (-dir * speed / 1.5f);
 
-                }
-                else {
-                    transform.LookAt(player.parent.transform);
-                }
+			} else {
+				transform.LookAt (player.parent.transform);
+			}
 
 
 
-                break;
+			break;
 
-            case STATE.ATTACK:
+		case STATE.ATTACK:
 
 
-                anim.SetInteger("AniStep", 2);
-                transform.LookAt(player.parent.transform);
+			anim.SetInteger ("AniStep", 2);
+			transform.LookAt (player.parent.transform);
 
-                if (stateTime > idleStateMaxTime)
-                {
-                    state = STATE.MOVE;
-                    stateTime = 0.0f;
-                }
-                stateTime += Time.deltaTime;
-                if (stateTime < 0.1f)
-                {
-                    anim.SetInteger("AniStep", 2);
-                }
-                if (stateTime > 0.1f && stateTime < 0.5f)
-                {
-                    anim.SetInteger("AniStep", 0);
-                }
-                if (stateTime > 1.0f)
-                {
-                    reloadTime = 0.0f;
-                    stateTime = 0.0f;
-                    state = STATE.MOVE;
-                }
-                break;
+			if (stateTime > idleStateMaxTime) {
+				state = STATE.MOVE;
+				stateTime = 0.0f;
+			}
+			stateTime += Time.deltaTime;
+			if (stateTime < 0.1f) {
+				anim.SetInteger ("AniStep", 2);
+			}
+			if (stateTime > 0.1f && stateTime < 0.5f) {
+				anim.SetInteger ("AniStep", 0);
+			}
+			if (stateTime > 1.0f) {
+				reloadTime = 0.0f;
+				stateTime = 0.0f;
+				state = STATE.MOVE;
+			}
+			break;
 
-            case STATE.DAMAGE:
+		case STATE.DAMAGE:
                 //stateTime += Time.deltaTime;
                 //if (mHp <= 0)
                 //{
@@ -200,47 +178,58 @@ public class csHardMonster2 : MonoBehaviour {
                 //}
 
 
-                transform.LookAt(player.parent.transform);
-                anim.SetInteger("AniStep", 3);
-                state = STATE.IDLE;
+			transform.LookAt (player.parent.transform);
+			anim.SetInteger ("AniStep", 3);
+			state = STATE.IDLE;
 
-                break;
+			break;
 
-            case STATE.DEAD:
-                state = STATE.NONE;
-                int SpawnPercent = Random.Range(1, 100);
-                if (SpawnPercent >= 1 && SpawnPercent <= 10)
-                {
-                    GameManager.Instance().SpawnHealthItem(transform.position);
-                }
-                obj = gameObject.GetComponentsInChildren<Transform>();
+		case STATE.DEAD:
+			state = STATE.NONE;
+			int SpawnPercent = Random.Range (1, 100);
+			if (SpawnPercent >= 1 && SpawnPercent <= 10) {
+				GameManager.Instance ().SpawnHealthItem (transform.position);
+			}
+			obj = gameObject.GetComponentsInChildren<Transform> ();
 
-                if (gameObject.GetComponent<Animator>() != null)
-                {
-                    gameObject.GetComponent<Animator>().enabled = false;
-                }
+			if (gameObject.GetComponent<Animator> () != null) {
+				gameObject.GetComponent<Animator> ().enabled = false;
+			}
 
-                for (int i = 1; i < obj.Length; i++)
-                {
-                    obj[i].gameObject.AddComponent<Rigidbody>();
-                    obj[i].gameObject.AddComponent<BoxCollider>();
-                    obj[i].gameObject.GetComponent<BoxCollider>().center = new Vector3(0.0f, 0.0f, 0.0f);
-                    obj[i].gameObject.GetComponent<BoxCollider>().size = new Vector3(0.2f, 0.2f, 0.2f);
-                    obj[i].gameObject.AddComponent<csFollowWeapon>();
-                    //Destroy(obj [i].gameObject , 3.0f);
-                    obj[i].parent = null;
-                    obj[i].gameObject.layer = 0;
+			for (int i = 1; i < obj.Length; i++) {
+				if (obj [i].gameObject.GetComponent<CharacterJoint> () != null) {
+					Destroy (obj [i].gameObject);
+					continue;
+				}
+				if (obj [i].gameObject.tag == "EnemyDown") {
+					Destroy (obj [i].gameObject);
+					continue;
+				}
+				//if (obj [i].gameObject.GetComponent<Rigidbody> () != null) {
+					obj [i].gameObject.AddComponent<Rigidbody> ();
+				//}
+				obj [i].gameObject.AddComponent<BoxCollider> ();
+				obj [i].gameObject.GetComponent<BoxCollider> ().center = new Vector3 (0.0f, 0.0f, 0.0f);
+				obj [i].gameObject.GetComponent<BoxCollider> ().size = new Vector3 (0.2f, 0.2f, 0.2f);
 
-                }
+//				obj [i].gameObject.AddComponent<SphereCollider> ();
+//				obj [i].gameObject.GetComponent<SphereCollider> ().center = new Vector3 (0.0f, 0.0f, 0.0f);
+//				obj [i].gameObject.GetComponent<SphereCollider> ().radius = 0.1f;
+				obj [i].gameObject.AddComponent<csFollowWeapon> ();
+				//Destroy(obj [i].gameObject , 3.0f);
+				obj [i].parent = null;
+				obj [i].gameObject.layer = 0;
+
+			}
                 //obj [0].parent = null;
                 //obj [0].gameObject.layer = 12;
                 
-                Destroy(gameObject,0.1f);
+			Destroy (gameObject, 0.1f);
                 
-                break;
+			break;
 
-        }
-    }
+		}
+	}
     public void Damage(int WeaponAttackPoint)
     {
         if (mHp < maxmHp * 0.5)
@@ -311,14 +300,14 @@ public class csHardMonster2 : MonoBehaviour {
         //anim.SetInteger("AniStep", 3);
     }
     void MakeCollider3()
-    {
-        Vector3 setPos = new Vector3(atkpoint.position.x, transform.position.y, atkpoint.position.z);
+	{
+		Vector3 setPos = new Vector3 (atkpoint.position.x, transform.position.y, atkpoint.position.z);
 
 
-        GameObject AttackFieldObj = Instantiate(attackfield, setPos, Quaternion.identity) as GameObject;
+		GameObject AttackFieldObj = Instantiate (attackfield, setPos, Quaternion.identity) as GameObject;
 
-        AttackFieldObj.GetComponent<csCounterField>().AttackPower = monsterAttackPoint;
+		AttackFieldObj.GetComponent<csCounterField> ().AttackPower = monsterAttackPoint;
 
 
-    }
+	}
 }

@@ -49,15 +49,11 @@ public class SceneManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		_PlayTimefloat += Time.unscaledDeltaTime;
-		PlayerPrefs.SetFloat ("PlayTime", _PlayTimefloat);
-		//if (isGamePlay) 
-			//PlayTime ();
 
-//		if(Input.GetButtonDown("Fire1"))
-//			{
-//				PlayTime();
-//			}
+
+		//_PlayTimefloat += Time.unscaledDeltaTime;
+		//PlayerPrefs.SetFloat ("PlayTime", _PlayTimefloat);
+
 	}
 
 	void SetPrefs()
@@ -87,18 +83,24 @@ public class SceneManager : MonoBehaviour {
 		}
 	}
 
-	void KillCountSet(int count)
+	public void KillCountSet(int count)
 	{
 		int Allcount = PlayerPrefs.GetInt ("KillCount");
 		Allcount += count;
-		PlayerPrefs.SetInt ("KillCount" , count);
+		PlayerPrefs.SetInt ("KillCount" , Allcount);
 	}
 
-	void DeadCountSet(int count)
+	public void DeadCountSet(int count)
 	{
 		int Allcount = PlayerPrefs.GetInt ("DeadCount");
 		Allcount += count;
-		PlayerPrefs.SetInt ("DeadCount" , count);
+		PlayerPrefs.SetInt ("DeadCount" , Allcount);
+	}
+
+	public void AddPlayTime(float time)
+	{
+		_PlayTimefloat += time;
+		PlayerPrefs.SetFloat ("PlayTime", _PlayTimefloat);
 	}
 
 	public void Weapon1Set(int WeaponNum)
@@ -217,11 +219,11 @@ public class SceneManager : MonoBehaviour {
         Application.LoadLevel ("POLY_Profile");
     }
 
-	string PlayTime()
+	public string PlayTime(float inputplaytime)
 	{
-		int S = (int)(_PlayTimefloat % 60);
-		int M = (int)((_PlayTimefloat / 60) % 60);
-		int H = (int)(((_PlayTimefloat / 60) / 60));
+		int S = (int)(inputplaytime % 60);
+		int M = (int)((inputplaytime / 60) % 60);
+		int H = (int)(((inputplaytime / 60) / 60));
 
 		Sstr = ""+S;
 		Mstr = ""+M;

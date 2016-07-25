@@ -230,26 +230,6 @@ public class csHardMonster : MonoBehaviour {
 
         }
     }
-    void FixedUpdate()
-    {
-        rottime += Time.deltaTime;
-        if (isattackMotion)
-        {
-            for (int i = 1; i < obj.Length; i++)
-            {
-                if (obj[i].tag == "EnemyDown")
-                {
-                    obj[i].transform.Rotate(new Vector3(attackMotionSpeed * 0.5f, 0.0f, 0.0f));
-                }
-            }
-        }
-
-        if (rottime > rotmaxtime)
-        {
-            rottime = 0.0f;
-            isattackMotion = false;
-        }
-    }
     public void Damage(int WeaponAttackPoint)
     {
         if (mHp < maxmHp * 0.5)

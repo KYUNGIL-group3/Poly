@@ -19,9 +19,9 @@ public class GameManager : MonoBehaviour {
 	public GameObject AllSpwanPoint;
 	bool once = true;
 
-	int Stagekillcount = 0;
-	int StageDeadcount = 0;
-	float PlayTime = 0.0f;
+	public int Stagekillcount = 0;
+	public int StageDeadcount = 0;
+	public float PlayTime = 0.0f;
     
 	int count = 0;
 
@@ -81,12 +81,11 @@ public class GameManager : MonoBehaviour {
 				GameClear ();
 
 			}
+		} else {
+			return;
 		}
 
-
-
 		PlayTime += Time.unscaledDeltaTime;
-
 
 		timecount += Time.deltaTime;
 		if (timecount > tencount) {
@@ -102,6 +101,11 @@ public class GameManager : MonoBehaviour {
 	{
 		if (isGameOver)
 		return;
+		AddDeadCount(1);
+
+		SceneManager.Instance ().AddPlayTime (PlayTime);
+		SceneManager.Instance ().KillCountSet (Stagekillcount);
+		SceneManager.Instance ().DeadCountSet (StageDeadcount);
 
 		Fail ();
 		isGameOver = true;
@@ -130,23 +134,32 @@ public class GameManager : MonoBehaviour {
 
 		isGameClear = true;
 
-		Debug.Log (Application.loadedLevelName);
+		SceneManager.Instance ().AddPlayTime (PlayTime);
+		SceneManager.Instance ().KillCountSet (Stagekillcount);
+		SceneManager.Instance ().DeadCountSet (StageDeadcount);
 
 		switch (Application.loadedLevelName) {
-
 		case "stage1-Happy":
-			PlayerPrefs.SetInt ("ClearStage", 2);
-			PlayerPrefs.SetInt ("Weapon1" , 0);
-			PlayerPrefs.SetInt ("Weapon2" , 1);
+			if (PlayerPrefs.GetInt ("ClearStage") < 2) {
+				PlayerPrefs.SetInt ("ClearStage", 2);
+				PlayerPrefs.SetInt ("Weapon1", 0);
+				PlayerPrefs.SetInt ("Weapon2", 1);
+			}
 			break;
 		case "stage2-Enjoy":
-			PlayerPrefs.SetInt ("ClearStage", 3);
+			if (PlayerPrefs.GetInt ("ClearStage") < 3) {
+				PlayerPrefs.SetInt ("ClearStage", 3);
+			}
 			break;
 		case "stage3-Sadness":
-			PlayerPrefs.SetInt ("ClearStage", 4);
+			if (PlayerPrefs.GetInt ("ClearStage") < 4) {
+				PlayerPrefs.SetInt ("ClearStage", 4);
+			}
 			break;
 		case "stage4-angry":
-			PlayerPrefs.SetInt ("ClearStage", 5);
+			if (PlayerPrefs.GetInt ("ClearStage") < 5) {
+				PlayerPrefs.SetInt ("ClearStage", 5);
+			}
 			break;
 
 
