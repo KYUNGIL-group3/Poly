@@ -46,12 +46,6 @@ public class GameManager : MonoBehaviour {
 
 	public bool isTimeControl = false;
 
-
-	public Image m_FillImage;                     
-	public Color m_FullHealthColor = Color.green;
-	public Color m_ZeroHealthColor = Color.red;  
-
-
     // Use this for initialization
 
     void Awake()
@@ -67,7 +61,7 @@ public class GameManager : MonoBehaviour {
 
 	void Start () {
 		Player = GameObject.Find ("Player");
-		healthBarSlider = GameObject.Find ("HealthSlider").GetComponent<Slider> ();
+		healthBarSlider = GameObject.Find ("Hp").GetComponent<Slider> ();
 		skillBarSlider = GameObject.Find ("SkillGauge").GetComponent<Slider> ();
         hp = maxHp;
         gauge = 0;
@@ -92,10 +86,8 @@ public class GameManager : MonoBehaviour {
 			timecount = 0.0f;
 			SkillGauge (1);
 		}
-		//healthBarSlider.value = hp;
-		healthBarSlider.value = hp/10;
-		float hpLate = (float)hp / (float)maxHp;
-		m_FillImage.color = Color.Lerp (m_ZeroHealthColor, m_FullHealthColor,hpLate);
+		healthBarSlider.value = hp;
+
 		skillBarSlider.value = gauge;
 	}
 

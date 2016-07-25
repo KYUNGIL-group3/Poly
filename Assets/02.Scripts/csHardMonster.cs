@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class csHardMonster : MonoBehaviour {
     enum STATE
@@ -46,6 +47,11 @@ public class csHardMonster : MonoBehaviour {
     public int mHp;
     private int maxmHp;
 
+	public Slider healthBarSlider;
+	public Image m_FillImage;                     
+	public Color m_FullHealthColor = Color.green;
+	public Color m_ZeroHealthColor = Color.red;  
+
     // Use this for initialization
     void Start () {
         player = GameObject.FindWithTag("CharCenter").transform;
@@ -61,7 +67,9 @@ public class csHardMonster : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-       
+		healthBarSlider.value =(float)mHp / (float)maxmHp * 100;
+		float hpLate = (float)mHp / (float)maxmHp;
+		m_FillImage.color = Color.Lerp (m_ZeroHealthColor, m_FullHealthColor,hpLate);
           
 		if (GameManager.Instance ().isGameOver) {
 			return;
