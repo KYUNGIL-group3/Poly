@@ -291,6 +291,7 @@ public class csHardMonster : MonoBehaviour {
         }
 
         //stateTime = 0.0f;
+        AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
         mHp -= WeaponAttackPoint;
 
         if (mHp <= 0)

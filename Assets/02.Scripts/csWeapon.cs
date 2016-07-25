@@ -33,6 +33,7 @@ public class csWeapon : MonoBehaviour {
 	void OnTriggerEnter(Collider col)
 	{
 		if (col.gameObject.tag == "Enemy") {
+            
 			if (player.GetComponent<csPlayerController> ().isAttack) {
 				if (EnemyArrayList.Contains (col.transform.gameObject)) {
 					

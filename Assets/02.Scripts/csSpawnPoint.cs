@@ -17,7 +17,8 @@ public class csSpawnPoint : MonoBehaviour {
 	}
 	public void pointsSpawn()
 	{
-		for (int i = 1; i < enemies.Length; ++i) {
+        AudioManager.Instance().PlayMonsterSpawnSound();    //몬스터 소환 사운드
+        for (int i = 1; i < enemies.Length; ++i) {
 			enemies [i].gameObject.SetActive (true);
 		}
 	}
@@ -37,7 +38,7 @@ public class csSpawnPoint : MonoBehaviour {
 	{
 		if(coll.gameObject.tag=="Player")
 		if(isSpawn){
-			pointsSpawn ();
+            pointsSpawn ();
 			isSpawn = false;
 		}
 	}

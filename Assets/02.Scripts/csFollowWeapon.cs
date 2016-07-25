@@ -24,7 +24,8 @@ public class csFollowWeapon : MonoBehaviour {
 	void OnTriggerEnter(Collider col)
 	{
 		if (col.gameObject.tag == "CharCenter") {
-			if (once) {
+            AudioManager.Instance().PlayFragmentAbsorbSound();
+            if (once) {
 				once = false;
 				GameManager.Instance ().RecoveryHealth(1);
 			}

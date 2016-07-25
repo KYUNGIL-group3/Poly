@@ -162,6 +162,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		this.hp -= hp;
+        AudioManager.Instance().PlayPlayerHitSound();   //플레이어 피격 사운드 재생
         Player.GetComponent<csPlayerController>().DamageEF();
         if (this.hp < 0) {
 			this.hp = 0;

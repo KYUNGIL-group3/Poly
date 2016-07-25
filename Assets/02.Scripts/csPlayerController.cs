@@ -117,12 +117,14 @@ public class csPlayerController : MonoBehaviour {
 
             velocity *= walkSpeed;
 			if (CrossPlatformInputManager.GetButtonDown ("Attack")) {
-				isaaaa = true;
+               
+                isaaaa = true;
 				StartCoroutine (isaaab ());
 			} 
 
 			if (CrossPlatformInputManager.GetButton ("Attack")) {
-				anim.SetBool ("isAttack", true);
+                
+                anim.SetBool ("isAttack", true);
 				anim.SetBool ("isMove", false);
 				isidle = false;
 				isAttack = true;
@@ -223,6 +225,7 @@ public class csPlayerController : MonoBehaviour {
 	}
     public void DamageEF()
     {
+        
 		GameObject damageFxObj =  Instantiate(DamageFx, transform.position, transform.rotation) as GameObject;
 		Destroy (damageFxObj, 1.5f);
     }
@@ -279,6 +282,7 @@ public class csPlayerController : MonoBehaviour {
     }
     void Fire()
     {
+        AudioManager.Instance().PlayArrowShotSound();
         Transform firePos;
         Transform firePos2;
         //firePos = GameObject.FindWithTag("firePos1").transform;

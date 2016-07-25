@@ -179,7 +179,8 @@ public class csEnemy1 : MonoBehaviour {
 
 	public void Damage(int WeaponAttackPoint)
 	{
-		//stateTime = 0.0f;
+        AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
+        //stateTime = 0.0f;
         mHp -= WeaponAttackPoint;
         if (mHp <= 0)
         {

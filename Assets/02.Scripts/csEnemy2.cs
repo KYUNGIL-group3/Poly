@@ -207,10 +207,10 @@ public class csEnemy2 : MonoBehaviour
 	}
     public void Damage(int WeaponAttackPoint)
 	{
-
-		//anim.SetBool ("Damage", true);
-		//stateTime = 0.0f;
-		mHp -= WeaponAttackPoint;
+        AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
+        //anim.SetBool ("Damage", true);
+        //stateTime = 0.0f;
+        mHp -= WeaponAttackPoint;
         if (mHp <= 0)
         {
             state = STATE.DEAD;

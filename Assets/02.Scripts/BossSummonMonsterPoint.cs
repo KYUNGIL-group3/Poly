@@ -13,6 +13,7 @@ public class BossSummonMonsterPoint : MonoBehaviour {
     }
     public void pointsSpawn()
     {
+       
         for (int i = 1; i < enemies.Length; ++i)
         {
             enemies[i].gameObject.SetActive(true);

@@ -272,6 +272,7 @@ public class csHardMonster2 : MonoBehaviour {
         }
         //anim.SetBool ("Damage", true);
         //stateTime = 0.0f;
+        AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
         mHp -= WeaponAttackPoint;
         if (mHp <= 0)
         {
@@ -283,7 +284,7 @@ public class csHardMonster2 : MonoBehaviour {
 
     void Fire()
     {
-
+        AudioManager.Instance().PlayArrowShotSound();   //몬스터 화살 사운드
         GameObject bullettemp = Instantiate(bullet, firePos.position, Quaternion.identity) as GameObject;
         
         bullettemp.GetComponent<csBullet>().bulletdamage = monsterAttackPoint;

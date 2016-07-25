@@ -28,6 +28,7 @@ public class csBullet : MonoBehaviour {
 			Destroy (gameObject);
 		}
 		if (col.gameObject.tag == "Player") {
+            AudioManager.Instance().PlayArrowHitSound();    //화살 피격 사운드
             if (once)
             {
                 once = false;

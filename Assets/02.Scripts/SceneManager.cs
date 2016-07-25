@@ -168,7 +168,7 @@ public class SceneManager : MonoBehaviour {
 
     public void StartButton()
     {
-        AudioManager.Instance().PlayMainUISound();
+        AudioManager.Instance().PlayStartTouchSound();
 		Application.LoadLevel ("POLY_ROBY");
     }
     public void ShopButton()
@@ -177,36 +177,44 @@ public class SceneManager : MonoBehaviour {
     }
 	public void StageButton()
 	{
-		Application.LoadLevel ("POLY_stage");
+        AudioManager.Instance().PlayStartTouchSound();
+        Application.LoadLevel ("POLY_stage");
 	}
 	public void Stage1()
 	{
-		Application.LoadLevel ("stage1-Happy");
+        AudioManager.Instance().PlayStartTouchSound();
+        Application.LoadLevel ("stage1-Happy");
 	}
 	public void Stage2()
 	{
-		Application.LoadLevel ("stage2-Enjoy");
+        AudioManager.Instance().PlayStartTouchSound();
+        Application.LoadLevel ("stage2-Enjoy");
 	}
 	public void Stage3()
 	{
-		Application.LoadLevel ("stage3-Sadness");
+        AudioManager.Instance().PlayStartTouchSound();
+        Application.LoadLevel ("stage3-Sadness");
 	}
 	public void Stage4()
 	{
-		Application.LoadLevel ("stage4-angry");
+        AudioManager.Instance().PlayStartTouchSound();
+        Application.LoadLevel ("stage4-angry");
 	}
 	public void Stage5()
 	{
-		Application.LoadLevel ("stage5-fear");
+        AudioManager.Instance().PlayStartTouchSound();
+        Application.LoadLevel ("stage5-fear");
 	}
 
 	public void WeaponButton()
     {
-		Application.LoadLevel ("POLY_WEAPON");
+        AudioManager.Instance().PlayStartTouchSound();
+        Application.LoadLevel ("POLY_WEAPON");
     }
     public void ProfileButton()
     {
-		Application.LoadLevel ("POLY_Profile");
+        AudioManager.Instance().PlayStartTouchSound();
+        Application.LoadLevel ("POLY_Profile");
     }
 
 	string PlayTime()

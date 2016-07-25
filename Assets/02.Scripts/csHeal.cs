@@ -26,6 +26,7 @@ public class csHeal : MonoBehaviour
             //중복충돌로 인해 회복의 중첩을 막고자 bool타입 once추가
             if (once)
             {
+                AudioManager.Instance().PlayRecoveryItemTakeSound();
                 once = false;
                 GameManager.Instance().RecoveryHealth(100);
                 Destroy(gameObject);

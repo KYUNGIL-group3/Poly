@@ -32,6 +32,7 @@ public class PlayerBullet : MonoBehaviour
         }
         if (col.gameObject.tag == "Enemy")
         {
+            AudioManager.Instance().PlayArrowHitSound();    //화살 피격 사운드
             if (once)
             {
                 once = false;
