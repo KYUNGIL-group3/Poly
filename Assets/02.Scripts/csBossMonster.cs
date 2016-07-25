@@ -20,6 +20,7 @@ public class csBossMonster : MonoBehaviour
     public Transform spawn1;
     public Transform spawn2;
     public Transform spawn3;
+    public Transform spawn4;
     public float idleStateMaxTime = 1.0f;   //대기시간,경직시간
     public float checkMoveDistance = 20.0f; //몬스터 시야
     public float attackableRange = 20.0f;    //공격범위
@@ -64,9 +65,10 @@ public class csBossMonster : MonoBehaviour
         monsterAttackPoint = GetComponent<csBossMonster>().monsterAttackPoint;
         //Debug.Log(monsterAttackPoint);
     
-        spawn1 = GameObject.Find("SpawnPoint").transform;
-        spawn2 = GameObject.Find("SpawnPoint2").transform;
-        spawn3 = GameObject.Find("SpawnPoint3").transform;
+        spawn1 = GameObject.Find("Pattern4Point1").transform;
+        spawn2 = GameObject.Find("Pattern4Point2").transform;
+        spawn3 = GameObject.Find("Pattern4Point3").transform;
+        spawn4 = GameObject.Find("Pattern4Point4").transform;
     }
     // Update is called once per frame
     void Update()
@@ -285,7 +287,7 @@ public class csBossMonster : MonoBehaviour
    
     void MakeCollider()
     {
-        Vector3 setPos = new Vector3(atkpoint.position.x, 0, atkpoint.position.z - 1.0f);
+        Vector3 setPos = new Vector3(atkpoint.position.x, transform.position.y + 9.0f, atkpoint.position.z - 1.0f);
 
 
         GameObject AttackFieldObj = Instantiate(attackfield, setPos, Quaternion.identity) as GameObject;
@@ -297,7 +299,7 @@ public class csBossMonster : MonoBehaviour
     void MakeCollider2()
     {
 
-        Vector3 setPos2 = new Vector3(atkpoint2.position.x, 0, atkpoint2.position.z - 1.0f);
+        Vector3 setPos2 = new Vector3(atkpoint2.position.x, transform.position.y + 9.0f, atkpoint2.position.z - 1.0f);
 
 
         GameObject AttackFieldObj2 = Instantiate(attackfield2, setPos2, Quaternion.identity) as GameObject;
@@ -309,7 +311,7 @@ public class csBossMonster : MonoBehaviour
     public void MakeCollider3()
     {
 
-        Vector3 setPos3 = new Vector3(atkpoint3.position.x, 0, atkpoint3.position.z);
+        Vector3 setPos3 = new Vector3(atkpoint3.position.x, transform.position.y + 9.0f, atkpoint3.position.z);
 
 
         GameObject AttackFieldObj3 = Instantiate(attackfield3, setPos3, Quaternion.identity) as GameObject;
@@ -346,6 +348,7 @@ public class csBossMonster : MonoBehaviour
         spawn1.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
         spawn2.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
         spawn3.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
+        spawn4.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
     }
 
 }
