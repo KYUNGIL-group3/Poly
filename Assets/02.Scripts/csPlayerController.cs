@@ -105,7 +105,8 @@ public class csPlayerController : MonoBehaviour {
             
             if (!isAttack) { 
                            
-				velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
+				//velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
+				velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
                 if(audio.isPlaying)
                 {
 
@@ -114,7 +115,6 @@ public class csPlayerController : MonoBehaviour {
                 {
                     audio.Play();
                 }
-                //velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
             }
 			else{
 				velocity = new Vector3 (0, 0, 0);
@@ -235,7 +235,8 @@ public class csPlayerController : MonoBehaviour {
 	}
 	void SetLookVelocity()
 	{
-		velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
+		//velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
+		velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
 		transform.LookAt (transform.position + velocity);
 	}
 

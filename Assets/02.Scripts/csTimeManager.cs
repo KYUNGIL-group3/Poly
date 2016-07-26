@@ -20,6 +20,8 @@ public class csTimeManager : MonoBehaviour {
 
 	int returnGauge;
 
+	bool once = true;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -34,6 +36,7 @@ public class csTimeManager : MonoBehaviour {
 
 		if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop==false
 			&& GameManager.Instance().gauge >=5 ) {
+			once = true;
             AudioManager.Instance().PlayTimeSkillOnSound();
 			MobileSingleStickControl.GetComponent<csITweenManagerButton> ().ActionStart ();
 			GameManager.Instance ().isTimeControl = true;
@@ -95,20 +98,39 @@ public class csTimeManager : MonoBehaviour {
 
 						SkillMoveObj = GameObject.Find("SkillMoveObj");
 
+
+
+
+
 						if (Vector3.Distance
 							(new Vector3 (SkillMoveObj.transform.position.x, 0.0f, SkillMoveObj.transform.position.z),
 							    new Vector3 (hit.transform.position.x, 0.0f, hit.transform.position.z)) < 1.5f) {
 							
 							if (Vec3ArrayList.Contains (hit.transform.gameObject)) {
-							
+								
+
 							} else if (GameManager.Instance ().gauge >= 5) {
 								if (Vec3ArrayList.Count != 0) {
 									GameManager.Instance ().gauge -= 5;
 								}
+							
 								Vec3ArrayList.Add (hit.transform.gameObject);
 								SkillMoveObj.transform.position = hit.transform.position;
 								AudioManager.Instance ().PlaySkillPointSound ();
 								hit.transform.gameObject.GetComponent<SpriteRenderer> ().color = new Color (0.0f, 255.0f, 255.0f, 255.0f);
+								if (once) {
+									once = false;
+									GameObject SkillManager = GameObject.Find ("SkillManager(Clone)");
+									Transform[] pointRender = SkillManager.GetComponentsInChildren<Transform> ();
+									for(int j = 0 ;j<pointRender.Length;j++)
+									{
+										if (pointRender [j].gameObject.GetComponent<SpriteRenderer> () != null) {
+											if (Vec3ArrayList.Contains (pointRender [j].gameObject) == false) {
+												pointRender [j].gameObject.GetComponent<SpriteRenderer> ().color = new Color (255.0f, 255.0f, 255.0f, 1.0f);
+											}
+										}
+									}
+								}
 							}
 						}
 						break;

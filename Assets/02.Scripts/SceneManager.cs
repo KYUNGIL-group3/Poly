@@ -250,22 +250,22 @@ public class SceneManager : MonoBehaviour {
 		return timestr;
 	}
 
-	void OnGUI()
-	{
-		if (GUI.Button (new Rect (20, 20, 120, 50), "Lock Contents")) {
-
-			PlayerPrefs.SetInt ("ClearStage", 1);
-			PlayerPrefs.SetInt ("Weapon1" , 0);
-			PlayerPrefs.SetInt ("Weapon2" , 0);
-		}
-
-		if (GUI.Button (new Rect (20, 80, 120, 50), "unLock Contents")) {
-
-			PlayerPrefs.SetInt ("ClearStage", 5);
-			PlayerPrefs.SetInt ("Weapon1" , 0);
-			PlayerPrefs.SetInt ("Weapon2" , 1);
-		}
-
-	}
+//	void OnGUI()
+//	{
+//		if (GUI.Button (new Rect (20, 20, 120, 50), "Lock Contents")) {
+//
+//			PlayerPrefs.SetInt ("ClearStage", 1);
+//			PlayerPrefs.SetInt ("Weapon1" , 0);
+//			PlayerPrefs.SetInt ("Weapon2" , 0);
+//		}
+//
+//		if (GUI.Button (new Rect (20, 80, 120, 50), "unLock Contents")) {
+//
+//			PlayerPrefs.SetInt ("ClearStage", 5);
+//			PlayerPrefs.SetInt ("Weapon1" , 0);
+//			PlayerPrefs.SetInt ("Weapon2" , 1);
+//		}
+//
+//	}
 
 }
