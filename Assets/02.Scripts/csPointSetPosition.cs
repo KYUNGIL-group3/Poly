@@ -81,11 +81,31 @@ public class csPointSetPosition : MonoBehaviour {
 					new Vector3 (gameObject.transform.position.x, 0.0f, gameObject.transform.position.z)) < 1.5f) {
 				if (pointcount != 1) {
 					pointRender [1].gameObject.GetComponent<SpriteRenderer> ().color = new Color (255.0f, 255.0f, 255.0f, 0.5f);
+					StartCoroutine (PointColorSet ());
 				}
 			}
 			return;
 		}
 
 
+	}
+
+	IEnumerator PointColorSet()
+	{
+		yield return new WaitForSeconds (0.0005f);
+		pointRender = GetComponentsInChildren<Transform> ();
+		pointRender [1].gameObject.GetComponent<SpriteRenderer> ().color = new Color (255.0f, 255.0f, 255.0f, 1.0f);
+		yield return new WaitForSeconds (0.0005f);
+		pointRender = GetComponentsInChildren<Transform> ();
+		pointRender [1].gameObject.GetComponent<SpriteRenderer> ().color = new Color (255.0f, 255.0f, 255.0f, 0.5f);
+		yield return new WaitForSeconds (0.0005f);
+		pointRender = GetComponentsInChildren<Transform> ();
+		pointRender [1].gameObject.GetComponent<SpriteRenderer> ().color = new Color (255.0f, 255.0f, 255.0f, 1.0f);
+		yield return new WaitForSeconds (0.0005f);
+		pointRender = GetComponentsInChildren<Transform> ();
+		pointRender [1].gameObject.GetComponent<SpriteRenderer> ().color = new Color (255.0f, 255.0f, 255.0f, 0.5f);
+		yield return new WaitForSeconds (0.0005f);
+		pointRender = GetComponentsInChildren<Transform> ();
+		pointRender [1].gameObject.GetComponent<SpriteRenderer> ().color = new Color (255.0f, 255.0f, 255.0f, 1.0f);
 	}
 }
