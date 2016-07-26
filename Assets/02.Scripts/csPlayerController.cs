@@ -106,7 +106,7 @@ public class csPlayerController : MonoBehaviour {
             if (!isAttack) { 
                            
 				velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
-
+                
                 //velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
             }
 			else{
@@ -140,14 +140,16 @@ public class csPlayerController : MonoBehaviour {
 				}
 				if (velocity.magnitude > 0) {
 					anim.SetBool ("isMove", true);
+                    //AudioManager.Instance().PlayPlayerMoveSound();
 					isidle = false;
 					transform.LookAt (transform.position + velocity);
 				} else {
 					anim.SetBool ("isMove", false);
+                    
 				}
 
 			}
-            AudioManager.Instance().PlayPlayerMoveSound();
+           
             velocity.y -= (gravity);
 			controller.Move (velocity * Time.deltaTime);
 		}

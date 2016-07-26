@@ -15,8 +15,8 @@ public class SceneManager : MonoBehaviour {
 
 	string Sstr;
 	string Mstr;
-
-	public static SceneManager Instance()
+  
+    public static SceneManager Instance()
 	{
 		return _instance;
 	}
@@ -40,17 +40,18 @@ public class SceneManager : MonoBehaviour {
 		_DeadCount = PlayerPrefs.GetInt ("DeadCount");
 		_Piece = PlayerPrefs.GetInt ("Piece");
 		ClearStage =  PlayerPrefs.GetInt ("ClearStage");
-
+        AudioManager.Instance().PlayMainUISound();
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
+       
 
+        //_PlayTimefloat += Time.unscaledDeltaTime;
+        //PlayerPrefs.SetFloat ("PlayTime", _PlayTimefloat);
 
-		//_PlayTimefloat += Time.unscaledDeltaTime;
-		//PlayerPrefs.SetFloat ("PlayTime", _PlayTimefloat);
-
-	}
+    }
 
 	void SetPrefs()
 	{
@@ -187,27 +188,32 @@ public class SceneManager : MonoBehaviour {
 	{
         AudioManager.Instance().PlayStartTouchSound();
         Application.LoadLevel ("stage1-Happy");
+        
 	}
 	public void Stage2()
 	{
         AudioManager.Instance().PlayStartTouchSound();
         Application.LoadLevel ("stage2-Enjoy");
-	}
+        
+    }
 	public void Stage3()
 	{
         AudioManager.Instance().PlayStartTouchSound();
         Application.LoadLevel ("stage3-Sadness");
-	}
+        
+    }
 	public void Stage4()
 	{
         AudioManager.Instance().PlayStartTouchSound();
         Application.LoadLevel ("stage4-angry");
-	}
+        
+    }
 	public void Stage5()
 	{
         AudioManager.Instance().PlayStartTouchSound();
         Application.LoadLevel ("stage5-fear");
-	}
+       
+    }
 
 	public void WeaponButton()
     {

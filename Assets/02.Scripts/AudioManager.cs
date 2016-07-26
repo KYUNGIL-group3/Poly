@@ -76,7 +76,7 @@ public class AudioManager : MonoBehaviour {
     public AudioClip RecoveryItemTakeSound; //31    적용
     public AudioClip PlayerRevivalSound;    //32    적용
 
-    AudioSource audio;
+    
     public static AudioManager Instance()
     {
         return _instance;
@@ -92,7 +92,7 @@ public class AudioManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         
-        audio = GetComponent<AudioSource>();
+        
     }
 
     // Update is called once per frame
@@ -142,11 +142,7 @@ public class AudioManager : MonoBehaviour {
     public void PlayPlayerMoveSound()
     {
         GetComponent<AudioSource>().PlayOneShot(PlayerMoveSound);
-        if(!audio.isPlaying)
-        {
-            audio.clip = PlayerMoveSound;
-            audio.Play();
-        }
+        
         
         
     }
