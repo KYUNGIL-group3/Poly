@@ -10,6 +10,8 @@ public class csWeapon : MonoBehaviour {
 	int weaponGauge = 0;
 	ArrayList EnemyArrayList;
 
+	public GameObject[] xtrail;
+
 	public int[] WeaponStateAttack;
 	public float[] WeaponStateRange;
 
@@ -57,7 +59,7 @@ public class csWeapon : MonoBehaviour {
 
 	void UpgradeWeapon(int Count)
 	{
-		if (Count > 100) {
+		if (Count >= 100) {
 			SetState (3);
 		} else if (Count >= 60) {
 
@@ -72,9 +74,15 @@ public class csWeapon : MonoBehaviour {
 
 	void SetState(int level)
 	{
+		for (int i = 0; i < xtrail.Length; i++) {
+			if (i == level)
+				continue;
+			xtrail [i].SetActive (false);
+		}
 		AttackPoint = WeaponStateAttack [level];
 		AttackRange = WeaponStateRange [level];
 		transform.localScale = new Vector3 (AttackRange, AttackRange, AttackRange);
+		xtrail [level].SetActive (true);
 	}
 
 	public void targetreset()

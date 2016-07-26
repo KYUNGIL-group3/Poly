@@ -37,8 +37,10 @@ public class csFollowWeapon : MonoBehaviour {
 	{
 		yield return new WaitForSeconds (2.0f);
 		GetComponent<BoxCollider> ().isTrigger = true;
-		GetComponent<Rigidbody> ().useGravity = false;
-		GetComponent<Rigidbody> ().isKinematic = true;
+		if (GetComponent<Rigidbody> () != null) {
+			GetComponent<Rigidbody> ().useGravity = false;
+			GetComponent<Rigidbody> ().isKinematic = true;
+		}
 		isfollow = true;
 	}
 

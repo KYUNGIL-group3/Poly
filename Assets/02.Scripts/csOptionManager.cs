@@ -111,6 +111,12 @@ public class csOptionManager : MonoBehaviour {
 		Time.timeScale = 1.0f;
 	}
 
+	public void WeaponSelletButton()
+	{
+		Application.LoadLevel ("POLY_WEAPON");
+		Time.timeScale = 1.0f;
+	}
+
 	public void NextButton()
 	{
 		switch (Application.loadedLevelName) {
