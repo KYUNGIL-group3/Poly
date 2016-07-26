@@ -36,11 +36,11 @@ public class csButtonITween : MonoBehaviour {
 			iTween.MoveTo (gameObject, hash);
 		} else {
 			onoff = true;
-			Hashtable hash = new Hashtable ();
-			hash.Add ("position", deflatVector);
-			hash.Add ("time", 1.5f);
-			hash.Add ("ignoretimescale",true);
-			iTween.MoveTo (gameObject, hash);
+			Hashtable hash1 = new Hashtable ();
+			hash1.Add ("position", deflatVector);
+			hash1.Add ("time", 1.5f);
+			hash1.Add ("ignoretimescale",true);
+			iTween.MoveTo (gameObject, hash1);
 		}
 	}
 }

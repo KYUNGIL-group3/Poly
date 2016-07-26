@@ -32,11 +32,7 @@ public class SceneManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (PlayerPrefs.GetInt ("FristAccount") == 0) {
-			PlayerPrefs.SetInt ("Volume", 50);
-			PlayerPrefs.SetInt ("FristAccount", 1);
-		}
-
+		PlayerPrefs.SetInt ("FristAccount", 0);
 		Volume = PlayerPrefs.GetInt ("Volume");
 		_Weapon1 = PlayerPrefs.GetInt ("Weapon1");
 		_Weapon2 = PlayerPrefs.GetInt ("Weapon2");
@@ -171,7 +167,12 @@ public class SceneManager : MonoBehaviour {
     public void StartButton()
     {
         AudioManager.Instance().PlayStartTouchSound();
-		Application.LoadLevel ("POLY_ROBY");
+		if (PlayerPrefs.GetInt ("FristAccount") == 0) {
+			Application.LoadLevel ("POLY_Synopsys");
+		} else {
+			
+			Application.LoadLevel ("POLY_ROBY");
+		}
     }
     public void ShopButton()
     {
