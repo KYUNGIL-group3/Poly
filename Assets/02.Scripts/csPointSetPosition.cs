@@ -8,6 +8,8 @@ public class csPointSetPosition : MonoBehaviour {
 	float del = 0.0f;
 	bool once = false;
 	int layerMask = 1 << 14;
+	GameObject SkillMoveObj;
+	Transform[] pointRender;
 	// Use this for initialization
 	void Start () {
 		pointcount++;
@@ -21,6 +23,7 @@ public class csPointSetPosition : MonoBehaviour {
 		if (once) {
 			return;
 		}
+
 		if (del > 0.001f) {
 			once = true;
 			RaycastHit hit;
@@ -69,6 +72,20 @@ public class csPointSetPosition : MonoBehaviour {
 		} else {
 			del += Time.unscaledDeltaTime;
 		}
+
+		if (once) {
+			SkillMoveObj = GameObject.Find("SkillMoveObj");
+			pointRender = GetComponentsInChildren<Transform> ();
+			if (Vector3.Distance
+				(new Vector3 (SkillMoveObj.transform.position.x, 0.0f, SkillMoveObj.transform.position.z),
+					new Vector3 (gameObject.transform.position.x, 0.0f, gameObject.transform.position.z)) < 1.5f) {
+				if (pointcount != 1) {
+					pointRender [1].gameObject.GetComponent<SpriteRenderer> ().color = new Color (255.0f, 255.0f, 255.0f, 0.5f);
+				}
+			}
+			return;
+		}
+
 
 	}
 }
