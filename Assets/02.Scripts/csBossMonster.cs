@@ -233,21 +233,21 @@ public class csBossMonster : MonoBehaviour
 
         if (mHp <= maxmHp * 0.9)
         {
-            Debug.Log("패턴1 : 날려버리기");
+            //Debug.Log("패턴1 : 날려버리기");
             state = STATE.DAMAGE;
             PatternNum = 1;
             
         }
         if (mHp < maxmHp * 0.7 && mHp <= maxmHp * 0.7)
         {
-            Debug.Log("패턴2 : 내려찍기");
+            //Debug.Log("패턴2 : 내려찍기");
             state = STATE.DAMAGE;
             PatternNum = 2;
             
         }
         if (mHp < maxmHp * 0.5 && mHp <= maxmHp * 0.5)
         {
-            Debug.Log("패턴3 : 충격파 날리기");
+            //Debug.Log("패턴3 : 충격파 날리기");
             state = STATE.DAMAGE;
             PatternNum = 3;
             //int percentage = Random.Range(1, 100);
@@ -263,7 +263,7 @@ public class csBossMonster : MonoBehaviour
 
         if (mHp < maxmHp * 0.3 && mHp <= maxmHp * 0.3)
         {
-            Debug.Log("패턴4 : 몬스터 소환");
+            //Debug.Log("패턴4 : 몬스터 소환");
             state = STATE.DAMAGE;
             PatternNum = 4;
             
@@ -278,7 +278,7 @@ public class csBossMonster : MonoBehaviour
         
         if (mHp <= 0)
         {
-            Debug.Log("사망");
+            //Debug.Log("사망");
             state = STATE.DEAD;
             GameManager.Instance().SkillGauge(1);
             
@@ -324,22 +324,22 @@ public class csBossMonster : MonoBehaviour
 
     void Pattern1()
     {
-        Debug.Log("패턴1 : 날려버리기 발동");
+        //Debug.Log("패턴1 : 날려버리기 발동");
         anim.SetInteger("AniStep", 2);
     }
     void Pattern2()
     {
-        Debug.Log("패턴2 : 내려찍기 발동");
+       // Debug.Log("패턴2 : 내려찍기 발동");
         anim.SetInteger("AniStep", 3);
     }
     void Pattern3()   
     {
-        Debug.Log("패턴3 : 충격파 발동");
+       // Debug.Log("패턴3 : 충격파 발동");
         anim.SetInteger("AniStep", 4);
     }
     void Pattern4()
     {
-        Debug.Log("패턴4 : 몬스터 소환 발동");
+       // Debug.Log("패턴4 : 몬스터 소환 발동");
         anim.SetInteger("AniStep", 5);
         MonsterSpawn();
 

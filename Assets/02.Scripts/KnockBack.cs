@@ -45,7 +45,7 @@ public class KnockBack : MonoBehaviour {
     {
         if (col.gameObject.tag == "WEAPON")
         {
-            Debug.Log("접촉");
+            //Debug.Log("접촉");
             Knockback();
         }
 

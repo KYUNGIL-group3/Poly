@@ -60,7 +60,7 @@ public class csHardMonster : MonoBehaviour {
         maxmHp = GetComponent<csHardMonster>().mHp;
         anim = GetComponent<Animator>();
         //monsterAttackPoint = GetComponent<csHardMonster>().monsterAttackPoint;
-        Debug.Log(monsterAttackPoint);
+        //Debug.Log(monsterAttackPoint);
 
 
     }
@@ -254,7 +254,7 @@ public class csHardMonster : MonoBehaviour {
             int percentage = Random.Range(1, 100);
             if (percentage >= 1 && percentage <= 30)
             {
-                Debug.Log("방어 자세");
+                //Debug.Log("방어 자세");
                 anim.SetInteger("AniStep", 0);
                 return;
 
@@ -262,7 +262,7 @@ public class csHardMonster : MonoBehaviour {
             int CounterPercentage = Random.Range(1, 100);
             if (CounterPercentage >= 1 && CounterPercentage <= 30)
             {
-                Debug.Log("카운터");
+                //Debug.Log("카운터");
 
                 CounterAttack();
                 
@@ -286,7 +286,7 @@ public class csHardMonster : MonoBehaviour {
     void CounterAttack()
     {
         
-        Debug.Log("CounterAttack");
+        //Debug.Log("CounterAttack");
         state = STATE.DAMAGE;
         //transform.LookAt(player.parent.transform);
         //anim.SetInteger("AniStep", 3);

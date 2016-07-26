@@ -246,7 +246,7 @@ public class csHardMonster2 : MonoBehaviour {
             int percentage = Random.Range(1, 100);
             if (percentage >= 1 && percentage <= 30)
             {
-                Debug.Log("방어 자세");
+                //Debug.Log("방어 자세");
                 anim.SetInteger("AniStep", 0);
                 return;
 
@@ -254,7 +254,7 @@ public class csHardMonster2 : MonoBehaviour {
             int CounterPercentage = Random.Range(1, 100);
             if (CounterPercentage >= 1 && CounterPercentage <= 30)
             {
-                Debug.Log("카운터");
+                //Debug.Log("카운터");
                
                 CounterAttack();
                 return;
