@@ -132,8 +132,8 @@ public class csEnemy1 : MonoBehaviour {
 
 		case STATE.DEAD:
 			state = STATE.NONE;
-
-			obj = gameObject.GetComponentsInChildren<Transform> ();
+                AudioManager.Instance().PlayFragmentBrokenSound();
+                obj = gameObject.GetComponentsInChildren<Transform> ();
 
 			if (gameObject.GetComponent<Animator> () != null) {
 				gameObject.GetComponent<Animator>().enabled = false;	

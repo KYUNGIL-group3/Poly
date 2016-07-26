@@ -195,6 +195,7 @@ public class csHardMonster : MonoBehaviour {
 
             case STATE.DEAD:
                 state = STATE.NONE;
+                AudioManager.Instance().PlayFragmentBrokenSound();
                 int SpawnPercent = Random.Range(1, 100);
                 if (SpawnPercent >= 1 && SpawnPercent <= 10)
                 {

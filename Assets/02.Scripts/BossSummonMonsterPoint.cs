@@ -13,7 +13,7 @@ public class BossSummonMonsterPoint : MonoBehaviour {
     }
     public void pointsSpawn()
     {
-       
+        AudioManager.Instance().PlayMonsterSpawnSound();
         for (int i = 1; i < enemies.Length; ++i)
         {
             enemies[i].gameObject.SetActive(true);

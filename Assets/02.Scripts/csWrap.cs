@@ -17,6 +17,7 @@ public class csWrap : MonoBehaviour {
 	{
 		if (coll.gameObject.tag == "Player") {
 			Transform[] wrapto = GetComponentsInChildren<Transform> ();
+            AudioManager.Instance().PlayWarpPotalSound();
 			coll.transform.position = wrapto [1].transform.position;
 			//Debug.Log (wrapto[1].gameObject.name);
 		}

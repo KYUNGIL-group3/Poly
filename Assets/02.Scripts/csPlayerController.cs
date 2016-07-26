@@ -50,8 +50,10 @@ public class csPlayerController : MonoBehaviour {
 		cameraFollow = GameObject.Find ("GameManager").GetComponent<csCameraFollow> ();
 		MainCamera = GameObject.Find ("Main Camera").transform;
 		GameManager.Instance ().isGameOver = false;
-       
-	}
+        AudioManager.Instance().PlayPlayerRevivalSound();
+      
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -83,6 +85,7 @@ public class csPlayerController : MonoBehaviour {
 					obj [i].parent = null;
 					Destroy (obj [i].gameObject, 3.0f);
 				}
+                AudioManager.Instance().PlayFragmentBrokenSound();
 				Destroy (gameObject);
 				//StartCoroutine (par ());
 			}
@@ -99,10 +102,13 @@ public class csPlayerController : MonoBehaviour {
 		}
 
 		if (ismove) {
-			if (!isAttack) {
+            
+            if (!isAttack) { 
+                           
 				velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
-				//velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
-			}
+
+                //velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
+            }
 			else{
 				velocity = new Vector3 (0, 0, 0);
 			}
@@ -141,16 +147,18 @@ public class csPlayerController : MonoBehaviour {
 				}
 
 			}
-			velocity.y -= (gravity);
+            AudioManager.Instance().PlayPlayerMoveSound();
+            velocity.y -= (gravity);
 			controller.Move (velocity * Time.deltaTime);
 		}
         
 
     }
+    
 
 	public IEnumerator StartArrayMove(ArrayList vec)
 	{
-
+        AudioManager.Instance().PlaySkillActiveSound();
 		GameManager.Instance ().isTimeControl = true;
 		anim.SetBool ("isSkill", true);
 		GameObject moveskillobj = GameObject.Find ("MoveSkillObj");
@@ -300,8 +308,16 @@ public class csPlayerController : MonoBehaviour {
         //bullettemp.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward * 900.0f);
 
     }
+    void PlayWeaponSwing()
+    {
+        AudioManager.Instance().PlayWeaponSwingSound();
+    }
+    void PlayWeaponSwing2()
+    {
+        AudioManager.Instance().PlayWeaponSwingSound2();
+    }
 
-	IEnumerator shake()
+    IEnumerator shake()
 	{
 		float shake = 0.3f;
 		float shakeAmount = 1.5f;

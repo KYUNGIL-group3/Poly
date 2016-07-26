@@ -52,6 +52,7 @@ public class csWeaponChange : MonoBehaviour {
 
 	public void selectMain()
 	{
+        AudioManager.Instance().PlayUIButtonTouchSound();
 		selectMainWeapon = true;
 		mainSlot.targetGraphic.color = Color.blue;
 		subSlot.targetGraphic.color = Color.white;
@@ -59,7 +60,8 @@ public class csWeaponChange : MonoBehaviour {
 
 	public void selectSub()
 	{
-		selectMainWeapon = false;
+        AudioManager.Instance().PlayUIButtonTouchSound();
+        selectMainWeapon = false;
 		mainSlot.targetGraphic.color = Color.white;
 		subSlot.targetGraphic.color = Color.red;
 	}
@@ -67,7 +69,8 @@ public class csWeaponChange : MonoBehaviour {
 	public void selectWeapon(int WeaponNum)
 	{
 		if (selectMainWeapon) {
-			if (SceneManager.Instance ().Weapon2Get () == WeaponNum) {
+            AudioManager.Instance().PlayWeaponTransSound();
+            if (SceneManager.Instance ().Weapon2Get () == WeaponNum) {
 
 				int weapon1 = SceneManager.Instance ().Weapon1Get ();
 				int weapon2 = SceneManager.Instance ().Weapon2Get ();
@@ -85,10 +88,12 @@ public class csWeaponChange : MonoBehaviour {
 					}
 				}
 				Weapons [WeaponNum].targetGraphic.color = Color.blue;
-				SceneManager.Instance ().Weapon1Set (WeaponNum);
+                
+                SceneManager.Instance ().Weapon1Set (WeaponNum);
 			}
 		} else {
-			if (SceneManager.Instance ().Weapon1Get () == WeaponNum) {
+            AudioManager.Instance().PlayWeaponTransSound();
+            if (SceneManager.Instance ().Weapon1Get () == WeaponNum) {
 				int weapon1 = SceneManager.Instance ().Weapon1Get ();
 				int weapon2 = SceneManager.Instance ().Weapon2Get ();
 
@@ -104,7 +109,8 @@ public class csWeaponChange : MonoBehaviour {
 						Weapons [i].targetGraphic.color = Color.white;	
 					}
 				}
-				Weapons [WeaponNum].targetGraphic.color = Color.red;
+                
+                Weapons [WeaponNum].targetGraphic.color = Color.red;
 				SceneManager.Instance ().Weapon2Set (WeaponNum);
 			}
 		}

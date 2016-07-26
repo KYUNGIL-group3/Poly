@@ -42,7 +42,7 @@ public class csWallDestroy : MonoBehaviour {
 			if (CreateWrapGate) {
 				CreateWrapGate.SetActive(true);
 			}
-
+            AudioManager.Instance().PlayWallRemoveSound();
 			Destroy (gameObject);
 		}
 	}

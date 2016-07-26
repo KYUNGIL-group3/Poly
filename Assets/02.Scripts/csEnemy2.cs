@@ -165,8 +165,8 @@ public class csEnemy2 : MonoBehaviour
 
 		case STATE.DEAD:
 			state = STATE.NONE;
-
-			bulletDestroy.GetComponent<csNullparentDestroy> ().DestroyAll();
+                AudioManager.Instance().PlayFragmentBrokenSound();
+                bulletDestroy.GetComponent<csNullparentDestroy> ().DestroyAll();
 		
 			obj = gameObject.GetComponentsInChildren<Transform> ();
 

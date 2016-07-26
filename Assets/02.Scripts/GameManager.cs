@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour {
 		SceneManager.Instance ().DeadCountSet (StageDeadcount);
 
 		switch (Application.loadedLevelName) {
-		case "stage1-Happy":
+		case "stage1-Happy":                
 			if (PlayerPrefs.GetInt ("ClearStage") < 2) {
 				PlayerPrefs.SetInt ("ClearStage", 2);
 				PlayerPrefs.SetInt ("Weapon1", 0);

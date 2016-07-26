@@ -6,7 +6,7 @@ public class AudioManager : MonoBehaviour {
     //32개
     /*
     1.게임 실행 후 Main UI 씬 출력 시, 재생 스테이지 입장 시 재생 종료
-    2.스테이지 입장 후 재생
+    2.스테이지 입장 후 재생 (스테이지1~5)
     3.보스 등장 시 재생
     4.Main UI 씬에서 Start 터치 시 재생
     5.각 스테이지 입장 후 시작 위치에 캐릭터 스폰 시 재생
@@ -38,62 +38,90 @@ public class AudioManager : MonoBehaviour {
     31.회복 오브젝트 획득 시 재생
     32.캐릭터 부활 시 재생
     */
-    public AudioClip MainUISound;   //1
-    public AudioClip StageSound;    //2
+    public AudioClip MainUISound;   //1 적용
+    public AudioClip HappySound;    //스테이지1
+    public AudioClip EnjoySound;    //스테이지2
+    public AudioClip SadnessSound;    //스테이지3
+    public AudioClip AngrySound;    //스테이지4
+    public AudioClip FearSound;    //스테이지5
     public AudioClip BossSound;     //3
     public AudioClip StartTouchSound;   //4 적용
-    public AudioClip PlayerSpawnSound;  //5
+    public AudioClip PlayerSpawnSound;  //5 적용
     public AudioClip UIButtonTouchSound;    //6 적용
-    public AudioClip PlayerMoveSound;   //7
-    public AudioClip WarpPotalSound;    //8
+    public AudioClip PlayerMoveSound;   //7 
+    public AudioClip WarpPotalSound;    //8 적용
     public AudioClip FallSound; //9
     public AudioClip LandSound; //10
-    public AudioClip WeaponSwingSound;  //11
-    public AudioClip WeaponHitSound;    //12    //적용
-    public AudioClip PlayerHitSound;    //13    //적용
-    public AudioClip ShockWaveSound;    //14
-    public AudioClip ArrowShotSound;    //15    //적용
-    public AudioClip ArrowHitSound;     //16    //적용
-    public AudioClip WeaponTransSound;  //17    //적용
-    public AudioClip TimeSkillOnSound;  //18
-    public AudioClip SkillPointSound;   //19
-    public AudioClip SkillActiveSound;  //20
-    public AudioClip SkillHitSound;     //21
-    public AudioClip MonsterSpawnSound; //22    //적용
-    public AudioClip FragmentBrokenSound;   //23    
-    public AudioClip FragmentAbsorbSound;   //24    //적용
+    public AudioClip WeaponSwingSound;  //11    적용
+    public AudioClip WeaponSwingSound2;  //11    적용
+    public AudioClip WeaponHitSound;    //12    적용
+    public AudioClip PlayerHitSound;    //13    적용
+    public AudioClip ShockWaveSound;    //14    3타도 같게 적용
+    public AudioClip ArrowShotSound;    //15    적용
+    public AudioClip ArrowHitSound;     //16    적용
+    public AudioClip WeaponTransSound;  //17    적용
+    public AudioClip TimeSkillOnSound;  //18    적용
+    public AudioClip SkillPointSound;   //19    
+    public AudioClip SkillActiveSound;  //20    적용
+    public AudioClip SkillHitSound;     //21    
+    public AudioClip MonsterSpawnSound; //22    적용
+    public AudioClip FragmentBrokenSound;   //23    적용
+    public AudioClip FragmentAbsorbSound;   //24    적용
     public AudioClip WaveWallRemoveSound;   //25
     public AudioClip WallRemoveSound;   //26
     public AudioClip StageClearSound;   //27
     public AudioClip StageFailSound;    //28
-    public AudioClip PlayerFragmentBrokenSound; //29
+    public AudioClip PlayerFragmentBrokenSound; //29    적용
     public AudioClip RecoveryItemDropSound; //30
-    public AudioClip RecoveryItemTakeSound; //31    //적용
-    public AudioClip PlayerRevivalSound;    //32
+    public AudioClip RecoveryItemTakeSound; //31    적용
+    public AudioClip PlayerRevivalSound;    //32    적용
 
+    AudioSource audio;
     public static AudioManager Instance()
     {
         return _instance;
     }
-    // Use this for initialization
-    void Start () {
-		if(_instance==null)
+    void Awake()
+    {
+        if (_instance == null)
         {
             _instance = this;
         }
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        DontDestroyOnLoad(gameObject);
+    }
+    // Use this for initialization
+    void Start () {
+        
+        audio = GetComponent<AudioSource>();
+    }
+
+    // Update is called once per frame
+    void Update () {
 	
 	}
     public void PlayMainUISound()
     {
         GetComponent<AudioSource>().PlayOneShot(MainUISound);
     }
-    public void PlayStageSound()
+    public void PlayHappySound()
     {
-        GetComponent<AudioSource>().PlayOneShot(StageSound);
+        GetComponent<AudioSource>().PlayOneShot(HappySound);
+    }
+    public void PlayEnjoySound()
+    {
+        GetComponent<AudioSource>().PlayOneShot(EnjoySound);
+    }
+    public void PlaySadnessSound()
+    {
+        GetComponent<AudioSource>().PlayOneShot(SadnessSound);
+    }
+    public void PlayAngrySound()
+    {
+        GetComponent<AudioSource>().PlayOneShot(AngrySound);
+    }
+    public void PlayFearSound()
+    {
+        GetComponent<AudioSource>().PlayOneShot(FearSound);
     }
     public void PlayBossSound()
     {
@@ -114,6 +142,13 @@ public class AudioManager : MonoBehaviour {
     public void PlayPlayerMoveSound()
     {
         GetComponent<AudioSource>().PlayOneShot(PlayerMoveSound);
+        if(!audio.isPlaying)
+        {
+            audio.clip = PlayerMoveSound;
+            audio.Play();
+        }
+        
+        
     }
     public void PlayWarpPotalSound()
     {
@@ -131,9 +166,13 @@ public class AudioManager : MonoBehaviour {
     {
         GetComponent<AudioSource>().PlayOneShot(WeaponSwingSound);
     }
+    public void PlayWeaponSwingSound2()
+    {
+        GetComponent<AudioSource>().PlayOneShot(WeaponSwingSound2);
+    }
     public void PlayWeaponHitSound()
     {
-        GetComponent<AudioSource>().PlayOneShot(WeaponHitSound);
+        GetComponent<AudioSource>().PlayOneShot(WeaponHitSound,0.5f);
     }
     public void PlayPlayerHitSound()
     {
@@ -181,7 +220,7 @@ public class AudioManager : MonoBehaviour {
     }
     public void PlayFragmentAbsorbSound()
     {
-        GetComponent<AudioSource>().PlayOneShot(FragmentAbsorbSound);
+        GetComponent<AudioSource>().PlayOneShot(FragmentAbsorbSound,0.5f);
     }
     public void PlayWaveWallRemoveSound()
     {
@@ -201,7 +240,7 @@ public class AudioManager : MonoBehaviour {
     }
     public void PlayPlayerFragmentBrokenSound()
     {
-        GetComponent<AudioSource>().PlayOneShot(PlayerFragmentBrokenSound);
+        GetComponent<AudioSource>().PlayOneShot(PlayerFragmentBrokenSound,0.5f);
     }
     public void PlayRecoveryItemDropSound()
     {
@@ -213,7 +252,7 @@ public class AudioManager : MonoBehaviour {
     }
     public void PlayPlayerRevivalSound()
     {
-        GetComponent<AudioSource>().PlayOneShot(PlayerRevivalSound);
+        GetComponent<AudioSource>().PlayOneShot(PlayerRevivalSound,0.5f);
     }
 
 

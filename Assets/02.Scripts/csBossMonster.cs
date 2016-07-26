@@ -346,7 +346,7 @@ public class csBossMonster : MonoBehaviour
     }
     void MonsterSpawn()
     {
-        AudioManager.Instance().PlayMonsterSpawnSound();    //패턴4 몬스터 소환 사운드 재생
+           
         spawn1.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
         spawn2.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
         spawn3.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
