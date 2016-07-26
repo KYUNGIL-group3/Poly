@@ -117,7 +117,6 @@ public class GameManager : MonoBehaviour {
 		if (isGameClear)
 			return;
 
-		Victory ();
 		Transform[] DesSpwanPoint = AllSpwanPoint.GetComponentsInChildren<Transform> ();
 		for (int i = 1; i < DesSpwanPoint.Length; i++) {
 			if(DesSpwanPoint[i].gameObject.GetComponent<csEnemy1> ())
@@ -138,6 +137,7 @@ public class GameManager : MonoBehaviour {
 		SceneManager.Instance ().KillCountSet (Stagekillcount);
 		SceneManager.Instance ().DeadCountSet (StageDeadcount);
 
+		Victory ();
 		switch (Application.loadedLevelName) {
 		case "stage1-Happy":
 			if (PlayerPrefs.GetInt ("ClearStage") < 2) {

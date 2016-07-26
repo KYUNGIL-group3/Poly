@@ -32,7 +32,6 @@ public class SceneManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		PlayerPrefs.SetInt ("FristAccount", 0);
 		Volume = PlayerPrefs.GetInt ("Volume");
 		_Weapon1 = PlayerPrefs.GetInt ("Weapon1");
 		_Weapon2 = PlayerPrefs.GetInt ("Weapon2");

@@ -56,7 +56,8 @@ public class csOptionManager : MonoBehaviour {
 
 		if (Application.loadedLevelName == "POLY_Profile") {
 			ProfileScene ();
-		} else if (Application.loadedLevelName.Substring(0,5) == "stage") {
+		} else if (Application.loadedLevelName.Substring(0,5) == "stage"
+			||Application.loadedLevelName.Substring(0,5) == "Stage") {
 			GameEndScene ();
 		}
 	}
