@@ -107,7 +107,7 @@ public class csTimeManager : MonoBehaviour {
 								}
 								Vec3ArrayList.Add (hit.transform.gameObject);
 								SkillMoveObj.transform.position = hit.transform.position;
-								//AudioManager.Instance ().PlaySkillPointSound ();
+								AudioManager.Instance ().PlaySkillPointSound ();
 								hit.transform.gameObject.GetComponent<SpriteRenderer> ().color = new Color (0.0f, 255.0f, 255.0f, 255.0f);
 							}
 						}

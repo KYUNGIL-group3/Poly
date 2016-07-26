@@ -99,6 +99,7 @@ public class GameManager : MonoBehaviour {
 
 	public void GameOver()
 	{
+        
 		if (isGameOver)
 		return;
 		AddDeadCount(1);
@@ -108,12 +109,15 @@ public class GameManager : MonoBehaviour {
 		SceneManager.Instance ().DeadCountSet (StageDeadcount);
 
 		Fail ();
-		isGameOver = true;
+        BgmManager.Instance().PlayFail();
+        isGameOver = true;
 		Time.timeScale = 0.5f;
 	}
 
 	public void GameClear()
 	{
+       
+
 		if (isGameClear)
 			return;
 
@@ -138,8 +142,10 @@ public class GameManager : MonoBehaviour {
 		SceneManager.Instance ().DeadCountSet (StageDeadcount);
 
 		Victory ();
-		switch (Application.loadedLevelName) {
+        BgmManager.Instance().PlayClear();
+        switch (Application.loadedLevelName) {
 		case "stage1-Happy":
+                
 			if (PlayerPrefs.GetInt ("ClearStage") < 2) {
 				PlayerPrefs.SetInt ("ClearStage", 2);
 				PlayerPrefs.SetInt ("Weapon1", 0);
@@ -242,10 +248,12 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void Victory(){
+       
 		VictoryCamvas.SetActive (true);
 	}
 
 	public void Fail(){
+       
 		FailCamvas.SetActive (true);
 	}
 

@@ -189,7 +189,8 @@ public class csHardMonster2 : MonoBehaviour {
                 AudioManager.Instance().PlayFragmentBrokenSound();
                 int SpawnPercent = Random.Range (1, 100);
 			if (SpawnPercent >= 1 && SpawnPercent <= 10) {
-				GameManager.Instance ().SpawnHealthItem (transform.position);
+                    AudioManager.Instance().PlayRecoveryItemDropSound();
+                    GameManager.Instance ().SpawnHealthItem (transform.position);
 			}
 			obj = gameObject.GetComponentsInChildren<Transform> ();
 
@@ -235,12 +236,12 @@ public class csHardMonster2 : MonoBehaviour {
     {
         if (mHp < maxmHp * 0.5)
         {
-            if (GameObject.Find("Crossbow Warrior") && once == true)
-            {
-                Debug.Log("크로스보우 워리어 공격속도 상승");
-                GameObject.Find("Crossbow Warrior").GetComponent<csHardMonster>().attackStateMaxTime -= 0.5f;
-                once = false;
-            }
+            //if (GameObject.Find("Crossbow Warrior") && once == true)
+            //{
+            //    Debug.Log("크로스보우 워리어 공격속도 상승");
+            //    GameObject.Find("Crossbow Warrior").GetComponent<csHardMonster>().attackStateMaxTime -= 0.5f;
+            //    once = false;
+            //}
 
             int percentage = Random.Range(1, 100);
             if (percentage >= 1 && percentage <= 30)

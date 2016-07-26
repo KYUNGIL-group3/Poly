@@ -102,20 +102,51 @@ public class csOptionManager : MonoBehaviour {
 
 	public void ExitButton()
 	{
+        AudioManager.Instance().PlayUIButtonTouchSound();
 		Application.LoadLevel ("POLY_stage");
 		Time.timeScale = 1.0f;
-	}
+        BgmManager.Instance().PlayMainUISound();
+    }
 
 	public void RetryButton()
 	{
+        AudioManager.Instance().PlayUIButtonTouchSound();
 		Application.LoadLevel (Application.loadedLevelName);
-		Time.timeScale = 1.0f;
+
+        switch (Application.loadedLevelName)
+        {
+            case "stage1-Happy":
+                
+                BgmManager.Instance().PlayHappySound();
+                break;
+            case "stage2-Enjoy":
+                
+                BgmManager.Instance().PlayEnjoySound();
+                break;
+            case "stage3-Sadness":
+               
+                BgmManager.Instance().PlaySadnessSound();
+                break;
+            case "stage4-angry":
+                
+                BgmManager.Instance().PlayAngrySound();
+                break;
+            case "stage5-fear":
+                
+                BgmManager.Instance().PlayFearSound();
+                break;
+
+        }
+        Time.timeScale = 1.0f;
+        
 	}
 
 	public void WeaponSelletButton()
 	{
-		Application.LoadLevel ("POLY_WEAPON");
+        AudioManager.Instance().PlayUIButtonTouchSound();
+        Application.LoadLevel ("POLY_WEAPON");
 		Time.timeScale = 1.0f;
+        BgmManager.Instance().PlayMainUISound();
 	}
 
 	public void NextButton()

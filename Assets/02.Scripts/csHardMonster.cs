@@ -199,6 +199,7 @@ public class csHardMonster : MonoBehaviour {
                 int SpawnPercent = Random.Range(1, 100);
                 if (SpawnPercent >= 1 && SpawnPercent <= 10)
                 {
+                    AudioManager.Instance().PlayRecoveryItemDropSound();
                     GameManager.Instance().SpawnHealthItem(transform.position);
                 }
                 
@@ -235,19 +236,19 @@ public class csHardMonster : MonoBehaviour {
     {
         if (mHp < maxmHp * 0.5)
         {
-            once = true;
-            if (GameObject.Find("Swordsman") && once == true)
-            {
-                Debug.Log("스워드맨 공격력 상승");
-                GameObject.Find("Swordsman").GetComponent<csHardMonster>().monsterAttackPoint += 20;
-                once = false;
-            }
-            if (GameObject.Find("Spearman") && once == true)
-            {
-                Debug.Log("스피어맨 공격력 상승");
-                GameObject.Find("Spearman").GetComponent<csHardMonster>().monsterAttackPoint += 20;
-                once = false;
-            }
+            //once = true;
+            //if (GameObject.Find("Swordsman") && once == true)
+            //{
+            //    Debug.Log("스워드맨 공격력 상승");
+            //    GameObject.Find("Swordsman").GetComponent<csHardMonster>().monsterAttackPoint += 20;
+            //    once = false;
+            //}
+            //if (GameObject.Find("Spearman") && once == true)
+            //{
+            //    Debug.Log("스피어맨 공격력 상승");
+            //    GameObject.Find("Spearman").GetComponent<csHardMonster>().monsterAttackPoint += 20;
+            //    once = false;
+            //}
             
 
             int percentage = Random.Range(1, 100);

@@ -41,9 +41,9 @@ public class csPlayerController : MonoBehaviour {
 
 	GameObject[] parentlist;
 	GameObject[] childlist;
-    
-	// Use this for initialization
-	void Start () {
+    AudioSource audio;
+    // Use this for initialization
+    void Start () {
         
 		controller = GetComponent<CharacterController> ();
 		anim = GetComponent<Animator> ();
@@ -51,7 +51,7 @@ public class csPlayerController : MonoBehaviour {
 		MainCamera = GameObject.Find ("Main Camera").transform;
 		GameManager.Instance ().isGameOver = false;
         AudioManager.Instance().PlayPlayerRevivalSound();
-      
+        audio = GetComponent<AudioSource>();
 
     }
 	
@@ -106,11 +106,19 @@ public class csPlayerController : MonoBehaviour {
             if (!isAttack) { 
                            
 				velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
-                
+                if(audio.isPlaying)
+                {
+
+                }
+                else
+                {
+                    audio.Play();
+                }
                 //velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
             }
 			else{
 				velocity = new Vector3 (0, 0, 0);
+
 			}
             if (isKnockBacking == true)
             {
@@ -134,7 +142,9 @@ public class csPlayerController : MonoBehaviour {
 				anim.SetBool ("isMove", false);
 				isidle = false;
 				isAttack = true;
-			} else {
+                audio.Stop();
+            } else {
+
 				if (!isaaaa) {
 					anim.SetBool ("isAttack", false);
 				}
@@ -145,8 +155,9 @@ public class csPlayerController : MonoBehaviour {
 					transform.LookAt (transform.position + velocity);
 				} else {
 					anim.SetBool ("isMove", false);
-                    
-				}
+                    audio.Stop();
+
+                }
 
 			}
            
