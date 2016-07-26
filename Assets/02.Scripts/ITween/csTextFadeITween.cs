@@ -8,7 +8,7 @@ public class csTextFadeITween : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		StartCoroutine (FadeOutIn());
+		
 	}
 	
 	// Update is called once per frame
@@ -16,10 +16,5 @@ public class csTextFadeITween : MonoBehaviour {
 	
 	}
 
-	IEnumerator FadeOutIn()
-	{
-		for (int i = 0; i < ITweenText.Length; i++) {
 
-		}
-	}
 }
