@@ -177,7 +177,7 @@ public class csBossMonster : MonoBehaviour
 
             case STATE.DEAD:
                 state = STATE.NONE;
-
+                AudioManager.Instance().PlayFragmentBrokenSound();
                 GameManager.Instance().SpawnHealthItem(transform.position);
 
                 obj = gameObject.GetComponentsInChildren<Transform>();
@@ -201,7 +201,7 @@ public class csBossMonster : MonoBehaviour
                 }
                 //obj [0].parent = null;
                 //obj [0].gameObject.layer = 12;
-
+               
                 Destroy(gameObject, 0.1f);
 
                 break;
@@ -232,9 +232,9 @@ public class csBossMonster : MonoBehaviour
     
     public void Damage(int WeaponAttackPoint)
     {
-        AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
+        
         mHp -= WeaponAttackPoint;
-
+        AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
         if (mHp <= maxmHp * 0.9)
         {
             //Debug.Log("패턴1 : 날려버리기");
