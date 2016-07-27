@@ -8,3 +8,4 @@ Temp/
 *.unitypackage
 *.unityproj
 obj/Debug/
+KeyStore/
