@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityStandardAssets.Utility;
 
 public class csHardMonster2 : MonoBehaviour {
 
@@ -72,6 +73,15 @@ public class csHardMonster2 : MonoBehaviour {
 		healthBarSlider.value = (float)mHp / (float)maxmHp * 100;
 		float hpLate = (float)mHp / (float)maxmHp;
 		m_FillImage.color = Color.Lerp (m_ZeroHealthColor, m_FullHealthColor, hpLate);
+
+		if (GameManager.Instance ().isTimeControl) {
+
+		} else {
+			if (once) {
+				Transform cameraPos = GameObject.Find ("Main Camera").transform;
+				cameraPos.gameObject.GetComponent<SmoothFollow> ().height = 3;
+			}
+		}
 
 		if (GameManager.Instance ().isGameOver) {
 			return;
@@ -271,7 +281,12 @@ public class csHardMonster2 : MonoBehaviour {
         AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
         mHp -= WeaponAttackPoint;
         if (mHp <= 0)
-        {
+		{
+			if (once) {
+				once = false;
+				Transform cameraPos = GameObject.Find ("Main Camera").transform;
+				cameraPos.gameObject.GetComponent<SmoothFollow> ().height = 7;
+			}
             state = STATE.DEAD;
             GameManager.Instance().SkillGauge(1);
            
@@ -314,7 +329,7 @@ public class csHardMonster2 : MonoBehaviour {
 		GameObject AttackFieldObj = Instantiate (attackfield, setPos, Quaternion.identity) as GameObject;
 
 		AttackFieldObj.GetComponent<csCounterField> ().AttackPower = monsterAttackPoint;
+        AttackFieldObj.transform.parent = gameObject.transform;
 
-
-	}
+    }
 }
