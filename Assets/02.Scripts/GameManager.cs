@@ -3,9 +3,14 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
+#if UNITY_ADS
+using UnityEngine.Advertisements;
+#endif
+
 
 public class GameManager : MonoBehaviour {
 
+	public GameObject PlayerPrefeb;
 	static GameManager _instance = null;
 	Slider healthBarSlider;
 	Slider skillBarSlider;
@@ -14,6 +19,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject OptionCamvas;
 	public GameObject VictoryCamvas;
 	public GameObject FailCamvas;
+	public GameObject ResurrectionCanvas;
 
 	public GameObject Boss;
 	public GameObject AllSpwanPoint;
@@ -22,7 +28,10 @@ public class GameManager : MonoBehaviour {
 	public int Stagekillcount = 0;
 	public int StageDeadcount = 0;
 	public float PlayTime = 0.0f;
-    
+	public int restartcount = 0;
+
+	public Vector3 DeadPosition;
+
 	int count = 0;
 
 	public static GameManager Instance()
@@ -102,13 +111,20 @@ public class GameManager : MonoBehaviour {
         
 		if (isGameOver)
 		return;
+
+		DeadPosition = Player.transform.position;
+
 		AddDeadCount(1);
 
 		SceneManager.Instance ().AddPlayTime (PlayTime);
 		SceneManager.Instance ().KillCountSet (Stagekillcount);
 		SceneManager.Instance ().DeadCountSet (StageDeadcount);
+		if (restartcount == 0) {
+			Resurrection ();
+		} else {
+			Fail ();
+		}
 
-		Fail ();
         BgmManager.Instance().PlayFail();
         isGameOver = true;
 		Time.timeScale = 0.5f;
@@ -257,6 +273,30 @@ public class GameManager : MonoBehaviour {
 		FailCamvas.SetActive (true);
 	}
 
+	public void Resurrection()
+	{
+		ResurrectionCanvas.SetActive (true);
+	}
+
+	public void ResurrectionPlayer()
+	{
+		restartcount++;
+		Time.timeScale = 1.0f;
+		Instantiate (PlayerPrefeb, DeadPosition, Quaternion.identity);
+		Player = GameObject.Find ("Player(Clone)");
+		GetComponent<csCameraFollow> ().reStartFollow ();
+		hp = maxHp;
+		isGameOver = false;
+		isGameClear = false;
+		once = true;
+
+	}
+
+	public void NoResurrection()
+	{
+		Fail ();
+	}
+
 	public void abncc()
 	{
 		count++;
@@ -273,24 +313,30 @@ public class GameManager : MonoBehaviour {
 		StageDeadcount += deadcount;
 	}
 
-//	void OnGUI()
-//	{
-//		if (GUI.Button (new Rect (20, 140, 120, 50), "Wrap Boss")) {
-//			Player.transform.position = Boss.transform.position;
-//		}
-//
-//		if (GUI.Button (new Rect (20, 200, 120, 50), "Kill Boss")) {
-//			if(Boss.gameObject.GetComponent<csEnemy1> ())
-//				Boss.gameObject.GetComponent<csEnemy1> ().Damage(10000);
-//			if(Boss.gameObject.GetComponent<csEnemy2> ())
-//				Boss.gameObject.GetComponent<csEnemy2> ().Damage(10000);
-//			if (Boss.gameObject.GetComponent<csHardMonster>())
-//				Boss.gameObject.GetComponent<csHardMonster>().Damage(10000);
-//			if (Boss.gameObject.GetComponent<csHardMonster2>())
-//				Boss.gameObject.GetComponent<csHardMonster2>().Damage(10000);
-//			if (Boss.gameObject.GetComponent<csBossMonster>())
-//				Boss.gameObject.GetComponent<csBossMonster>().Damage(10000);
-//		}
-//
-//	}
+
+	public void ShowRewarededAd()
+	{
+		#if UNITY_ADS
+		if(Advertisement.IsReady())
+		{
+			ShowOptions options = new ShowOptions();
+			options.resultCallback = HandleShowResult;
+			Advertisement.Show(null, options);
+		}
+		#endif
+	}
+
+	private void HandleShowResult(ShowResult result)
+	{
+		switch (result) {
+		case ShowResult.Finished:
+			ResurrectionPlayer ();
+
+			break;
+		case ShowResult.Skipped:
+			break;
+		case ShowResult.Failed:
+			break;
+		}
+	}
 }

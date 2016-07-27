@@ -33,6 +33,9 @@ public class csTimeManager : MonoBehaviour {
 			return;
 		}
 
+		if (GameManager.Instance ().restartcount == 1) {
+			player = GameObject.Find ("Player(Clone)");
+		}
 
 		if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop==false
 			&& GameManager.Instance().gauge >=5 ) {

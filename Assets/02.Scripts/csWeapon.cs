@@ -34,6 +34,10 @@ public class csWeapon : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col)
 	{
+		if (GameManager.Instance ().restartcount == 1) {
+			player = GameObject.Find ("Player(Clone)");
+		}
+
 		if (col.gameObject.tag == "Enemy") {
             
 			if (player.GetComponent<csPlayerController> ().isAttack) {

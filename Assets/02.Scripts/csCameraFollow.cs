@@ -21,4 +21,9 @@ public class csCameraFollow : MonoBehaviour {
 
 		transform.position = new Vector3 (PlayerPos.x, PlayerPos.y, PlayerPos.z);
 	}
+
+	public void reStartFollow()
+	{
+		Player = GameObject.Find ("Player(Clone)");
+	}
 }

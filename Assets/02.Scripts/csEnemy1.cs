@@ -48,6 +48,7 @@ public class csEnemy1 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
 		if (state == STATE.NONE) {
 			return;
 		}
@@ -59,6 +60,10 @@ public class csEnemy1 : MonoBehaviour {
 
 		if (GameManager.Instance ().isGameOver) {
 			return;
+		}
+
+		if (GameManager.Instance ().restartcount == 1) {
+			player = GameObject.FindWithTag("CharCenter").transform;
 		}
 
 		switch (state) {

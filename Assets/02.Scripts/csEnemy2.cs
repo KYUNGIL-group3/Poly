@@ -54,6 +54,11 @@ public class csEnemy2 : MonoBehaviour
 		if (GameManager.Instance ().isGameOver) {
 			return;
 		}
+
+		if (GameManager.Instance ().restartcount == 1) {
+			player = GameObject.FindWithTag("CharCenter").transform;
+		}
+
 		reloadTime += Time.deltaTime;
         
 		switch (state) {

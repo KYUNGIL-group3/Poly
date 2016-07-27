@@ -75,6 +75,10 @@ public class csHardMonster : MonoBehaviour {
 			return;
 		}
 
+		if (GameManager.Instance ().restartcount == 1) {
+			player = GameObject.FindWithTag("CharCenter").transform;
+		}
+
         switch (state)
         {
             case STATE.IDLE:

@@ -186,4 +186,17 @@ public class csOptionManager : MonoBehaviour {
 
 		PlayerPrefs.SetInt ("Volume", volume);
 	}
+
+	public void Resurrection()
+	{
+		gameObject.SetActive (false);
+		GameManager.Instance ().ShowRewarededAd ();
+		//GameManager.Instance ().ResurrectionPlayer ();
+	}
+
+	public void NoResurrection()
+	{
+		gameObject.SetActive (false);
+		GameManager.Instance ().NoResurrection ();
+	}
 }
