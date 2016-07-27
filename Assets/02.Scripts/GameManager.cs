@@ -334,8 +334,10 @@ public class GameManager : MonoBehaviour {
 
 			break;
 		case ShowResult.Skipped:
+			Fail ();
 			break;
 		case ShowResult.Failed:
+			Fail ();
 			break;
 		}
 	}
