@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityStandardAssets.Utility;
 
 public class csHardMonster : MonoBehaviour {
     enum STATE
@@ -37,7 +38,7 @@ public class csHardMonster : MonoBehaviour {
     public float rotmaxtime = 0.7f;
 
     bool isattackMotion = true;
-    bool once = false;
+	bool once = true;
     Transform player;
     public float speed = 3.0f;
     private float distance;
@@ -71,6 +72,15 @@ public class csHardMonster : MonoBehaviour {
 		float hpLate = (float)mHp / (float)maxmHp;
 		m_FillImage.color = Color.Lerp (m_ZeroHealthColor, m_FullHealthColor,hpLate);
           
+		if (GameManager.Instance ().isTimeControl) {
+			
+		} else {
+			if (once) {
+				Transform cameraPos = GameObject.Find ("Main Camera").transform;
+				cameraPos.gameObject.GetComponent<SmoothFollow> ().height = 3;
+			}
+		}
+
 		if (GameManager.Instance ().isGameOver) {
 			return;
 		}
@@ -197,7 +207,8 @@ public class csHardMonster : MonoBehaviour {
 
                 break;
 
-            case STATE.DEAD:
+		case STATE.DEAD:
+			
                 state = STATE.NONE;
                 AudioManager.Instance().PlayFragmentBrokenSound();
                 int SpawnPercent = Random.Range(1, 100);
@@ -280,12 +291,16 @@ public class csHardMonster : MonoBehaviour {
         AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
         mHp -= WeaponAttackPoint;
 
-        if (mHp <= 0)
-        {
-            state = STATE.DEAD;
-            GameManager.Instance().SkillGauge(1);
+		if (mHp <= 0) {
+			if (once) {
+				once = false;
+				Transform cameraPos = GameObject.Find ("Main Camera").transform;
+				cameraPos.gameObject.GetComponent<SmoothFollow> ().height = 7;
+			}
+			state = STATE.DEAD;
+			GameManager.Instance ().SkillGauge (1);
             
-        }
+		}
     }
     void CounterAttack()
     {
