@@ -10,7 +10,7 @@ namespace UnityStandardAssets.Utility
 		private Transform target;
 		// The distance in the x-z plane to the target
 		[SerializeField]
-		private float distance = 10.0f;
+		public float distance = 10.0f;
 		// the height we want the camera to be above the target
 		[SerializeField]
 		public float height = 5.0f;
@@ -19,6 +19,8 @@ namespace UnityStandardAssets.Utility
 		private float rotationDamping;
 		[SerializeField]
 		private float heightDamping;
+
+		public Quaternion currentRotation = Quaternion.Euler (0, 0, 0);
 
 		// Use this for initialization
 		void Start() { }
@@ -46,7 +48,8 @@ namespace UnityStandardAssets.Utility
 
 			// Convert the angle into a rotation
 			//var currentRotation = Quaternion.Euler(0, currentRotationAngle, 0);
-			var currentRotation = Quaternion.Euler(0, 0, 0);
+
+			//currentRotation = Quaternion.Euler(0, 0, 0);
 
 			// Set the position of the camera on the x-z plane to:
 			// distance meters behind the target

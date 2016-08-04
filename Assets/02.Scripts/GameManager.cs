@@ -11,6 +11,7 @@ using UnityEngine.Advertisements;
 public class GameManager : MonoBehaviour {
 
 	public GameObject PlayerPrefeb;
+	public GameObject CameraCenter;
 	static GameManager _instance = null;
 	Slider healthBarSlider;
 	Slider skillBarSlider;
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour {
 	public int StageDeadcount = 0;
 	public float PlayTime = 0.0f;
 	public int restartcount = 0;
+	public bool isShake = false;
 
 	public Vector3 DeadPosition;
 
@@ -206,6 +208,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		this.hp -= hp;
+		StartCoroutine(shake(1.0f));
         AudioManager.Instance().PlayPlayerHitSound();   //플레이어 피격 사운드 재생
         Player.GetComponent<csPlayerController>().DamageEF();
         if (this.hp < 0) {
@@ -339,6 +342,63 @@ public class GameManager : MonoBehaviour {
 		case ShowResult.Failed:
 			Fail ();
 			break;
+		}
+	}
+
+	public void CameraMove(GameObject ishardmonster)
+	{
+		if (ishardmonster) {
+			Vector3 dir = (Player.transform.position + ishardmonster.transform.position) /2.0f;
+
+			float cameraheight = Vector3.Distance (Player.transform.position, ishardmonster.transform.position);
+
+			if (cameraheight < 3.0f) {
+				cameraheight = 3.0f;
+			}
+
+			Transform cameraPos = GameObject.Find ("Main Camera").transform;
+
+			cameraPos.gameObject.GetComponent<SmoothFollow> ().height = cameraheight + 2.0f;
+
+			CameraCenter.transform.position = dir;
+		} else {
+			Transform cameraPos = GameObject.Find ("Main Camera").transform;
+
+			cameraPos.gameObject.GetComponent<SmoothFollow> ().height = 7;
+
+			CameraCenter.transform.position = gameObject.transform.position;
+		}
+	}
+
+	public IEnumerator shake(float rotalevel)
+	{
+		if (isShake) {
+			
+		} else {
+
+			isShake = true;
+
+			Transform MainCamera = GameObject.Find ("Main Camera").transform;
+
+			float shake = 0.3f;
+			float shakeAmount = 1.5f;
+			float decreaseFactor = 1.0f;
+			Vector3 originalPos;
+
+			Quaternion originalcur = MainCamera.gameObject.GetComponent<SmoothFollow> ().currentRotation;
+
+			originalPos = MainCamera.position;
+			originalcur = MainCamera.gameObject.GetComponent<SmoothFollow> ().currentRotation;
+			while (shake > 0) {
+				MainCamera.gameObject.GetComponent<SmoothFollow> ().currentRotation = Quaternion.Euler (0, Random.Range (-rotalevel, rotalevel) * shakeAmount, 0);
+				MainCamera.position = originalPos + Random.insideUnitSphere * shakeAmount;
+				shake -= Time.deltaTime * decreaseFactor;
+				yield return new WaitForSeconds (0.01f);
+			}
+
+			MainCamera.position = originalPos;
+			MainCamera.gameObject.GetComponent<SmoothFollow> ().currentRotation = originalcur;
+			isShake = false;
 		}
 	}
 }

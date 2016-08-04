@@ -24,6 +24,7 @@ public class csHardMonster : MonoBehaviour {
     public float attackStateMaxTime = 5.0f; //공격대기시간
     public float checkAttackDistance = 2.0f; //견제공격 범위
     public int monsterAttackPoint;  //몬스터 공격력
+    public GameObject HitEffect; //몬스터 피격 파티클
     //float knockbackCount = 10.0f;
     //public float DelayTime;
     public GameObject attackfield;
@@ -76,8 +77,9 @@ public class csHardMonster : MonoBehaviour {
 			
 		} else {
 			if (once) {
-				Transform cameraPos = GameObject.Find ("Main Camera").transform;
-				cameraPos.gameObject.GetComponent<SmoothFollow> ().height = 3;
+				GameManager.Instance ().CameraMove (this.gameObject);
+				//Transform cameraPos = GameObject.Find ("Main Camera").transform;
+				//cameraPos.gameObject.GetComponent<SmoothFollow> ().height = 3;
 			}
 		}
 
@@ -288,14 +290,17 @@ public class csHardMonster : MonoBehaviour {
         }
 
         //stateTime = 0.0f;
-        AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
         mHp -= WeaponAttackPoint;
+        AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
+        Instantiate(HitEffect, transform.position, transform.rotation); //몬스터 피격 이펙트
+        
 
 		if (mHp <= 0) {
 			if (once) {
 				once = false;
-				Transform cameraPos = GameObject.Find ("Main Camera").transform;
-				cameraPos.gameObject.GetComponent<SmoothFollow> ().height = 7;
+				GameManager.Instance ().CameraMove (null);
+				//Transform cameraPos = GameObject.Find ("Main Camera").transform;
+				//cameraPos.gameObject.GetComponent<SmoothFollow> ().height = 7;
 			}
 			state = STATE.DEAD;
 			GameManager.Instance ().SkillGauge (1);

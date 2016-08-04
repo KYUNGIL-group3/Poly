@@ -26,7 +26,7 @@ public class csEnemy2 : MonoBehaviour
 	public float attackStateMaxTime = 1.5f; //공격대기시간
 	public float checkAttackDistance = 3.0f; //견제공격 범위
 	public int monsterAttackPoint = 30;  //몬스터 공격력
-
+    public GameObject HitEffect; //몬스터 피격 파티클
     public float reloadTime = 4.0f;
 	public float reloadmaxTime = 5.0f;
     bool reloaded = false;
@@ -212,10 +212,12 @@ public class csEnemy2 : MonoBehaviour
 	}
     public void Damage(int WeaponAttackPoint)
 	{
+        mHp -= WeaponAttackPoint;
         AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
+        Instantiate(HitEffect, transform.position, transform.rotation); //몬스터 피격 이펙트
         //anim.SetBool ("Damage", true);
         //stateTime = 0.0f;
-        mHp -= WeaponAttackPoint;
+        
         if (mHp <= 0)
         {
             state = STATE.DEAD;

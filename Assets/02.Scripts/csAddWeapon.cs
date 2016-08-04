@@ -8,7 +8,7 @@ public class csAddWeapon : MonoBehaviour {
 	public GameObject Player;
 	GameObject Eweapon;
 	Animator Playeranim;
-	int WeaponNum=0;
+	public int WeaponNum=0;
 
 	float changetime= 0.0f;
 	float changemaxtime= 1.0f;

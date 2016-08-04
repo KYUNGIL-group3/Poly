@@ -32,6 +32,7 @@ public class csHardMonster2 : MonoBehaviour {
     public float attackStateMaxTime = 1.5f; //공격대기시간
     public float checkAttackDistance = 3.0f; //견제공격 범위
     public int monsterAttackPoint = 30;  //몬스터 공격력
+    public GameObject HitEffect; //몬스터 피격 파티클
     public GameObject attackfield;
     public Transform atkpoint;
     public float reloadTime = 4.0f;
@@ -278,8 +279,10 @@ public class csHardMonster2 : MonoBehaviour {
         }
         //anim.SetBool ("Damage", true);
         //stateTime = 0.0f;
-        AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
         mHp -= WeaponAttackPoint;
+        AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
+        Instantiate(HitEffect, transform.position, transform.rotation); //몬스터 피격 이펙트
+        
         if (mHp <= 0)
 		{
 			if (once) {

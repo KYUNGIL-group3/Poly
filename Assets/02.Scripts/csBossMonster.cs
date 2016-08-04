@@ -20,19 +20,23 @@ public class csBossMonster : MonoBehaviour
     public Transform spawn1;
     public Transform spawn2;
     public Transform spawn3;
-    public Transform spawn4;
+    public Transform spawn4;    
+    public Transform firePos;
+
     public float idleStateMaxTime = 1.0f;   //대기시간,경직시간
     public float checkMoveDistance = 20.0f; //몬스터 시야
     public float attackableRange = 20.0f;    //공격범위
     public float attackStateMaxTime = 2.0f; //공격대기시간
     public float checkAttackDistance = 20.0f; //견제공격 범위
     public int monsterAttackPoint;  //몬스터 공격력
-    
+
+    public GameObject HitEffect; //몬스터 피격 파티클    
     public GameObject attackfield;
     public GameObject attackfield2;
     public GameObject attackfield3;
+    public GameObject attackRange;
+    public GameObject bullet;
 
-    
     public Transform atkpoint;
     public Transform atkpoint2;
     public Transform atkpoint3;
@@ -54,6 +58,9 @@ public class csBossMonster : MonoBehaviour
     public int mHp;
     private int maxmHp;
 
+    LineRenderer line;
+    Transform Boss;
+
     // Use this for initialization
     void Start()
     {
@@ -64,11 +71,15 @@ public class csBossMonster : MonoBehaviour
         anim = GetComponent<Animator>();
         monsterAttackPoint = GetComponent<csBossMonster>().monsterAttackPoint;
         //Debug.Log(monsterAttackPoint);
-    
+        attackRange.SetActive(false);
+
         spawn1 = GameObject.Find("Pattern4Point1").transform;
         spawn2 = GameObject.Find("Pattern4Point2").transform;
         spawn3 = GameObject.Find("Pattern4Point3").transform;
         spawn4 = GameObject.Find("Pattern4Point4").transform;
+
+
+        
     }
     // Update is called once per frame
     void Update()
@@ -83,6 +94,7 @@ public class csBossMonster : MonoBehaviour
 		if (GameManager.Instance ().restartcount == 1) {
 			player = GameObject.FindWithTag("CharCenter").transform;
 		}
+        
 
         switch (state)
         {
@@ -109,19 +121,67 @@ public class csBossMonster : MonoBehaviour
                     state = STATE.IDLE;
                     return;
                 }
-
+                if (distance > checkAttackDistance)
+                {
+                    Pattern1();
+                }
                 if (stateTime > attackStateMaxTime)
                 {
                     stateTime = 0.0f;
                     if (distance < attackableRange + 0.5f)
                     {
-                        
+
                         anim.SetInteger("AniStep", 1);
                         //transform.LookAt(player.parent.transform);
                     }
+                        //패턴
+                        PatternNum = Random.Range(1, 4);
+                        if (PatternNum == 1)
+                        {
                        
-                   
+                            int percentage = Random.Range(1, 100);
+                            if (percentage >= 1 && percentage <= 47)
+                            {
+                                Pattern1();
+                                PatternNum = 0;
+                                state = STATE.IDLE;
+                            }
+                        }
+                        if (PatternNum == 2)
+                        {
+                            int percentage = Random.Range(1, 100);
+                            if (percentage >= 1 && percentage <= 44)
+                            {
+                                Pattern2();
+                                PatternNum = 0;
+                                state = STATE.IDLE;
+                            }
+                        }
+                        if (PatternNum == 3)
+                        {
+                            int percentage = Random.Range(1, 100);
+                            if (percentage >= 1 && percentage <= 48)
+                            {
+                                Pattern3();
+                                PatternNum = 0;
+                                state = STATE.IDLE;
+                            }
+                        }
+                        if (PatternNum == 4)
+                        {
+                            int percentage = Random.Range(1, 100);
+                            if (percentage >= 1 && percentage <= 45)
+                            {
+                                Pattern4();
+                                PatternNum = 0;
+                                state = STATE.IDLE;
+                            }
+                        }
+                    
+
                 }
+               
+                
 
                 break;
 
@@ -149,30 +209,7 @@ public class csBossMonster : MonoBehaviour
                 //    stateTime = 0.0f;
                 //    state = STATE.IDLE;
                 //}
-                if (PatternNum == 1)
-                {
-                    Pattern1();
-                    PatternNum = 0;
-                    state = STATE.IDLE;
-                }
-                if(PatternNum==2)
-                {
-                    Pattern2();
-                    PatternNum = 0;
-                    state = STATE.IDLE;
-                }
-                if (PatternNum == 3)
-                {
-                    Pattern3();
-                    PatternNum = 0;
-                    state = STATE.IDLE;
-                }
-                if (PatternNum == 4)
-                {
-                    Pattern4();
-                    PatternNum = 0;
-                    state = STATE.IDLE;
-                }
+               
                 break;
 
             case STATE.DEAD:
@@ -235,25 +272,28 @@ public class csBossMonster : MonoBehaviour
         
         mHp -= WeaponAttackPoint;
         AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
+        Instantiate(HitEffect, transform.position, transform.rotation); //몬스터 피격 이펙트
+        
+
         if (mHp <= maxmHp * 0.9)
         {
             //Debug.Log("패턴1 : 날려버리기");
-            state = STATE.DAMAGE;
-            PatternNum = 1;
+            state = STATE.ATTACK;
+            //PatternNum = 1;
             
         }
         if (mHp < maxmHp * 0.7 && mHp <= maxmHp * 0.7)
         {
             //Debug.Log("패턴2 : 내려찍기");
-            state = STATE.DAMAGE;
-            PatternNum = 2;
+            state = STATE.ATTACK;
+            //PatternNum = 2;
             
         }
         if (mHp < maxmHp * 0.5 && mHp <= maxmHp * 0.5)
         {
             //Debug.Log("패턴3 : 충격파 날리기");
-            state = STATE.DAMAGE;
-            PatternNum = 3;
+            state = STATE.ATTACK;
+            //PatternNum = 3;
             //int percentage = Random.Range(1, 100);
             //if (percentage >= 1 && percentage <= 50)
             //{
@@ -268,16 +308,11 @@ public class csBossMonster : MonoBehaviour
         if (mHp < maxmHp * 0.3 && mHp <= maxmHp * 0.3)
         {
             //Debug.Log("패턴4 : 몬스터 소환");
-            state = STATE.DAMAGE;
-            PatternNum = 4;
+            state = STATE.ATTACK;
+            //PatternNum = 4;
             
         }
-        //else
-        //{
-        //    //PatternNum = Random.Range(1, 4);
-        //    //state = STATE.DAMAGE;
-            
-        //}
+       
               
         
         if (mHp <= 0)
@@ -289,7 +324,23 @@ public class csBossMonster : MonoBehaviour
         }
 
     }
-   
+
+    void Fire()
+    {
+        
+        GameObject bullettemp = Instantiate(bullet, firePos.position, Quaternion.identity) as GameObject;
+
+        bullettemp.GetComponent<csBullet>().bulletdamage = monsterAttackPoint;
+
+
+        Vector3 dir = player.position - bullettemp.transform.position;
+        dir.Normalize();
+        bullettemp.transform.LookAt(player);
+        bullettemp.gameObject.GetComponent<Rigidbody>().AddForce(dir * 1000.0f);
+
+          
+    }
+
     void MakeCollider()
     {
         Vector3 setPos = new Vector3(atkpoint.position.x, transform.position.y + 9.0f, atkpoint.position.z - 1.0f);
@@ -328,7 +379,7 @@ public class csBossMonster : MonoBehaviour
 
     void Pattern1()
     {
-        //Debug.Log("패턴1 : 날려버리기 발동");
+        //Debug.Log("패턴1 : 날려버리기(원거리) 발동");
         anim.SetInteger("AniStep", 2);
     }
     void Pattern2()
@@ -338,8 +389,10 @@ public class csBossMonster : MonoBehaviour
     }
     void Pattern3()   
     {
-       // Debug.Log("패턴3 : 충격파 발동");
+       // Debug.Log("패턴3 : 양손 치기 발동");
         anim.SetInteger("AniStep", 4);
+        //StartCoroutine(MakeRange());
+        
     }
     void Pattern4()
     {
@@ -347,6 +400,26 @@ public class csBossMonster : MonoBehaviour
         anim.SetInteger("AniStep", 5);
         MonsterSpawn();
 
+    }
+    //IEnumerator MakeRange()
+    //{
+    //    yield return new WaitForSeconds(2.0f);
+    //    Boss = GameObject.Find("BossCenter").transform;
+    //    Instantiate(attackRange, Boss.position, Quaternion.identity);
+    //}
+    void MakeRange()
+    {
+        //Boss = GameObject.Find("BossCenter").transform;
+        //Instantiate(attackRange, Boss.position+new Vector3(0,0,9.0f), Quaternion.identity);
+        attackRange.SetActive(true);
+        StartCoroutine(HideRange());
+
+
+    }
+    IEnumerator HideRange()
+    {
+        yield return new WaitForSeconds(1.5f);
+        attackRange.SetActive(false);
     }
     void MonsterSpawn()
     {
@@ -356,5 +429,6 @@ public class csBossMonster : MonoBehaviour
         spawn3.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
         spawn4.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
     }
+    
 
 }

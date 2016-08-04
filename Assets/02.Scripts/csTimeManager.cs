@@ -44,7 +44,7 @@ public class csTimeManager : MonoBehaviour {
 			MobileSingleStickControl.GetComponent<csITweenManagerButton> ().ActionStart ();
 			GameManager.Instance ().isTimeControl = true;
 			timestop = true;
-			Time.timeScale = 0.001f;
+			Time.timeScale = 0.0f;
 
 			returnGauge = GameManager.Instance ().gauge;
 
@@ -60,17 +60,22 @@ public class csTimeManager : MonoBehaviour {
 
 
 		}else if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop) {
-			MobileSingleStickControl.GetComponent<csITweenManagerButton> ().ActionStart ();
 			timestop = false;
-
-			GameManager.Instance ().isTimeControl = false;
-			Time.timeScale = 0.2f;
 			GameObject PointManager = GameObject.FindWithTag ("PointManager");
 
+			if (Vec3ArrayList.Count == 1) {
+				timestop = false;
+				MobileSingleStickControl.GetComponent<csITweenManagerButton> ().ActionStart ();
+				GameManager.Instance ().gauge = returnGauge;
+				GameManager.Instance ().isTimeControl = false;
+				Time.timeScale = 1.0f;
+				cameraPos.gameObject.GetComponent<SmoothFollow>().height = 7;
+			} else {
+				StartCoroutine (ActionStart ());
+				StartCoroutine(player.GetComponent<csPlayerController>().StartArrayMove(Vec3ArrayList));
+			}
 
-			StartCoroutine(player.GetComponent<csPlayerController>().StartArrayMove(Vec3ArrayList));
 			Vec3ArrayList.Clear ();
-
 			Destroy (PointManager);
 		}else if(CrossPlatformInputManager.GetButtonDown ("SkillCancel") && timestop)
 		{
@@ -100,10 +105,6 @@ public class csTimeManager : MonoBehaviour {
 					if (hit.transform.tag.Equals ("Point")) {
 
 						SkillMoveObj = GameObject.Find("SkillMoveObj");
-
-
-
-
 
 						if (Vector3.Distance
 							(new Vector3 (SkillMoveObj.transform.position.x, 0.0f, SkillMoveObj.transform.position.z),
@@ -147,5 +148,11 @@ public class csTimeManager : MonoBehaviour {
 	public void FirstPoint(GameObject obj)
 	{
 		Vec3ArrayList.Add (obj);
+	}
+
+	IEnumerator ActionStart()
+	{
+		yield return new WaitForSeconds (0.1f);
+		MobileSingleStickControl.GetComponent<csITweenManagerButton> ().ActionStart ();
 	}
 }

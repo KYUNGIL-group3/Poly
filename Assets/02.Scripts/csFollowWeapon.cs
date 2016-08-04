@@ -8,6 +8,17 @@ public class csFollowWeapon : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		StartCoroutine (FollowStart ());
+		int a = Random.Range (-1, 1);
+		int b = Random.Range (-1, 1);
+		int c = Random.Range (-1, 1);
+
+		float right = Random.Range (-500.0f, -300.0f) * a;
+		float forward = Random.Range (-500.0f, -300.0f) * b;
+		float up = Random.Range (-500.0f, -300.0f) * c;
+
+
+		GetComponent<Rigidbody> ().AddForce ((transform.forward * forward) + (transform.right * right) + (transform.up * up));
+		weapon = GameObject.FindWithTag ("CharCenter");
 	}
 	
 	// Update is called once per frame
@@ -15,7 +26,6 @@ public class csFollowWeapon : MonoBehaviour {
 		if (isfollow == false) {
 			return;
 		}
-		weapon = GameObject.FindWithTag ("CharCenter");
 		//transform.LookAt (weapon.transform);
 		//transform.Translate (Vector3.forward * 10.0f * Time.deltaTime);
 		transform.position = Vector3.MoveTowards(transform.position, weapon.transform.position , 30.0f * Time.deltaTime);

@@ -22,8 +22,8 @@ public class csEnemy1 : MonoBehaviour {
     public float attackStateMaxTime = 1.5f; //공격대기시간
 	public float checkAttackDistance = 0.0f; //견제공격 범위
 	public int monsterAttackPoint = 5;  //몬스터 공격력
-
-	float rotspeed = 2.0f;
+    public GameObject HitEffect; //몬스터 피격 파티클
+    float rotspeed = 2.0f;
 	float attackMotionSpeed = 5.0f;
 	float rottime = 0.0f;
 	public float rotmaxtime = 0.7f;
@@ -184,9 +184,11 @@ public class csEnemy1 : MonoBehaviour {
 
 	public void Damage(int WeaponAttackPoint)
 	{
-        AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
-        //stateTime = 0.0f;
         mHp -= WeaponAttackPoint;
+        AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
+        Instantiate(HitEffect, transform.position, transform.rotation); //몬스터 피격 이펙트
+        //stateTime = 0.0f;
+       
         if (mHp <= 0)
         {
             state = STATE.DEAD;

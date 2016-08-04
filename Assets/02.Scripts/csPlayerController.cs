@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 
@@ -18,6 +19,8 @@ public class csPlayerController : MonoBehaviour {
     private Vector3 velocity;
     bool isKnockBacking = false;
     CharacterController controller = null;
+
+	public GameObject Rhand;
    
 	Animator anim = null;
 
@@ -39,9 +42,12 @@ public class csPlayerController : MonoBehaviour {
 
 	bool isaaaa = false;
 
+
 	GameObject[] parentlist;
 	GameObject[] childlist;
     AudioSource audio;
+
+	float eventmaxtime = 5.0f;
     // Use this for initialization
     void Start () {
         
@@ -57,6 +63,7 @@ public class csPlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
         //		if (isaaaa) {
         //			isAttack = true;
         //			anim.SetBool ("isAttack", true);
@@ -173,15 +180,15 @@ public class csPlayerController : MonoBehaviour {
 	public IEnumerator StartArrayMove(ArrayList vec)
 	{
         AudioManager.Instance().PlaySkillActiveSound();
-		GameManager.Instance ().isTimeControl = true;
+		//GameManager.Instance ().isTimeControl = true;
 		anim.SetBool ("isSkill", true);
+		gameObject.GetComponent<Animator> ().updateMode = AnimatorUpdateMode.UnscaledTime;
 		GameObject moveskillobj = GameObject.Find ("MoveSkillObj");
 		isSkill = true;
 		isAttack = true;
 		ismove = false;
 		cameraFollow.enabled = false;
 		gameObject.layer = 11;
-
 		pointpos = new Vector3[vec.Count];
         
 		for (int a = 0; a < vec.Count; a++) {
@@ -192,7 +199,9 @@ public class csPlayerController : MonoBehaviour {
 				pointpos [a] = pointobj.transform.position;
 			}
 		}
-
+		transform.LookAt ((Vector3)pointpos [1]);
+		yield return WaitForRealTime (eventmaxtime);
+		anim.SetBool ("isSkill", false);
 		for (int a = 1; a < pointpos.Length; a++) {
 
 			Vector3 dir = ((Vector3)pointpos [a-1] + (Vector3)pointpos [a]) /2.0f;
@@ -202,19 +211,31 @@ public class csPlayerController : MonoBehaviour {
 			//GameObject goTemp = Instantiate (SkillDamage, dir,Quaternion.Euler (new Vector3 (0.0f, 0.0f, 0.0f))) as GameObject;
 			
 			//dir.Normalize ();
-			transform.LookAt ((Vector3)pointpos [a]);
+			//transform.LookAt ((Vector3)pointpos [a]);
 
 			GameObject goTemp = Instantiate (SkillDamage, dir + new Vector3 (0.0f, 1.0f, 0.0f),
 				                    transform.rotation) as GameObject;
+			Vector3 lookVec3 = (Vector3)pointpos [a];
+			lookVec3.y = goTemp.transform.position.y;
+			goTemp.transform.LookAt (lookVec3);
+			if (Rhand.GetComponent<csAddWeapon> ().WeaponNum == 0) {
 
-			transform.position = (Vector3)pointpos [a];
+				transform.LookAt ((Vector3)pointpos [a]);
+				transform.position = (Vector3)pointpos [a];
+			} else {
+				transform.LookAt ((Vector3)pointpos [1]);
+			}
 
 			//float speed = 0.001f;
 			//float step = speed * Time.deltaTime;
 			//transform.position = Vector3.MoveTowards (transform.position, (Vector3)pointpos [a], step);
 
-			yield return new WaitForSeconds (skillmovespeed);
+			//yield return new WaitForSeconds (skillmovespeed);
+			yield return WaitForRealTime (0.01f);
 		}
+
+		yield return WaitForRealTime (eventmaxtime);
+
 
 		Time.timeScale = 1.0f;
 		gameObject.layer = 9;
@@ -222,12 +243,11 @@ public class csPlayerController : MonoBehaviour {
 		ismove = true;
 		isSkill = false;
 		isAttack = false;
-
+		gameObject.GetComponent<Animator> ().updateMode = AnimatorUpdateMode.Normal;
 		Transform cameraPos = GameObject.Find ("Main Camera").transform;
 		//cameraPos.position += new Vector3 (0.0f, -5.0f, 3.0f);
 
 		cameraPos.gameObject.GetComponent<SmoothFollow>().height = 7;
-		anim.SetBool ("isSkill", false);
 		GameManager.Instance ().isTimeControl = false;
 //		moveskillobj.GetComponent<BoxCollider> ().enabled = false;
 		//yield return new WaitForSeconds (1.0f);
@@ -238,7 +258,29 @@ public class csPlayerController : MonoBehaviour {
 	{
 		velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
 		//velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
-		transform.LookAt (transform.position + velocity);
+
+		//transform.LookAt (transform.position + velocity);
+
+		if (velocity.magnitude > 0) {
+			transform.LookAt (transform.position + velocity);
+			return;
+		}
+
+		GameObject[] targets;
+
+		targets = GameObject.FindGameObjectsWithTag ("Enemy");
+
+		foreach (GameObject target in targets) {
+			float targetDis = Vector3.Distance (transform.position, target.transform.position);
+
+			if (targetDis <= 5) {
+				Vector3 targetPos = target.transform.position;
+				targetPos.y = transform.position.y;
+				transform.LookAt (targetPos);
+				break;
+			}
+		}
+
 	}
 
 	void OkMove()
@@ -332,24 +374,19 @@ public class csPlayerController : MonoBehaviour {
         AudioManager.Instance().PlayWeaponSwingSound2();
     }
 
-    IEnumerator shake()
+	void shake()
 	{
-		float shake = 0.3f;
-		float shakeAmount = 1.5f;
-		float decreaseFactor = 1.0f;
-		Vector3 originalPos;
+		StartCoroutine (GameManager.Instance ().shake (0.0f));
+	}
 
-		originalPos = MainCamera.position;
-
-		while (shake > 0) {
-
-			MainCamera.position = originalPos + Random.insideUnitSphere * shakeAmount;
-			shake -= Time.deltaTime * decreaseFactor;
-			yield return new WaitForSeconds (0.01f);
+	public static IEnumerator WaitForRealTime(float delay){
+		while(true){
+			float pauseEndTime = Time.realtimeSinceStartup + delay;
+			while (Time.realtimeSinceStartup < pauseEndTime){
+				yield return 0;
+			}
+			break;
 		}
-
-		MainCamera.position = originalPos;
-
 	}
 
 }

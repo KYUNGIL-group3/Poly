@@ -71,8 +71,8 @@ public class AudioManager : MonoBehaviour {
     public AudioClip RecoveryItemTakeSound; //31    적용
     public AudioClip PlayerRevivalSound;    //32    적용
 
-    
-
+	bool sound = false;
+	float soundtime = 0.0f;
     public static AudioManager Instance()
     {
         return _instance;
@@ -93,7 +93,14 @@ public class AudioManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-	
+		if (sound) {
+			if (soundtime > 0.2f) {
+				sound = false;
+				soundtime = 0.0f;
+				return;
+			}
+			soundtime += Time.unscaledDeltaTime;
+		}
 	}
    
     public void PlayBossSound()
@@ -187,7 +194,11 @@ public class AudioManager : MonoBehaviour {
     }
     public void PlayFragmentAbsorbSound()
     {
+		if (sound) {
+			return;
+		}
         GetComponent<AudioSource>().PlayOneShot(FragmentAbsorbSound,0.5f);
+		sound = true;
     }
     public void PlayWaveWallRemoveSound()
     {
