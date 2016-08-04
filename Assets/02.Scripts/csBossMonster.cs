@@ -101,10 +101,11 @@ public class csBossMonster : MonoBehaviour
             case STATE.IDLE:
                 distance = Vector3.Distance(transform.position, player.position);
                 stateTime = 0.0f;
+				
 
                 anim.SetInteger("AniStep", 0);
 
-                if (distance < attackableRange)
+			if (distance < checkMoveDistance)
                 {
                     state = STATE.ATTACK;
 
@@ -112,19 +113,18 @@ public class csBossMonster : MonoBehaviour
    
                 break;
           
-            case STATE.ATTACK:
-                distance = Vector3.Distance(transform.position, player.position);
-                stateTime += Time.deltaTime;
-                anim.SetInteger("AniStep", 0);
-                if (distance > checkMoveDistance)
-                {
-                    state = STATE.IDLE;
-                    return;
-                }
-                if (distance > checkAttackDistance)
-                {
-                    Pattern1();
-                }
+		case STATE.ATTACK:
+			Debug.Log ("aa");
+			distance = Vector3.Distance (transform.position, player.position);
+			stateTime += Time.deltaTime;
+			anim.SetInteger ("AniStep", 0);
+			if (distance > checkMoveDistance) {
+				state = STATE.IDLE;
+				return;
+			}
+			if(distance<checkMoveDistance && distance>checkAttackDistance){
+				Pattern1 ();
+			}
                 if (stateTime > attackStateMaxTime)
                 {
                     stateTime = 0.0f;
@@ -143,7 +143,7 @@ public class csBossMonster : MonoBehaviour
                             if (percentage >= 1 && percentage <= 47)
                             {
                                 Pattern1();
-                                PatternNum = 0;
+
                                 state = STATE.IDLE;
                             }
                         }
@@ -153,7 +153,7 @@ public class csBossMonster : MonoBehaviour
                             if (percentage >= 1 && percentage <= 44)
                             {
                                 Pattern2();
-                                PatternNum = 0;
+                                
                                 state = STATE.IDLE;
                             }
                         }
@@ -163,7 +163,7 @@ public class csBossMonster : MonoBehaviour
                             if (percentage >= 1 && percentage <= 48)
                             {
                                 Pattern3();
-                                PatternNum = 0;
+                                
                                 state = STATE.IDLE;
                             }
                         }
@@ -173,7 +173,7 @@ public class csBossMonster : MonoBehaviour
                             if (percentage >= 1 && percentage <= 45)
                             {
                                 Pattern4();
-                                PatternNum = 0;
+                               
                                 state = STATE.IDLE;
                             }
                         }
@@ -328,15 +328,12 @@ public class csBossMonster : MonoBehaviour
     void Fire()
     {
         
-        GameObject bullettemp = Instantiate(bullet, firePos.position, Quaternion.identity) as GameObject;
-
-        bullettemp.GetComponent<csBullet>().bulletdamage = monsterAttackPoint;
-
-
+		GameObject bullettemp = Instantiate (bullet, firePos.position + new Vector3 (0, 1.5f, 0), Quaternion.identity) as GameObject;
+		bullettemp.GetComponent<csBossSlash>().bulletdamage = monsterAttackPoint;
         Vector3 dir = player.position - bullettemp.transform.position;
         dir.Normalize();
         bullettemp.transform.LookAt(player);
-        bullettemp.gameObject.GetComponent<Rigidbody>().AddForce(dir * 1000.0f);
+        bullettemp.gameObject.GetComponent<Rigidbody>().AddForce(dir * 800.0f);
 
           
     }
