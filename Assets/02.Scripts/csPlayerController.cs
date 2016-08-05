@@ -46,8 +46,12 @@ public class csPlayerController : MonoBehaviour {
 	GameObject[] parentlist;
 	GameObject[] childlist;
     AudioSource audio;
+	public GameObject swordSkillEffect1;
+	public GameObject swordSkillEffect2;
+	public GameObject hammerSkillEffect1;
+	public GameObject hammerSkillEffect2;
 
-	float eventmaxtime = 5.0f;
+	float eventmaxtime = 4.0f;
     // Use this for initialization
     void Start () {
         
@@ -181,15 +185,21 @@ public class csPlayerController : MonoBehaviour {
 	{
         AudioManager.Instance().PlaySkillActiveSound();
 		//GameManager.Instance ().isTimeControl = true;
+		Debug.Log("1");
+		anim.SetBool ("isMove", false);
 		anim.SetBool ("isSkill", true);
+		Debug.Log("2");
 		gameObject.GetComponent<Animator> ().updateMode = AnimatorUpdateMode.UnscaledTime;
 		GameObject moveskillobj = GameObject.Find ("MoveSkillObj");
+		Debug.Log("3");
 		isSkill = true;
 		isAttack = true;
 		ismove = false;
 		cameraFollow.enabled = false;
 		gameObject.layer = 11;
 		pointpos = new Vector3[vec.Count];
+
+		Debug.Log("4");
         
 		for (int a = 0; a < vec.Count; a++) {
 			if (vec.Count == 1) {
@@ -200,6 +210,15 @@ public class csPlayerController : MonoBehaviour {
 			}
 		}
 		transform.LookAt ((Vector3)pointpos [1]);
+		if (Rhand.GetComponent<csAddWeapon> ().WeaponNum == 0) {
+			Instantiate (swordSkillEffect1, transform.position + new Vector3 (0.0f, 0.5f, 0.0f), Quaternion.identity);
+		} else {
+			transform.LookAt ((Vector3)pointpos [1]);
+
+
+			Instantiate (swordSkillEffect1, transform.position + new Vector3 (0.0f, 0.5f, 0.0f), Quaternion.identity);
+		}
+
 		yield return WaitForRealTime (eventmaxtime);
 		anim.SetBool ("isSkill", false);
 		for (int a = 1; a < pointpos.Length; a++) {
@@ -222,9 +241,28 @@ public class csPlayerController : MonoBehaviour {
 
 				transform.LookAt ((Vector3)pointpos [a]);
 				transform.position = (Vector3)pointpos [a];
+				Instantiate (swordSkillEffect2,
+					lookVec3 + Random.insideUnitSphere * 1.0f,
+					Quaternion.identity);
+			} else if (Rhand.GetComponent<csAddWeapon> ().WeaponNum == 4) {
+				//Vector3 lookVec3_1 = (Vector3)pointpos [1];
+				//transform.LookAt (lookVec3_1);
+
+
+				lookVec3.y = transform.position.y;
+				Instantiate (hammerSkillEffect2,
+					lookVec3,
+					Quaternion.identity);
 			} else {
-				transform.LookAt ((Vector3)pointpos [1]);
+				//Vector3 lookVec3_1 = (Vector3)pointpos [1];
+				//transform.LookAt (lookVec3_1);
+
+
+				Instantiate (swordSkillEffect2,
+					lookVec3 + Random.insideUnitSphere * 1.0f,
+					Quaternion.identity);
 			}
+			
 
 			//float speed = 0.001f;
 			//float step = speed * Time.deltaTime;
@@ -234,8 +272,7 @@ public class csPlayerController : MonoBehaviour {
 			yield return WaitForRealTime (0.01f);
 		}
 
-		yield return WaitForRealTime (eventmaxtime);
-
+		yield return WaitForRealTime (2.0f);
 
 		Time.timeScale = 1.0f;
 		gameObject.layer = 9;

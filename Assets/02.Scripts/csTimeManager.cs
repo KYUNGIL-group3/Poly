@@ -38,7 +38,7 @@ public class csTimeManager : MonoBehaviour {
 		}
 
 		if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop==false
-			&& GameManager.Instance().gauge >=5 ) {
+			&& GameManager.Instance().gauge >=5 && GameManager.Instance ().isTimeControl == false ) {
 			once = true;
             AudioManager.Instance().PlayTimeSkillOnSound();
 			MobileSingleStickControl.GetComponent<csITweenManagerButton> ().ActionStart ();

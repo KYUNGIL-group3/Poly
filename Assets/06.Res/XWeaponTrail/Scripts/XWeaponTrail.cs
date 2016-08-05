@@ -182,7 +182,7 @@ namespace Xft {
             UpdateHeadElem();
 
 
-            mElapsedTime += Time.deltaTime;
+			mElapsedTime += Time.unscaledDeltaTime;
             if (mElapsedTime < UpdateInterval) {
                 return;
             }
