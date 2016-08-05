@@ -2,22 +2,25 @@
 using System.Collections;
 
 public class BossSummonMonsterPoint : MonoBehaviour {
-    public Transform[] enemies;
+    public GameObject[] enemies;
+    public Transform pattern4Point; 
+    //public Transform[] enemies;
     // Use this for initialization
     void Start () {
-        enemies = GetComponentsInChildren<Transform>();
-        for (int i = 1; i < enemies.Length; ++i)
-        {
-            enemies[i].gameObject.SetActive(false);
-        }
+        //enemies = GetComponentsInChildren<Transform>();
+        //for (int i = 1; i < enemies.Length; ++i)
+        //{
+        //    enemies[i].gameObject.SetActive(false);
+        //}
     }
     public void pointsSpawn()
     {
-        AudioManager.Instance().PlayMonsterSpawnSound();
-        for (int i = 1; i < enemies.Length; ++i)
-        {
-            enemies[i].gameObject.SetActive(true);
-        }
+       
+        //AudioManager.Instance().PlayMonsterSpawnSound();
+        //for (int i = 1; i < enemies.Length; ++i)
+        //{
+        //    enemies[i].gameObject.SetActive(true);
+        //}
     }
     // Update is called once per frame
     void Update () {
