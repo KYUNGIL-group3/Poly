@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject PlayerPrefeb;
 	public GameObject CameraCenter;
+	public GameObject BossCamera;
 	static GameManager _instance = null;
 	Slider healthBarSlider;
 	Slider skillBarSlider;
@@ -368,6 +369,13 @@ public class GameManager : MonoBehaviour {
 
 			CameraCenter.transform.position = gameObject.transform.position;
 		}
+	}
+
+	public void BossCameraSet()
+	{
+		GameObject MainCamera = GameObject.Find ("Main Camera");
+		MainCamera.SetActive (false);
+		BossCamera.SetActive(true);
 	}
 
 	public IEnumerator shake(float rotalevel)

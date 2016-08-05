@@ -14,6 +14,12 @@ public class csLockContents : MonoBehaviour {
 		int ClearStage = PlayerPrefs.GetInt ("ClearStage");
 
 		switch (ClearStage) {
+		case 6:
+			content5.SetActive (false);
+			content4.SetActive (false);
+			content3.SetActive (false);
+			content2.SetActive (false);
+			break;
 		case 5:
 			content5.SetActive (false);
 			content4.SetActive (false);

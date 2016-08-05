@@ -52,11 +52,7 @@ public class csEnemy1 : MonoBehaviour {
 		if (state == STATE.NONE) {
 			return;
 		}
-			for (int i = 1; i < obj.Length; i++) {
-				if (obj [i].tag == "Body") {
-					obj [i].transform.Rotate (new Vector3 (0.0f, rotspeed, 0.0f));
-				}
-			}
+			
 
 		if (GameManager.Instance ().isGameOver) {
 			return;
@@ -105,6 +101,12 @@ public class csEnemy1 : MonoBehaviour {
 			if (distance > checkMoveDistance) {
 				state = STATE.IDLE;
 				return;
+			}
+
+			for (int i = 1; i < obj.Length; i++) {
+				if (obj [i].tag == "Body") {
+					obj [i].transform.Rotate (new Vector3 (0.0f, rotspeed * stateTime * 10.0f, 0.0f));
+				}
 			}
 
 			if (stateTime > attackStateMaxTime) {
