@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject PlayerPrefeb;
 	public GameObject CameraCenter;
 	public GameObject BossCamera;
+	bool BossCameraIsSet = false;
 	static GameManager _instance = null;
 	Slider healthBarSlider;
 	Slider skillBarSlider;
@@ -380,6 +381,7 @@ public class GameManager : MonoBehaviour {
 	{
 		GameObject MainCamera = GameObject.Find ("Main Camera");
 		MainCamera.SetActive (false);
+		BossCameraIsSet = true;
 		BossCamera.SetActive(true);
 	}
 
@@ -391,26 +393,51 @@ public class GameManager : MonoBehaviour {
 
 			isShake = true;
 
-			Transform MainCamera = GameObject.Find ("Main Camera").transform;
+			if (BossCameraIsSet) {
+				float shake1 = 0.3f;
+				float shakeAmount1 = 1.5f;
+				float decreaseFactor1 = 1.0f;
+				Vector3 originalPos1;
 
-			float shake = 0.3f;
-			float shakeAmount = 1.5f;
-			float decreaseFactor = 1.0f;
-			Vector3 originalPos;
+				Quaternion originalcur1 = BossCamera.gameObject.GetComponent<SmoothFollow> ().currentRotation;
 
-			Quaternion originalcur = MainCamera.gameObject.GetComponent<SmoothFollow> ().currentRotation;
+				originalPos1 = BossCamera.transform.position;
+				originalcur1 = BossCamera.gameObject.GetComponent<SmoothFollow> ().currentRotation;
 
-			originalPos = MainCamera.position;
-			originalcur = MainCamera.gameObject.GetComponent<SmoothFollow> ().currentRotation;
-			while (shake > 0) {
-				MainCamera.gameObject.GetComponent<SmoothFollow> ().currentRotation = Quaternion.Euler (0, Random.Range (-rotalevel, rotalevel) * shakeAmount, 0);
-				MainCamera.position = originalPos + Random.insideUnitSphere * shakeAmount;
-				shake -= Time.deltaTime * decreaseFactor;
-				yield return new WaitForSeconds (0.01f);
+				while (shake1 > 0) {
+					BossCamera.gameObject.GetComponent<SmoothFollow> ().currentRotation = Quaternion.Euler (0, Random.Range (-rotalevel, rotalevel) * shakeAmount1, 0);
+					BossCamera.transform.position = originalPos1 + Random.insideUnitSphere * shakeAmount1;
+					shake1 -= Time.deltaTime * decreaseFactor1;
+					yield return new WaitForSeconds (0.01f);
+				}
+
+				BossCamera.transform.position = originalPos1;
+				BossCamera.gameObject.GetComponent<SmoothFollow> ().currentRotation = originalcur1;
+			} else {
+				
+				Transform MainCamera = GameObject.Find ("Main Camera").transform;
+
+
+				float shake = 0.3f;
+				float shakeAmount = 1.5f;
+				float decreaseFactor = 1.0f;
+				Vector3 originalPos;
+
+				Quaternion originalcur = MainCamera.gameObject.GetComponent<SmoothFollow> ().currentRotation;
+
+				originalPos = MainCamera.position;
+				originalcur = MainCamera.gameObject.GetComponent<SmoothFollow> ().currentRotation;
+				while (shake > 0) {
+					MainCamera.gameObject.GetComponent<SmoothFollow> ().currentRotation = Quaternion.Euler (0, Random.Range (-rotalevel, rotalevel) * shakeAmount, 0);
+					MainCamera.position = originalPos + Random.insideUnitSphere * shakeAmount;
+					shake -= Time.deltaTime * decreaseFactor;
+					yield return new WaitForSeconds (0.01f);
+				}
+
+				MainCamera.position = originalPos;
+				MainCamera.gameObject.GetComponent<SmoothFollow> ().currentRotation = originalcur;
 			}
 
-			MainCamera.position = originalPos;
-			MainCamera.gameObject.GetComponent<SmoothFollow> ().currentRotation = originalcur;
 			isShake = false;
 		}
 	}

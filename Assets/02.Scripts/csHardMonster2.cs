@@ -75,12 +75,14 @@ public class csHardMonster2 : MonoBehaviour {
 		float hpLate = (float)mHp / (float)maxmHp;
 		m_FillImage.color = Color.Lerp (m_ZeroHealthColor, m_FullHealthColor, hpLate);
 
+
 		if (GameManager.Instance ().isTimeControl) {
 
 		} else {
 			if (once) {
-				Transform cameraPos = GameObject.Find ("Main Camera").transform;
-				cameraPos.gameObject.GetComponent<SmoothFollow> ().height = 3;
+				GameManager.Instance ().CameraMove (this.gameObject);
+				//Transform cameraPos = GameObject.Find ("Main Camera").transform;
+				//cameraPos.gameObject.GetComponent<SmoothFollow> ().height = 3;
 			}
 		}
 
@@ -283,17 +285,17 @@ public class csHardMonster2 : MonoBehaviour {
         AudioManager.Instance().PlayWeaponHitSound();   //몬스터 피격 사운드
         Instantiate(HitEffect, transform.position, transform.rotation); //몬스터 피격 이펙트
         
-        if (mHp <= 0)
-		{
+		if (mHp <= 0) {
 			if (once) {
 				once = false;
-				Transform cameraPos = GameObject.Find ("Main Camera").transform;
-				cameraPos.gameObject.GetComponent<SmoothFollow> ().height = 7;
+				GameManager.Instance ().CameraMove (null);
+				//Transform cameraPos = GameObject.Find ("Main Camera").transform;
+				//cameraPos.gameObject.GetComponent<SmoothFollow> ().height = 7;
 			}
-            state = STATE.DEAD;
-            GameManager.Instance().SkillGauge(1);
-           
-        }
+			state = STATE.DEAD;
+			GameManager.Instance ().SkillGauge (1);
+
+		}
     }
 
     void Fire()

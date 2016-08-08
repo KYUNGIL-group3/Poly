@@ -93,9 +93,11 @@ public class csBossMonster : MonoBehaviour
 
 
 
-		Transform cameraPos = GameObject.Find ("Main Camera").transform;
-		cameraPos.gameObject.SetActive (false);
-		camera.SetActive (true);
+		//Transform cameraPos = GameObject.Find ("Main Camera").transform;
+		//cameraPos.gameObject.SetActive (false);
+		//camera.SetActive (true);
+
+		GameManager.Instance ().BossCameraSet ();
 
     }
     // Update is called once per frame
