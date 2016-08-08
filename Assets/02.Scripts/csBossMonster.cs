@@ -70,7 +70,7 @@ public class csBossMonster : MonoBehaviour
     public int mHp;
     private int maxmHp;
 
-    
+	public GameObject camera;
     
 
     // Use this for initialization
@@ -92,6 +92,10 @@ public class csBossMonster : MonoBehaviour
         spawn6 = GameObject.Find("Pattern4Point6").transform;
 
 
+
+		Transform cameraPos = GameObject.Find ("Main Camera").transform;
+		cameraPos.gameObject.SetActive (false);
+		camera.SetActive (true);
 
     }
     // Update is called once per frame
