@@ -20,7 +20,9 @@ public class csBossMonster : MonoBehaviour
     public Transform spawn1;
     public Transform spawn2;
     public Transform spawn3;
-    public Transform spawn4;    
+    public Transform spawn4;
+    public Transform spawn5;
+    public Transform spawn6;    
     public Transform firePos;
 
     public float idleStateMaxTime = 1.0f;   //대기시간,경직시간
@@ -86,9 +88,11 @@ public class csBossMonster : MonoBehaviour
         spawn2 = GameObject.Find("Pattern4Point2").transform;
         spawn3 = GameObject.Find("Pattern4Point3").transform;
         spawn4 = GameObject.Find("Pattern4Point4").transform;
+        spawn5 = GameObject.Find("Pattern4Point5").transform;
+        spawn6 = GameObject.Find("Pattern4Point6").transform;
 
 
-        
+
     }
     // Update is called once per frame
     void Update()
@@ -125,7 +129,7 @@ public class csBossMonster : MonoBehaviour
                 break;
           
 		case STATE.ATTACK:
-			//Debug.Log ("aa");
+			
 			distance = Vector3.Distance (transform.position, player.position);
 			stateTime += Time.deltaTime;
 			anim.SetInteger ("AniStep", 0);
@@ -190,7 +194,7 @@ public class csBossMonster : MonoBehaviour
                     if (PatternNum == 4)
                     {
                         int percentage = Random.Range(1, 100);
-                        if (percentage >= 1 && percentage <= 55)
+                        if (percentage >= 1 && percentage <= 15)
                         {
                             Pattern4();
                             state = STATE.IDLE;
@@ -331,7 +335,12 @@ public class csBossMonster : MonoBehaviour
         {
             //Debug.Log("패턴4 : 몬스터 소환");
             //state = STATE.ATTACK;
-            Pattern4();
+            int percentage = Random.Range(1, 100);
+            if (percentage >= 1 && percentage <= 15)
+            {
+                Pattern4();
+            }
+            
             
         }
        
@@ -420,10 +429,10 @@ public class csBossMonster : MonoBehaviour
         MonsterSpawn();
 
     }
-    //패턴2 내려찍기 
+    //패턴2 내려찍기 범위
     void MakePattern2Range()
     {
-        Vector3 setPos = new Vector3(AttackFiledpostion1.position.x, 0.01f, AttackFiledpostion1.position.z);
+        Vector3 setPos = new Vector3(AttackFiledpostion1.position.x, AttackFiledpostion1.position.y + 0.01f, AttackFiledpostion1.position.z);
         GameObject pattern2Range = Instantiate(attackRange, setPos, Quaternion.identity) as GameObject;
         Destroy(pattern2Range, 2.0f);
        //attackRange.SetActive(true);  
@@ -431,27 +440,28 @@ public class csBossMonster : MonoBehaviour
 
     }
     
-    //패턴3 양손 치기
+    //패턴3 양손 치기 범위
     void MakePattern3Range()
     {
-        Vector3 setPos = new Vector3(AttackFiledpostion2.position.x, 0.01f, AttackFiledpostion2.position.z);
-        Instantiate(attackRange2, setPos, Quaternion.identity);
+        Vector3 setPos = new Vector3(AttackFiledpostion2.position.x, AttackFiledpostion2.position.y + 0.01f, AttackFiledpostion2.position.z);
+//        Instantiate(attackRange2, setPos, Quaternion.identity);
         GameObject pattern3Range = Instantiate(attackRange, setPos, Quaternion.identity) as GameObject;
         Destroy(pattern3Range, 2.0f);
     }
    
-
+    //패턴2 박스 콜라이더 생성
     void CreatePattern2BoxCollider()
     {
         Vector3 setPos11 = new Vector3(AttackFiledpostion1.position.x, AttackFiledpostion1.position.y + 2.5f, AttackFiledpostion1.position.z);
-        GameObject aa = Instantiate(Battackfield1, setPos11, Quaternion.identity) as GameObject;
-        aa.transform.parent = transform; 
+        GameObject Pattern2Box = Instantiate(Battackfield1, setPos11, Quaternion.identity) as GameObject;
+        Pattern2Box.transform.parent = transform; 
     }
+    //패턴3 박스 콜라이더 생성
     void CreatePattern3BoxCollider()    
     {
         Vector3 setPos22 = new Vector3(AttackFiledpostion2.position.x, AttackFiledpostion2.position.y + 2.5f, AttackFiledpostion2.position.z);
-        GameObject aa = Instantiate(Battackfield2, setPos22, Quaternion.identity) as GameObject;
-        aa.transform.parent = transform;
+        GameObject Pattern3Box = Instantiate(Battackfield2, setPos22, Quaternion.identity) as GameObject;
+        Pattern3Box.transform.parent = transform;
     }
     //void CreatePattern4BoxCollider()
     //{
@@ -460,11 +470,29 @@ public class csBossMonster : MonoBehaviour
     //}
     void MonsterSpawn()
     {
-           
-        spawn1.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
-        spawn2.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
-        spawn3.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
-        spawn4.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
+        int RandNum = Random.Range(1, 6);
+        switch (RandNum)
+        {
+            case 1:
+                spawn1.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
+                break;
+            case 2:
+                spawn2.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
+                break;
+            case 3:
+                spawn3.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
+                break;
+            case 4:
+                spawn4.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
+                break;
+            case 5:
+                spawn5.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
+                break;
+            case 6:
+                spawn6.GetComponent<BossSummonMonsterPoint>().pointsSpawn();
+                break;
+        }
+        
     }
     
 
