@@ -10,6 +10,7 @@ public class BossManager : MonoBehaviour {
     public GameObject Battackfield1;
     public GameObject Battackfield2;
     public GameObject Battackfield3;
+    public GameObject attackRange;
 
     public static BossManager Instance()
     {
@@ -25,24 +26,52 @@ public class BossManager : MonoBehaviour {
     }
     // Use this for initialization
     void Start () {
-	
-	}
+        Instantiate(attackRange, AttackFiledpostion1.position, Quaternion.identity);
+    }
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
+    //패턴2
+    void MakeRange1()
+    {
+
+        attackRange.SetActive(true);
+        StartCoroutine(HideRange1());
+
+    }
+    IEnumerator HideRange1()
+    {
+        yield return new WaitForSeconds(1.5f);
+        attackRange.SetActive(false);
+    }
+    //패턴3
+    void MakeRange2()
+    {
+
+        attackRange.SetActive(true);
+        StartCoroutine(HideRange2());
+
+    }
+    IEnumerator HideRange2()
+    {
+        yield return new WaitForSeconds(1.5f);
+        attackRange.SetActive(false);
+    }
+
     void CreateBoxCollider1()
     {
         Instantiate(Battackfield1, AttackFiledpostion1.position, Quaternion.identity);
     }
     void CreateBoxCollider2()
     {
-        Instantiate(Battackfield2, AttackFiledpostion1.position, Quaternion.identity);
+        Instantiate(Battackfield2, AttackFiledpostion2.position, Quaternion.identity);
     }
     void CreateBoxCollider3()
     {
-        Instantiate(Battackfield3, AttackFiledpostion1.position, Quaternion.identity);
+        Instantiate(Battackfield3, AttackFiledpostion3.position, Quaternion.identity);
     }
-        
+   
+
 }
