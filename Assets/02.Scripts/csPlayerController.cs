@@ -116,8 +116,8 @@ public class csPlayerController : MonoBehaviour {
             
             if (!isAttack) { 
                            
-				velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
-				//velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
+				//velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
+				velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
                 if(audio.isPlaying)
                 {
 
@@ -141,15 +141,15 @@ public class csPlayerController : MonoBehaviour {
 
 
             velocity *= walkSpeed;
-			//if (CrossPlatformInputManager.GetButtonDown ("Attack")) {
-				if (Input.GetKeyDown("j")) {
+			if (CrossPlatformInputManager.GetButtonDown ("Attack")) {
+				//if (Input.GetKeyDown("j")) {
                
                 isaaaa = true;
 				StartCoroutine (isaaab ());
 			} 
 
-			//if (CrossPlatformInputManager.GetButton ("Attack")) {
-			if (Input.GetKey("j")) {
+			if (CrossPlatformInputManager.GetButton ("Attack")) {
+			//if (Input.GetKey("j")) {
                 anim.SetBool ("isAttack", true);
 				anim.SetBool ("isMove", false);
 				isidle = false;
@@ -293,8 +293,8 @@ public class csPlayerController : MonoBehaviour {
 	}
 	void SetLookVelocity()
 	{
-		velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
-		//velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
+		//velocity = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
+		velocity = new Vector3 (CrossPlatformInputManager.GetAxis ("Horizontal"), 0, CrossPlatformInputManager.GetAxis ("Vertical"));
 
 		//transform.LookAt (transform.position + velocity);
 

@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SocialPlatforms;
+using UnityEngine.UI;
+using GooglePlayGames;
 
 public class SceneManager : MonoBehaviour {
 	static SceneManager _instance = null;
-
+	private bool bWaitingForAuth = false;
 	public int _killCount;
 	public int _DeadCount;
 	public float _PlayTimefloat;
@@ -32,6 +35,8 @@ public class SceneManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		//PlayerPrefs.SetInt ("FristAccount",0);
+		//PlayerPrefs.SetInt ("ClearStage", 0);
 		Volume = PlayerPrefs.GetInt ("Volume");
 		_Weapon1 = PlayerPrefs.GetInt ("Weapon1");
 		_Weapon2 = PlayerPrefs.GetInt ("Weapon2");
@@ -41,9 +46,12 @@ public class SceneManager : MonoBehaviour {
 		ClearStage =  PlayerPrefs.GetInt ("ClearStage");
         BgmManager.Instance().PlayMainUISound();
 
-        
+
+		GooglePlayGames.PlayGamesPlatform.Activate ();
+		doLogin ();
 	}
-	
+
+
 	// Update is called once per frame
 	void Update () {
 
@@ -77,6 +85,7 @@ public class SceneManager : MonoBehaviour {
 	{
 		if (PlayerPrefs.GetInt ("ClearStage") < nowStage) {
 			PlayerPrefs.SetInt ("ClearStage", nowStage);
+
 		}
 	}
 
@@ -85,6 +94,7 @@ public class SceneManager : MonoBehaviour {
 		int Allcount = PlayerPrefs.GetInt ("KillCount");
 		Allcount += count;
 		PlayerPrefs.SetInt ("KillCount" , Allcount);
+		doLeaderboardKillScore (Allcount);
 	}
 
 	public void DeadCountSet(int count)
@@ -92,6 +102,7 @@ public class SceneManager : MonoBehaviour {
 		int Allcount = PlayerPrefs.GetInt ("DeadCount");
 		Allcount += count;
 		PlayerPrefs.SetInt ("DeadCount" , Allcount);
+
 	}
 
 	public void AddPlayTime(float time)
@@ -250,22 +261,104 @@ public class SceneManager : MonoBehaviour {
 		return timestr;
 	}
 
-//	void OnGUI()
-//	{
-//		if (GUI.Button (new Rect (20, 20, 120, 50), "Lock Contents")) {
-//
-//			PlayerPrefs.SetInt ("ClearStage", 1);
-//			PlayerPrefs.SetInt ("Weapon1" , 0);
-//			PlayerPrefs.SetInt ("Weapon2" , 0);
-//		}
-//
-//		if (GUI.Button (new Rect (20, 80, 120, 50), "unLock Contents")) {
-//
-//			PlayerPrefs.SetInt ("ClearStage", 5);
-//			PlayerPrefs.SetInt ("Weapon1" , 0);
-//			PlayerPrefs.SetInt ("Weapon2" , 1);
-//		}
-//
-//	}
+	void doLogin()
+	{
+		if (bWaitingForAuth) {
+			return;
+		}
+		if (!Social.localUser.authenticated) {
+			// Authenticate
+			bWaitingForAuth = true;
 
+			Social.localUser.Authenticate((bool success) => {
+				bWaitingForAuth = false;
+				if (success) {
+					string token = GooglePlayGames.PlayGamesPlatform.Instance.GetToken();
+				} else {
+					//mStatusText = Social.localUser.userName +  " : failed";
+				}
+			});
+		}
+	}
+
+	public void doAchievementShow()
+	{
+		Social.ShowAchievementsUI();
+	}
+
+	public void doLeaderboardShow()
+	{
+		Social.ShowLeaderboardUI();
+	}
+
+	public void doAchievementStage1()
+	{
+
+		string unLockAchievement_id = "CgkIgoLo6cUQEAIQAA";
+
+		Social.ReportProgress(unLockAchievement_id, 100.0f, (bool success) => {
+			// handle success or failure
+		});
+	}
+
+	public void doAchievementStage2()
+	{
+
+		string unLockAchievement_id = "CgkIgoLo6cUQEAIQAQ";
+
+		Social.ReportProgress(unLockAchievement_id, 100.0f, (bool success) => {
+			// handle success or failure
+		});
+	}
+
+	public void doAchievementStage3()
+	{
+
+		string unLockAchievement_id = "CgkIgoLo6cUQEAIQAg";
+
+		Social.ReportProgress(unLockAchievement_id, 100.0f, (bool success) => {
+			// handle success or failure
+		});
+	}
+
+	public void doAchievementStage4()
+	{
+
+		string unLockAchievement_id = "CgkIgoLo6cUQEAIQAw";
+
+		Social.ReportProgress(unLockAchievement_id, 100.0f, (bool success) => {
+			// handle success or failure
+		});
+	}
+
+	public void doAchievementStage5()
+	{
+
+		string unLockAchievement_id = "CgkIgoLo6cUQEAIQBA";
+
+		Social.ReportProgress(unLockAchievement_id, 100.0f, (bool success) => {
+			// handle success or failure
+		});
+	}
+
+	public void doLeaderboardKillScore(int myScore)
+	{
+		string leader_board_id = "";
+		#if UNITY_ANDROID
+		leader_board_id = "CgkIgoLo6cUQEAIQBQ";
+		#elif UNITY_IPHONE
+		leader_board_id = "SOCIALTEST_HIGH_SCORE";
+		#endif
+
+		Social.ReportScore(myScore, leader_board_id,
+			(bool success) =>
+			{
+				#if UNITY_ANDROID
+				//PlayGamesPlatform.Instance.ShowLeaderboardUI(leader_board_id);
+				#elif UNITY_IPHONE
+				Social.ShowLeaderboardUI();
+				#endif
+			}
+		);
+	}
 }

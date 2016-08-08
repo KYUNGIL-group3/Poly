@@ -169,26 +169,31 @@ public class GameManager : MonoBehaviour {
 				PlayerPrefs.SetInt ("ClearStage", 2);
 				PlayerPrefs.SetInt ("Weapon1", 0);
 				PlayerPrefs.SetInt ("Weapon2", 1);
+				SceneManager.Instance ().doAchievementStage1 ();
 			}
 			break;
 		case "stage2-Enjoy":
 			if (PlayerPrefs.GetInt ("ClearStage") < 3) {
 				PlayerPrefs.SetInt ("ClearStage", 3);
+				SceneManager.Instance ().doAchievementStage2 ();
 			}
 			break;
 		case "stage3-Sadness":
 			if (PlayerPrefs.GetInt ("ClearStage") < 4) {
 				PlayerPrefs.SetInt ("ClearStage", 4);
+				SceneManager.Instance ().doAchievementStage3 ();
 			}
 			break;
 		case "stage4-angry":
 			if (PlayerPrefs.GetInt ("ClearStage") < 5) {
 				PlayerPrefs.SetInt ("ClearStage", 5);
+				SceneManager.Instance ().doAchievementStage4 ();
 			}
 			break;
 		case "stage5-fear":
 			if (PlayerPrefs.GetInt ("ClearStage") < 6) {
 				PlayerPrefs.SetInt ("ClearStage", 6);
+				SceneManager.Instance ().doAchievementStage5 ();
 			}
 
 			if (PlayerPrefs.GetInt ("FristEnding") == 0) {
