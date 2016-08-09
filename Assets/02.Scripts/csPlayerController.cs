@@ -141,15 +141,15 @@ public class csPlayerController : MonoBehaviour {
 
 
             velocity *= walkSpeed;
-			if (CrossPlatformInputManager.GetButtonDown ("Attack")) {
-				//if (Input.GetKeyDown("j")) {
+			//if (CrossPlatformInputManager.GetButtonDown ("Attack")) {
+				if (Input.GetKeyDown("j")) {
                
                 isaaaa = true;
 				StartCoroutine (isaaab ());
 			} 
 
-			if (CrossPlatformInputManager.GetButton ("Attack")) {
-			//if (Input.GetKey("j")) {
+			//if (CrossPlatformInputManager.GetButton ("Attack")) {
+			if (Input.GetKey("j")) {
                 anim.SetBool ("isAttack", true);
 				anim.SetBool ("isMove", false);
 				isidle = false;

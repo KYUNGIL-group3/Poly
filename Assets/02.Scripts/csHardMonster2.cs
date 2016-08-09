@@ -39,7 +39,7 @@ public class csHardMonster2 : MonoBehaviour {
     public float reloadmaxTime = 5.0f;
     
     bool reloaded = false;
-    bool once = false;
+	bool once = true;
     Transform player;
     public float speed = 3.0f;
     private float distance;

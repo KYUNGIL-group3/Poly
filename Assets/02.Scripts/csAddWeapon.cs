@@ -41,8 +41,8 @@ public class csAddWeapon : MonoBehaviour {
 			}
 			return;
 		}
-		if (CrossPlatformInputManager.GetButtonUp ("Change")) {
-		//if (Input.GetKeyDown("k")) {
+		//if (CrossPlatformInputManager.GetButtonUp ("Change")) {
+		if (Input.GetKeyDown("k")) {
             AudioManager.Instance().PlayWeaponTransSound();
 			if (!Player.GetComponent<csPlayerController> ().isAttack) {
 				if (WeaponNum == GameManager.Instance ().Weapon1Num ()) {

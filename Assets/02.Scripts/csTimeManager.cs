@@ -37,7 +37,7 @@ public class csTimeManager : MonoBehaviour {
 			player = GameObject.Find ("Player(Clone)");
 		}
 
-		if (CrossPlatformInputManager.GetButtonDown ("Skill") && timestop==false
+		if ((Input.GetKeyDown("l") || CrossPlatformInputManager.GetButtonDown ("Skill")) && timestop==false
 			&& GameManager.Instance().gauge >=5 && GameManager.Instance ().isTimeControl == false ) {
 			once = true;
             AudioManager.Instance().PlayTimeSkillOnSound();

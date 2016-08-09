@@ -16,6 +16,8 @@ public class SceneManager : MonoBehaviour {
 	public int ClearStage;
 	public int Volume;
 
+	public bool look = false;
+
 	string Sstr;
 	string Mstr;
   
@@ -35,8 +37,7 @@ public class SceneManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//PlayerPrefs.SetInt ("FristAccount",0);
-		//PlayerPrefs.SetInt ("ClearStage", 0);
+		
 		Volume = PlayerPrefs.GetInt ("Volume");
 		_Weapon1 = PlayerPrefs.GetInt ("Weapon1");
 		_Weapon2 = PlayerPrefs.GetInt ("Weapon2");
@@ -361,4 +362,19 @@ public class SceneManager : MonoBehaviour {
 			}
 		);
 	}
+
+	void OnGUI()
+	{
+		if (look) {
+			if (GUI.Button (new Rect (20, 30, 80, 20), "Look")) {
+				PlayerPrefs.SetInt ("FristAccount", 0);
+				PlayerPrefs.SetInt ("ClearStage", 0);
+			}
+			if (GUI.Button (new Rect (20, 70, 80, 20), "unLook")) {
+				PlayerPrefs.SetInt ("FristAccount", 1);
+				PlayerPrefs.SetInt ("ClearStage", 5);
+			}
+		}
+	}
+
 }
